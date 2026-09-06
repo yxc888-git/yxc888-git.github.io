@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "cn.zhengzhou.wushik",
+        "sha256_cert_fingerprints": ["08:43:D1:40:F2:BE:94:83:DC:15:57:7D:35:33:B3:C6:FB:35:EE:1D:8B:82:2D:EB:FE:05:8A:BA:CF:1D:34:12"]
+      }
+    }]
