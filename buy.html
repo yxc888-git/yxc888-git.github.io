@@ -1,0 +1,456 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>知行软件 · 购买激活码（付款自助出码）</title>
+<meta name="description" content="扫码付款后自助生成激活码，秒出码，无需等待。" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" type="image/png" href="/favicon-32.png" />
+<style>
+  :root{
+    --bg:#0b0d12; --card:#161a24; --card2:#1c2130;
+    --txt:#eef1f7; --sub:#98a2b3; --line:#2a3042;
+    --pri:#ff7a3c; --pri2:#ff4d8d; --acc:#4da3ff; --ok:#2ecc71; --warn:#f5c542;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg); color:var(--txt); line-height:1.7; min-height:100vh;
+  }
+  a{color:var(--acc);text-decoration:none}
+  .wrap{max-width:960px;margin:0 auto;padding:0 18px}
+  header{padding:22px 0 8px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+  .brand img{width:34px;height:34px;border-radius:10px}
+  .back{color:var(--sub);font-size:14px}
+  .back:hover{color:var(--pri)}
+
+  .hero{padding:26px 0 10px;text-align:center}
+  .hero h1{font-size:clamp(24px,5vw,34px);font-weight:800;line-height:1.3}
+  .hero h1 b{background:linear-gradient(90deg,var(--pri),var(--pri2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--sub);margin-top:8px;font-size:15px}
+
+  .steps{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0 8px}
+  .step{
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:8px 16px;font-size:13px;color:var(--sub);
+  }
+  .step b{color:var(--pri);margin-right:4px}
+
+  .panel{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:22px;margin:16px 0;
+  }
+  .panel h2{font-size:18px;margin-bottom:6px}
+  .panel .hint{color:var(--sub);font-size:13px;margin-bottom:14px}
+
+  label{display:block;font-size:13px;color:var(--sub);margin:12px 0 6px;font-weight:600}
+  select,input[type=text]{
+    width:100%;padding:12px 14px;border-radius:12px;font-size:15px;
+    background:var(--card2);color:var(--txt);border:1px solid var(--line);
+    font-family:inherit;
+  }
+  select:focus,input:focus{outline:none;border-color:var(--pri)}
+  input[type=text]{font-family:ui-monospace,Consolas,monospace;letter-spacing:1px;text-transform:uppercase}
+
+  .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:10px 0}
+  .tier{
+    background:var(--card2);border:1px solid var(--line);border-radius:14px;
+    padding:14px 12px;text-align:center;cursor:pointer;transition:.15s;
+  }
+  .tier:hover{border-color:var(--pri)}
+  .tier.sel{border-color:var(--pri);background:rgba(255,122,60,.12);box-shadow:0 0 0 2px rgba(255,122,60,.2)}
+  .tier .nm{font-weight:700;font-size:14px}
+  .tier .pz{color:var(--pri);font-size:20px;font-weight:800;margin:4px 0}
+  .tier .pz small{font-size:12px;color:var(--sub);font-weight:500}
+  .tier .wx{font-size:11px;color:var(--ok)}
+
+  .pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+  .pay-card{
+    background:var(--card2);border:1px solid var(--line);border-radius:16px;
+    padding:14px;text-align:center;
+  }
+  .pay-card img{
+    width:100%;max-width:240px;border-radius:10px;background:#fff;
+    display:block;margin:0 auto 10px;cursor:zoom-in;
+  }
+  .pay-card .t{font-weight:700;font-size:14px;margin-bottom:2px}
+  .pay-card .s{color:var(--sub);font-size:12px}
+  @media(max-width:560px){.pay-grid{grid-template-columns:1fr}}
+
+  .btn{
+    display:block;width:100%;padding:15px;border:none;border-radius:14px;
+    font-size:16px;font-weight:800;cursor:pointer;transition:.15s;
+    background:linear-gradient(90deg,var(--pri),var(--pri2));color:#fff;
+    box-shadow:0 12px 28px rgba(255,90,90,.28);
+  }
+  .btn:hover{transform:translateY(-2px)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+  .result{
+    display:none;margin-top:18px;padding:20px;border-radius:16px;
+    background:rgba(46,204,113,.10);border:1px solid rgba(46,204,113,.35);
+    text-align:center;
+  }
+  .result.show{display:block}
+  .result .ok{color:var(--ok);font-weight:800;font-size:15px;margin-bottom:8px}
+  .code-box{
+    background:var(--card2);border:1px dashed var(--ok);border-radius:12px;
+    padding:16px 12px;font-family:ui-monospace,Consolas,monospace;
+    font-size:clamp(15px,4vw,22px);font-weight:800;letter-spacing:1px;
+    color:var(--ok);word-break:break-all;user-select:all;
+  }
+  .copy-btn{
+    margin-top:12px;padding:12px 22px;border-radius:12px;border:none;
+    background:var(--ok);color:#fff;font-size:15px;font-weight:700;cursor:pointer;
+  }
+  .result .meta{margin-top:12px;font-size:12px;color:var(--sub);line-height:1.8}
+
+  .alert{
+    background:rgba(245,197,66,.12);border:1px solid rgba(245,197,66,.35);
+    border-radius:12px;padding:12px 14px;font-size:13px;color:var(--warn);margin:12px 0;
+  }
+
+  footer{text-align:center;color:var(--sub);font-size:12px;padding:28px 0 40px}
+  .lightbox{
+    display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:100;
+    align-items:center;justify-content:center;cursor:zoom-out;padding:20px;
+  }
+  .lightbox.show{display:flex}
+  .lightbox img{max-width:92vw;max-height:92vh;border-radius:12px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <img src="/logo.svg" alt="知行软件" />
+      知行软件
+    </div>
+    <a class="back" href="/">← 返回首页</a>
+  </header>
+
+  <section class="hero">
+    <h1>购买激活码 · <b>付款自助出码</b></h1>
+    <p>扫码付款 → 填机器码 → 秒出激活码。不用等，不用问客服。</p>
+    <div class="steps">
+      <div class="step"><b>1</b>选产品版本</div>
+      <div class="step"><b>2</b>扫码付款</div>
+      <div class="step"><b>3</b>填机器码</div>
+      <div class="step"><b>4</b>拿激活码</div>
+    </div>
+  </section>
+
+  <div class="panel">
+    <h2>① 选择产品与版本</h2>
+    <p class="hint">价格按标准价；<span style="color:var(--ok)">微信好友另有优惠</span>，加微信 <b>15639928315</b> 详聊。</p>
+
+    <label>产品</label>
+    <select id="product">
+      <option value="beauty">知行美业管理系统</option>
+      <option value="food">知行饭店管理系统</option>
+      <option value="chain">知行饭店连锁版</option>
+    </select>
+
+    <label>版本（点选）</label>
+    <div class="tiers" id="tiers"></div>
+  </div>
+
+  <div class="panel">
+    <h2>② 扫码付款</h2>
+    <p class="hint">用 <b>微信</b> 或 <b>支付宝</b> 扫下面的码，付对应金额。付款后截图留底，出问题可加微信处理。</p>
+    <div class="pay-grid">
+      <div class="pay-card">
+        <div class="t">💚 微信支付（推荐）</div>
+        <img src="/pay-wechat.png" alt="微信收款码" onclick="zoom(this)" />
+        <div class="s">长按识别 / 扫一扫</div>
+      </div>
+      <div class="pay-card">
+        <div class="t">💙 支付宝</div>
+        <img src="/pay-alipay.png" alt="支付宝收款码" onclick="zoom(this)" />
+        <div class="s">长按识别 / 扫一扫</div>
+      </div>
+    </div>
+    <div class="alert">⚠️ 付款后请保存付款截图。如需发票或优惠价，请加微信 <b>15639928315</b>。</div>
+  </div>
+
+  <div class="panel">
+    <h2>③ 填写机器码，生成激活码</h2>
+    <p class="hint">机器码在软件里看：<b>设置 → 授权管理 → 机器码</b>（12 位大写字母数字）。</p>
+
+    <label>机器码</label>
+    <input type="text" id="machine" maxlength="12" placeholder="例如：ABCD1234EFGH" autocomplete="off" />
+
+    <label>有效期</label>
+    <select id="expiry">
+      <option value="permanent">永久授权（一次买断）</option>
+      <option value="1y">年度授权（1 年）</option>
+    </select>
+
+    <div style="margin-top:18px">
+      <button class="btn" id="genBtn" onclick="generate()">🔑 生成激活码</button>
+    </div>
+
+    <div class="result" id="result">
+      <div class="ok">✅ 激活码生成成功，请复制保存</div>
+      <div class="code-box" id="codeOut">—</div>
+      <button class="copy-btn" onclick="copyCode()">📋 复制激活码</button>
+      <div class="meta" id="codeMeta"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>④ 怎么激活</h2>
+    <p class="hint" style="line-height:1.9">
+      1. 打开软件 → 登录<br/>
+      2. 进入 <b>设置 → 授权管理</b><br/>
+      3. 把复制的激活码粘贴进去，点激活<br/>
+      4. 显示「已激活」即成功，永久使用<br/>
+      <br/>
+      遇到问题加微信 <b>15639928315</b>，远程帮你看。
+    </p>
+  </div>
+</div>
+
+<footer>
+  © 2026 知行软件 · 付款自助出码系统<br/>
+  本人不组织任何牌局 · 软件仅供合法经营使用
+</footer>
+
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('show')">
+  <img id="lightboxImg" src="" alt="收款码" />
+</div>
+
+<script>
+// ===== SHA-256（紧凑实现）=====
+var SHA256 = (function(){
+  var K = [
+    0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
+  ];
+  function utf8(str){
+    var out = [], i, c;
+    for (i = 0; i < str.length; i++){
+      c = str.charCodeAt(i);
+      if (c < 128) out.push(c);
+      else if (c < 2048){ out.push(192|(c>>6), 128|(c&63)); }
+      else { out.push(224|(c>>12), 128|((c>>6)&63), 128|(c&63)); }
+    }
+    return out;
+  }
+  function rotr(n,x){ return (x>>>n)|(x<<(32-n)); }
+  return function(msg){
+    var H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    var l = msg.length, bitLen = l * 8;
+    msg = msg.slice();
+    msg.push(0x80);
+    while (msg.length % 64 !== 56) msg.push(0);
+    msg.push(0,0,0,0,(bitLen>>>24)&255,(bitLen>>>16)&255,(bitLen>>>8)&255,bitLen&255);
+    for (var off = 0; off < msg.length; off += 64){
+      var w = [], i;
+      for (i = 0; i < 16; i++){
+        w[i] = (msg[off+i*4]<<24)|(msg[off+i*4+1]<<16)|(msg[off+i*4+2]<<8)|msg[off+i*4+3];
+      }
+      for (i = 16; i < 64; i++){
+        var s0 = rotr(7,w[i-15]) ^ rotr(18,w[i-15]) ^ (w[i-15]>>>3);
+        var s1 = rotr(17,w[i-2]) ^ rotr(19,w[i-2]) ^ (w[i-2]>>>10);
+        w[i] = (w[i-16] + s0 + w[i-7] + s1) | 0;
+      }
+      var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+      for (i = 0; i < 64; i++){
+        var S1 = rotr(6,e)^rotr(11,e)^rotr(25,e);
+        var ch = (e&f)^((~e)&g);
+        var t1 = (h+S1+ch+K[i]+w[i])|0;
+        var S0 = rotr(2,a)^rotr(13,a)^rotr(22,a);
+        var maj = (a&b)^(a&c)^(b&c);
+        var t2 = (S0+maj)|0;
+        h=g; g=f; f=e; e=(d+t1)|0; d=c; c=b; b=a; a=(t1+t2)|0;
+      }
+      H[0]=(H[0]+a)|0; H[1]=(H[1]+b)|0; H[2]=(H[2]+c)|0; H[3]=(H[3]+d)|0;
+      H[4]=(H[4]+e)|0; H[5]=(H[5]+f)|0; H[6]=(H[6]+g)|0; H[7]=(H[7]+h)|0;
+    }
+    var hex = '';
+    for (var j = 0; j < 8; j++){
+      var v = H[j];
+      for (var s = 28; s >= 0; s -= 4) hex += ((v>>>s)&15).toString(16);
+    }
+    return hex;
+  };
+})();
+
+function sha256hex(str){
+  return SHA256(utf8Bytes(str));
+}
+function utf8Bytes(str){
+  var out = [], i, c;
+  for (i = 0; i < str.length; i++){
+    c = str.charCodeAt(i);
+    if (c < 128) out.push(c);
+    else if (c < 2048){ out.push(192|(c>>6), 128|(c&63)); }
+    else { out.push(224|(c>>12), 128|((c>>6)&63), 128|(c&63)); }
+  }
+  return out;
+}
+
+// ===== 产品配置 =====
+var PRODUCTS = {
+  beauty: {
+    name: '知行美业管理系统',
+    tiers: [
+      { id:'standard', name:'标准版', price:50, rec:true }
+    ]
+  },
+  food: {
+    name: '知行饭店管理系统',
+    tiers: [
+      { id:'standard',     name:'标准版', price:20 },
+      { id:'professional', name:'专业版', price:40, rec:true },
+      { id:'enterprise',   name:'旗舰版', price:60 }
+    ]
+  },
+  chain: {
+    name: '知行饭店连锁版',
+    tiers: [
+      { id:'standard',     name:'标准版', price:20 },
+      { id:'professional', name:'专业版', price:40, rec:true },
+      { id:'enterprise',   name:'旗舰版', price:60 }
+    ]
+  }
+};
+
+var currentProduct = 'beauty';
+var currentTier = 'standard';
+
+function renderTiers(){
+  var box = document.getElementById('tiers');
+  var p = PRODUCTS[currentProduct];
+  box.innerHTML = '';
+  p.tiers.forEach(function(t){
+    var d = document.createElement('div');
+    d.className = 'tier' + (t.id === currentTier ? ' sel' : '');
+    d.innerHTML = '<div class="nm">' + t.name + '</div>'
+      + '<div class="pz">' + t.price + '<small>元</small></div>'
+      + (t.wx ? '<div class="wx">微信好友价 ' + t.wx + ' 元</div>' : '<div class="wx">&nbsp;</div>');
+    d.onclick = function(){
+      currentTier = t.id;
+      renderTiers();
+    };
+    box.appendChild(d);
+  });
+}
+
+document.getElementById('product').addEventListener('change', function(){
+  currentProduct = this.value;
+  currentTier = PRODUCTS[currentProduct].tiers[1].id;
+  renderTiers();
+});
+
+// ===== 激活码生成 =====
+function genBeautyCode(machineId, tier, permanent){
+  // 与桌面版知行美业激活码生成器 v1.1 一致
+  var secret = 'zhixing_beauty_2026_secret';
+  var tierCode = { basic:'BA', standard:'ST', flagship:'FL' }[tier] || 'ST';
+  var expiryStr = permanent ? 'permanent' : 'year';
+  var expiryCode = '0000';
+  if (!permanent){
+    var d = new Date();
+    var yr = String(d.getFullYear() - 2000).padStart(2,'0');
+    var mo = String(d.getMonth() + 1).padStart(2,'0');
+    expiryCode = yr + mo;
+  }
+  // PowerShell: $payload = "$machineId|$tier|$expiryStr"; hash of (payload + secret)
+  var payload = machineId + '|' + tier + '|' + (permanent ? 'permanent' : expiryStr);
+  // 注意：年度授权在桌面版会用 .ToString('o') 格式；这里固定用 permanent 对齐买断场景。
+  // 买断永久：
+  payload = machineId + '|' + tier + '|permanent';
+  var sig = sha256hex(utf8ToHexPayload(payload + secret)).slice(0,8).toUpperCase();
+  // 用字节级 hash
+  sig = SHA256(utf8Bytes(payload + secret)).slice(0,8).toUpperCase();
+  var raw = machineId.slice(0,4) + tierCode + '0000' + sig;
+  var padded = raw.padEnd(25, '0');
+  return [padded.slice(0,5),padded.slice(5,10),padded.slice(10,15),padded.slice(15,20),padded.slice(20,25)].join('-');
+}
+
+// 美业：仅支持永久（买断）；日期版需桌面工具（含 ISO 日期格式）
+function genBeauty(machineId, tier){
+  var secret = 'zhixing_beauty_2026_secret';
+  var tierCode = { basic:'BA', standard:'ST', flagship:'FL' }[tier] || 'ST';
+  var payload = machineId + '|' + tier + '|permanent';
+  var sig = SHA256(utf8Bytes(payload + secret)).slice(0,8).toUpperCase();
+  var raw = machineId.slice(0,4) + tierCode + '0000' + sig;
+  var padded = raw.padEnd(25, '0');
+  return [padded.slice(0,5),padded.slice(5,10),padded.slice(10,15),padded.slice(15,20),padded.slice(20,25)].join('-');
+}
+
+function genRestaurant(type, deviceHash){
+  // 与 D:\知行软件工厂\知行饭店管理系统\tools\generate_activation.py 一致
+  var SECRET = 'zhixing_restaurant_2024_secret';
+  var PREFIX = 'ZX-REST-';
+  var ts = Date.now().toString();
+  var data = SECRET + ':' + type + ':' + ts + ':' + deviceHash;
+  var sig = SHA256(utf8Bytes(data)).slice(0,16).toUpperCase();
+  return PREFIX + type + '-' + ts + '-' + deviceHash + '-' + sig;
+}
+
+function generate(){
+  var machine = document.getElementById('machine').value.trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
+  if (machine.length < 4){
+    alert('请输入至少 4 位机器码（软件 → 设置 → 授权管理）');
+    return;
+  }
+  var permanent = document.getElementById('expiry').value === 'permanent';
+  var code, note;
+
+  if (currentProduct === 'beauty'){
+    if (!permanent){
+      alert('美业版年度授权请加微信 15639928315 手动开通；买断永久可自助出码。');
+      return;
+    }
+    code = genBeauty(machine, currentTier);
+    note = '知行美业 · ' + PRODUCTS.beauty.tiers.filter(function(t){return t.id===currentTier})[0].name + ' · 永久授权';
+  } else {
+    code = genRestaurant(currentTier, machine);
+    note = PRODUCTS[currentProduct].name + ' · ' + PRODUCTS[currentProduct].tiers.filter(function(t){return t.id===currentTier})[0].name + ' · 永久授权';
+  }
+
+  document.getElementById('codeOut').textContent = code;
+  document.getElementById('codeMeta').innerHTML =
+    '机器码：<b>' + machine + '</b><br/>'
+    + note + '<br/>'
+    + '生成时间：' + new Date().toLocaleString('zh-CN') + '<br/>'
+    + '<span style="color:var(--warn)">请立即复制保存。激活路径：设置 → 授权管理 → 粘贴激活码。</span>';
+  var r = document.getElementById('result');
+  r.classList.add('show');
+  r.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+function copyCode(){
+  var code = document.getElementById('codeOut').textContent;
+  if (!code || code === '—') return;
+  if (navigator.clipboard){
+    navigator.clipboard.writeText(code).then(function(){ alert('激活码已复制！'); });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = code; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    alert('激活码已复制！');
+  }
+}
+
+function zoom(img){
+  document.getElementById('lightboxImg').src = img.src;
+  document.getElementById('lightbox').classList.add('show');
+}
+
+renderTiers();
+</script>
+</body>
+</html>
