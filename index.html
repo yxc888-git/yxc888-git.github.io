@@ -1,0 +1,893 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>知行软件 · 餐饮 & 美业管理系统 — 一次买断 永久使用</title>
+<meta name="description" content="知行饭店管理系统 v6.2.0 与 知行美业管理系统：一次买断、永久使用、无年费无月费、离线可用、手机电脑同步。7天免费全功能试用。" />
+<meta name="theme-color" content="#0b0d12" />
+<meta name="author" content="知行软件" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="mask-icon" href="/logo.svg" color="#ff7a3c" />
+<meta name="msapplication-TileImage" content="/logo-192.png" />
+<meta name="msapplication-TileColor" content="#ff7a3c" />
+<!-- PWA：手机浏览器 / 微信里可「添加到主屏幕」，点图标直达 -->
+<link rel="manifest" href="/manifest.json" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="知行软件" />
+<meta name="format-detection" content="telephone=no" />
+<!-- 微信 / 社交分享卡片（必须绝对地址，朋友圈点卡片直接进站） -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="知行软件" />
+<meta property="og:title" content="知行软件 · 餐饮 & 美业管理系统 — 一次买断 永久使用" />
+<meta property="og:description" content="饭店系统 + 美业系统：一次买断、永久使用、离线可用。还附带免费五十K小游戏。微信：15639928315" />
+<meta property="og:image" content="https://yxc-homepage.surge.sh/share-card.jpg" />
+<meta property="og:image:secure_url" content="https://yxc-homepage.surge.sh/share-card.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="512" />
+<meta property="og:image:height" content="512" />
+<meta property="og:url" content="https://yxc-homepage.surge.sh/" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="知行软件 · 餐饮 & 美业管理系统" />
+<meta name="twitter:description" content="一次买断 · 永久使用 · 7天免费试用 · 五十K免费玩" />
+<meta name="twitter:image" content="https://yxc-homepage.surge.sh/share-card.jpg" />
+<link rel="canonical" href="https://yxc-homepage.surge.sh/" />
+<style>
+  :root{
+    --bg:#0b0d12; --bg2:#12151c; --card:#161a24; --card2:#1c2130;
+    --txt:#eef1f7; --sub:#98a2b3; --line:#262c3c;
+    --pri:#ff7a3c; --pri2:#ff4d8d; --acc:#4da3ff; --ok:#2ecc71; --warn:#f5c542;
+    --shadow:0 18px 50px rgba(0,0,0,.45);
+    --radius:18px;
+  }
+  [data-theme="light"]{
+    --bg:#f4f6fb; --bg2:#ffffff; --card:#ffffff; --card2:#f0f3f9;
+    --txt:#151a24; --sub:#5b6678; --line:#e4e8f0;
+    --shadow:0 18px 50px rgba(20,40,80,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg); color:var(--txt); line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background:
+      radial-gradient(900px 420px at 12% -8%, rgba(255,122,60,.16), transparent 60%),
+      radial-gradient(700px 380px at 90% 0%, rgba(255,77,141,.12), transparent 55%);
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+
+  .promo{
+    position:relative; z-index:2;
+    background:linear-gradient(90deg,#ff6a2d,#ff4d8d 55%,#7c5cff);
+    color:#fff; text-align:center; font-size:13.5px; font-weight:700;
+    padding:10px 14px; letter-spacing:.2px;
+  }
+  .promo span{opacity:.92; font-weight:600}
+
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,13,18,.78);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  [data-theme="light"] nav{background:rgba(255,255,255,.82)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+  .logo{
+    font-weight:800;font-size:20px;letter-spacing:.4px;
+    display:flex;align-items:center;gap:11px;
+    text-decoration:none;color:inherit;
+  }
+  .logo:hover{opacity:.92}
+  .logo .mark{
+    width:34px;height:34px;border-radius:10px;flex-shrink:0;
+    background:linear-gradient(135deg,var(--pri),var(--pri2));
+    box-shadow:0 8px 18px rgba(255,90,70,.35);
+    display:grid;place-items:center;
+  }
+  .logo .mark img,.logo .mark svg{width:34px;height:34px;display:block;border-radius:10px}
+  .logo span{color:var(--pri)}
+  .logo-text{line-height:1.15}
+  .logo-text small{display:block;font-size:11px;font-weight:600;color:var(--sub);letter-spacing:.2px;margin-top:1px}
+  .nav-links{display:flex;gap:16px;align-items:center;font-size:14px}
+  .nav-links a{color:var(--sub);transition:.2s}
+  .nav-links a:hover{color:var(--txt)}
+  .theme-btn{
+    background:var(--card2);border:1px solid var(--line);color:var(--txt);
+    border-radius:999px;padding:7px 13px;cursor:pointer;font-size:13px;
+    transition:.2s;
+  }
+  .theme-btn:hover{border-color:var(--pri);color:var(--pri)}
+  @media(max-width:760px){.nav-links a{display:none}.nav-links .theme-btn{display:inline-block}}
+
+  /* 访问计数器 */
+  .visit-pill{
+    display:inline-flex;align-items:center;gap:5px;
+    background:var(--card2);border:1px solid var(--line);border-radius:999px;
+    padding:6px 12px;font-size:13px;color:var(--sub);font-weight:600;
+    white-space:nowrap;
+  }
+  .visit-pill b{color:var(--pri);font-size:14px;min-width:1.5em;display:inline-block;text-align:center}
+  .visit-pill .eye{font-size:14px}
+  .visit-box{
+    margin-top:18px;padding:22px 20px;border-radius:16px;
+    background:linear-gradient(135deg,rgba(255,122,60,.12),rgba(255,77,141,.08));
+    border:1px solid rgba(255,122,60,.3);
+    text-align:center;
+  }
+  .visit-box .vb-label{color:var(--sub);font-size:13px;letter-spacing:1px;margin-bottom:6px}
+  .visit-box .vb-num{
+    font-size:38px;font-weight:800;letter-spacing:1px;
+    background:linear-gradient(90deg,var(--pri),var(--pri2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .visit-box .vb-num.loading{background:none;color:var(--sub);font-size:20px}
+  .visit-box .vb-sub{color:var(--sub);font-size:12px;margin-top:6px}
+  .visit-badge-img{margin-top:10px;display:inline-block;vertical-align:middle}
+
+  .hero{padding:72px 0 56px;text-align:center;position:relative}
+  .hero-logo{display:inline-block;margin-bottom:22px;line-height:0}
+  .hero-logo img{
+    width:88px;height:88px;border-radius:22px;
+    box-shadow:0 16px 40px rgba(255,90,90,.35);
+    transition:.2s;
+  }
+  .hero-logo:hover img{transform:scale(1.05)}
+  .hero h1{
+    font-size:clamp(32px,5vw,48px); line-height:1.22; font-weight:800; margin-bottom:16px;
+    letter-spacing:-.5px;
+  }
+  .hero h1 b{
+    background:linear-gradient(90deg,var(--pri),var(--pri2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{color:var(--sub);font-size:17px;max-width:720px;margin:0 auto 26px}
+  .tags{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}
+  .tag{
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:8px 16px;font-size:13px;color:var(--sub);
+  }
+  .tag b{color:var(--pri);margin-right:4px}
+  .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn{
+    padding:14px 28px;border-radius:14px;font-weight:700;font-size:15px;cursor:pointer;
+    border:1px solid transparent;transition:.2s;display:inline-block;
+  }
+  .btn.pri{
+    background:linear-gradient(90deg,var(--pri),var(--pri2));color:#fff;
+    box-shadow:0 12px 28px rgba(255,90,90,.32);
+  }
+  .btn.pri:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(255,90,90,.4)}
+  .btn.ghost{background:var(--card);border-color:var(--line);color:var(--txt)}
+  .btn.ghost:hover{border-color:var(--pri);color:var(--pri)}
+
+  section{padding:58px 0;position:relative}
+  .sec-head{text-align:center;margin-bottom:36px}
+  .sec-head .k{
+    color:var(--pri);font-weight:800;letter-spacing:3px;font-size:12px;
+    text-transform:uppercase;
+  }
+  .sec-head h2{font-size:clamp(24px,3.4vw,32px);margin-top:10px;font-weight:800;letter-spacing:-.3px}
+  .sec-head p{color:var(--sub);margin-top:10px}
+
+  .pcard{
+    background:linear-gradient(180deg,rgba(255,255,255,.03),transparent 40%),var(--card);
+    border:1px solid var(--line); border-radius:22px;
+    padding:30px; box-shadow:var(--shadow); margin-bottom:26px;
+  }
+  .pcard .top{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:18px}
+  .pcard h3{font-size:24px;font-weight:800}
+  .badge{
+    background:rgba(46,204,113,.14);color:var(--ok);border:1px solid rgba(46,204,113,.35);
+    border-radius:999px;padding:5px 13px;font-size:12px;font-weight:700;
+  }
+  .badge.hot{
+    background:rgba(255,122,60,.14);color:var(--pri);border-color:rgba(255,122,60,.4);
+  }
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0}
+  .feat{
+    background:var(--card2);border:1px solid var(--line);border-radius:14px;
+    padding:16px 18px;font-size:14px;transition:.2s;
+  }
+  .feat:hover{border-color:rgba(255,122,60,.45);transform:translateY(-2px)}
+  .feat b{display:block;color:var(--txt);margin-bottom:4px;font-size:14.5px}
+  .feat span{color:var(--sub);font-size:13px;line-height:1.55}
+
+  .price{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:18px 0}
+  .plan{
+    background:var(--card2);border:1px solid var(--line);border-radius:16px;
+    padding:20px 16px;text-align:center;position:relative;
+  }
+  .plan.rec{
+    border-color:var(--pri);box-shadow:0 0 0 3px rgba(255,122,60,.18);
+    background:linear-gradient(180deg,rgba(255,122,60,.10),transparent 55%),var(--card2);
+  }
+  .plan .nm{font-weight:700;font-size:15px}
+  .plan .pv{font-size:30px;font-weight:800;color:var(--pri);margin:8px 0;line-height:1}
+  .plan .pv small{font-size:13px;color:var(--sub);font-weight:500}
+  .plan .wx{font-size:12.5px;color:var(--ok);margin-top:6px;font-weight:600}
+
+  .dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:16px 0}
+  .dl a{
+    display:flex;align-items:center;gap:10px;background:var(--card2);border:1px solid var(--line);
+    border-radius:14px;padding:14px 16px;font-size:14px;transition:.2s;flex-wrap:wrap;
+  }
+  .dl a:hover{border-color:var(--acc);transform:translateY(-2px);box-shadow:0 10px 24px rgba(77,163,255,.12)}
+  .dl .ic{font-size:20px}
+  .dl .sz{margin-left:auto;color:var(--sub);font-size:12px}
+  .dl-count{
+    display:block;width:100%;font-size:12px;color:var(--pri);font-weight:700;
+    margin-top:2px;padding-left:30px;
+  }
+  .btn-game .dl-count{padding-left:0;margin-top:4px}
+
+  .note{
+    font-size:13px;color:var(--sub);margin-top:12px;padding:13px 15px;background:var(--card2);
+    border-left:3px solid var(--acc);border-radius:10px;line-height:1.6;
+  }
+
+  .ad{
+    background:
+      radial-gradient(500px 180px at 20% 0%, rgba(255,122,60,.18), transparent),
+      radial-gradient(500px 180px at 80% 100%, rgba(61,169,252,.14), transparent),
+      var(--card);
+    border:1px dashed var(--pri); border-radius:20px; padding:30px 26px; margin:10px 0 30px; text-align:center;
+  }
+  .ad h4{font-size:22px;margin-bottom:10px}
+  .ad p{color:var(--sub);max-width:680px;margin:0 auto;line-height:1.75}
+  .ad b{color:var(--txt)}
+
+  .news{display:grid;gap:12px}
+  .news .it{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:16px 18px;display:flex;gap:16px;align-items:flex-start;
+  }
+  .news .dt{color:var(--pri);font-weight:800;font-size:13px;white-space:nowrap;min-width:58px}
+  .news .tx{font-size:14px;color:var(--sub)}
+  .news .tx b{color:var(--txt)}
+
+  .contact{
+    text-align:center;background:var(--card);border:1px solid var(--line);
+    border-radius:22px;padding:40px 28px;box-shadow:var(--shadow);
+  }
+  .contact .wx{
+    font-size:22px;font-weight:800;margin:14px 0 6px;color:var(--pri);
+    letter-spacing:.5px;
+  }
+  .contact .wx code{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    background:var(--card2);border:1px solid var(--line);border-radius:10px;
+    padding:8px 14px;display:inline-block;margin-top:6px;font-size:20px;
+  }
+  .contact p{color:var(--sub);margin-bottom:8px}
+  .copy-hint{font-size:12px;color:var(--sub);opacity:.85;margin-top:8px}
+
+  footer{
+    border-top:1px solid var(--line);padding:34px 0 48px;text-align:center;color:var(--sub);font-size:13px;
+  }
+  .pill{
+    display:inline-block;background:var(--card2);border:1px solid var(--line);
+    border-radius:999px;padding:6px 14px;margin:4px;font-size:12px;
+  }
+  .footer-brand{margin-top:14px;font-weight:700;color:var(--txt);opacity:.85}
+
+  /* 五十K 小游戏板块 */
+  .game-card{
+    background:
+      radial-gradient(600px 200px at 15% 0%, rgba(20,96,63,.45), transparent 60%),
+      linear-gradient(160deg, #123528 0%, #0f1f18 45%, #161a24 100%);
+    border:1px solid #2a5a42;
+    border-radius:22px;
+    padding:30px;
+    box-shadow:var(--shadow);
+    position:relative;
+    overflow:hidden;
+  }
+  .game-card::after{
+    content:"♠ ♥ ♦ ♣";
+    position:absolute; right:18px; top:16px;
+    letter-spacing:6px; font-size:18px; color:rgba(232,196,106,.35);
+    pointer-events:none;
+  }
+  .game-top{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:14px}
+  .game-top h3{font-size:24px;font-weight:800;color:#f0d78a}
+  .game-badge{
+    background:rgba(232,196,106,.14);color:#e8c46a;
+    border:1px solid rgba(232,196,106,.4);border-radius:999px;
+    padding:5px 13px;font-size:12px;font-weight:700;
+  }
+  .game-badge.free{
+    background:rgba(46,204,113,.14);color:#2ecc71;border-color:rgba(46,204,113,.35);
+  }
+  .game-lead{color:#c5d4c9;font-size:15px;margin-bottom:18px;max-width:820px}
+  .game-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0}
+  .game-feat{
+    background:rgba(0,0,0,.22);border:1px solid rgba(232,196,106,.15);
+    border-radius:14px;padding:14px 16px;
+  }
+  .game-feat b{display:block;color:#f0d78a;margin-bottom:4px;font-size:14px}
+  .game-feat span{color:#9db5a6;font-size:13px}
+  .game-btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+  .btn-game{
+    padding:14px 24px;border-radius:14px;font-weight:700;font-size:15px;
+    display:inline-block;border:1px solid transparent;transition:.2s;
+  }
+  .btn-game.primary{
+    background:linear-gradient(90deg,#e8c46a,#f0d78a);color:#14281c;
+    box-shadow:0 12px 28px rgba(232,196,106,.25);
+  }
+  .btn-game.primary:hover{transform:translateY(-2px)}
+  .btn-game.ghost{
+    background:rgba(255,255,255,.04);border-color:rgba(232,196,106,.35);color:#f0d78a;
+  }
+  .btn-game.ghost:hover{border-color:#e8c46a}
+  .game-note{
+    margin-top:16px;padding:12px 14px;border-radius:10px;
+    background:rgba(0,0,0,.25);border-left:3px solid #e8c46a;
+    color:#9db5a6;font-size:13px;line-height:1.65;
+  }
+  .game-note b{color:#f0d78a}
+</style>
+</head>
+<body data-theme="dark">
+
+<div class="promo">🔥 7天免费全功能试用 · 不满意不付款 · 一次买断 永久使用 · 无年费无月费 · <span>断网照常收银</span></div>
+
+<nav>
+  <div class="wrap nav-in">
+    <a class="logo" href="/" aria-label="返回知行软件首页">
+      <span class="mark"><img src="/logo.svg" alt="知行软件" width="34" height="34" /></span>
+      <span class="logo-text">知行<span>软件</span><small>餐饮 · 美业管理系统</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="#food">饭店系统</a>
+      <a href="#beauty">美业系统</a>
+      <a href="#game">五十K小游戏</a>
+      <a href="#why">为什么选我们</a>
+      <a href="#news">更新动态</a>
+      <a href="#contact">联系</a>
+        <a href="#buy" style="color:var(--pri);font-weight:700">购买激活码</a>
+      <button class="theme-btn" id="themeBtn" type="button">🌗 主题</button>
+      <span class="visit-pill" title="网站累计访问次数"><span class="eye">👁</span> <b id="visitNav">…</b> 次访问</span>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <a href="/" class="hero-logo" aria-label="知行软件">
+      <img src="/logo-192.png" alt="知行软件 Logo" width="88" height="88" />
+    </a>
+    <h1>餐饮 & 美业 <b>管理系统</b><br>一次买断 · 永久使用</h1>
+    <p>覆盖点餐、收银、后厨、扫码点餐、打印、交接班、报表；离线可用、手机电脑同步、多设备实时联动。小店老板自己的收银管家。</p>
+    <div class="tags">
+      <span class="tag"><b>买断制</b> 无年费无月费</span>
+      <span class="tag"><b>离线可用</b> 断网照常收银</span>
+      <span class="tag"><b>双端</b> 手机 + 电脑同步</span>
+      <span class="tag"><b>7天</b> 免费全功能试用</span>
+      <span class="tag"><b>售后</b> 终身技术支持</span>
+    </div>
+    <div class="btns">
+      <a class="btn pri" href="#food">免费下载试用</a>
+      <a class="btn ghost" href="#contact">微信咨询</a>
+        <a class="btn ghost" href="#buy" style="border-color:var(--pri);color:var(--pri)">🔑 购买激活码</a>
+    </div>
+  </div>
+</header>
+
+<section id="food">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k">Product 01</div>
+      <h2>知行饭店管理系统 v6.2.0 完整版</h2>
+      <p>覆盖点餐、收银、后厨、扫码点餐、打印、交接班、报表的完整餐饮系统</p>
+    </div>
+
+    <div class="pcard">
+      <div class="top">
+        <h3>🍜 一套搞定餐厅全流程</h3>
+        <span class="badge hot">7天免费全功能试用</span>
+        <span class="badge">20元起 · 买断</span>
+      </div>
+
+      <div class="grid">
+        <div class="feat"><b>一次买断 永久使用</b><span>无年费、无月费，离线可用，断网照常收银</span></div>
+        <div class="feat"><b>手机 + 电脑同步</b><span>多设备实时联动，堂食外卖一起管</span></div>
+        <div class="feat"><b>扫码点餐</b><span>顾客手机点菜，后厨秒收到</span></div>
+        <div class="feat"><b>小票打印</b><span>USB / 网络 / 串口 / 驱动 四种连接</span></div>
+        <div class="feat"><b>四种支付</b><span>微信 / 支付宝 / 现金 / 会员卡</span></div>
+        <div class="feat"><b>报表 &amp; 交接班</b><span>营业数据清晰，班次交接不扯皮</span></div>
+      </div>
+
+      <p style="color:var(--sub);font-size:14px;margin-bottom:6px"><b style="color:var(--txt)">适合：</b>小餐馆、快餐店、奶茶店、面馆、烧烤店、外卖店等</p>
+
+      <h4 style="margin:22px 0 10px;font-size:16px">💰 版本与价格</h4>
+      <div class="price">
+        <div class="plan"><div class="nm">标准版</div><div class="pv">20<small>元</small></div><div class="wx">一次买断</div></div>
+        <div class="plan rec"><div class="nm">专业版</div><div class="pv">40<small>元</small></div><div class="wx">一次买断</div></div>
+        <div class="plan"><div class="nm">旗舰版</div><div class="pv">60<small>元</small></div><div class="wx">一次买断</div></div>
+      </div>
+
+      <h4 style="margin:22px 0 10px;font-size:16px">📦 下载（首次安装 7 天全功能试用，到期输入激活码永久使用）</h4>
+      <div class="dl">
+        <a href="/zhixing-food.apk" download="知行饭店管理系统_v6.2.0.apk" data-dl="dl-food-apk"><span class="ic">📱</span> 安卓 APK 直接下载 <span class="sz">71.1 MB</span><span class="dl-count" data-count="dl-food-apk">⏳ 统计中…</span></a>
+        <a href="https://share.weiyun.com/h9zpKJc2" target="_blank" rel="noopener" data-dl="dl-food-pkg"><span class="ic">💾</span> 客户交付包（微云） <span class="sz">132.8 MB</span><span class="dl-count" data-count="dl-food-pkg">⏳ 统计中…</span></a>
+        <a href="https://share.weiyun.com/MNrknoQ6" target="_blank" rel="noopener" data-dl="dl-food-chain"><span class="ic">🏪</span> 连锁店版交付包 <span class="sz">71.4 MB</span><span class="dl-count" data-count="dl-food-chain">⏳ 统计中…</span></a>
+      </div>
+      <div class="note">📱 <b>手机直装：</b>点「安卓 APK 直接下载」，下载完成后打开安装即可（需允许"安装未知来源应用"）。交付方式：拍下后发下载链接 + 安装说明，远程指导安装。售后：免费 BUG 修复、终身技术支持。</div>
+    </div>
+  </div>
+</section>
+
+<section id="beauty">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k">Product 02</div>
+      <h2>知行美业管理系统</h2>
+      <p>美容美发店老板看过来！一套搞定收银、会员、预约、提成、库存</p>
+    </div>
+
+    <div class="pcard">
+      <div class="top">
+        <h3>💇 美业门店经营管家</h3>
+        <span class="badge hot">7天免费全功能试用</span>
+        <span class="badge">50元 买断</span>
+      </div>
+
+      <div class="grid">
+        <div class="feat"><b>💈 智能收银</b><span>现金 / 微信 / 支付宝 / 会员卡</span></div>
+        <div class="feat"><b>👥 会员管理</b><span>储值 / 积分 / 等级 / 消费记录</span></div>
+        <div class="feat"><b>📅 预约管理</b><span>客户扫码自助预约，不撞单</span></div>
+        <div class="feat"><b>💰 员工提成</b><span>自动计算，月底不用加班对账</span></div>
+        <div class="feat"><b>📱 双平台</b><span>Windows 电脑 + Android 手机</span></div>
+        <div class="feat"><b>📦 库存管理</b><span>进销存一目了然</span></div>
+      </div>
+
+      <h4 style="margin:22px 0 10px;font-size:16px">💰 价格</h4>
+      <div class="price">
+        <div class="plan rec"><div class="nm">标准买断</div><div class="pv">50<small>元</small></div><div class="wx">一次买断</div></div>
+      </div>
+
+      <h4 style="margin:22px 0 10px;font-size:16px">📦 下载（7天全功能免费试用，不满意不付款）</h4>
+      <div class="dl">
+        <a href="/zhixing-beauty.apk" download="知行美业管理系统_v1.0.0.apk" data-dl="dl-beauty-apk"><span class="ic">📱</span> 安卓 APK 直接下载 <span class="sz">65 MB</span><span class="dl-count" data-count="dl-beauty-apk">⏳ 统计中…</span></a>
+        <a href="https://share.weiyun.com/KELedcH6" target="_blank" rel="noopener" data-dl="dl-beauty-pkg"><span class="ic">💾</span> 安装包（微云） <span class="sz">65.8 MB</span><span class="dl-count" data-count="dl-beauty-pkg">⏳ 统计中…</span></a>
+        <a href="https://share.weiyun.com/QomzUSMN" target="_blank" rel="noopener" data-dl="dl-beauty-deliver"><span class="ic">📁</span> 正式交付包（含4文件）<span class="sz">目录</span><span class="dl-count" data-count="dl-beauty-deliver">⏳ 统计中…</span></a>
+      </div>
+      <div class="note">📱 <b>手机直装：</b>点「安卓 APK 直接下载」，下载完成后打开安装即可（需允许"安装未知来源应用"）。适合：美容院、美发店、美甲店、养生理疗等门店。买断后永久使用，无后续费用。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 五十K 小游戏 ===================== -->
+<section id="game">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k" style="color:#e8c46a">Fun · 免费小游戏</div>
+      <h2>五十 K · 河南郑州版</h2>
+      <p>闲来无事自己写的：复原老郑州原版打法（五十凯见张乎）。纯怀旧消遣，一分钱不赚。</p>
+    </div>
+
+    <div class="game-card">
+      <div class="game-top">
+        <h3>🃏 五十 K</h3>
+        <span class="game-badge">郑州老打法</span>
+        <span class="game-badge free">完全免费</span>
+        <span class="game-badge">纯娱乐 · 禁赌博</span>
+      </div>
+      <p class="game-lead">
+        两副牌 108 张 · 各管各的 · 见张乎：能压必须压 ·
+        支持<b style="color:#f0d78a">单机</b>（带机器人）和<b style="color:#f0d78a">联机开房</b>（3/4/5 人都能玩）。
+        安卓可直接装 APK，苹果用「添加到主屏幕」也能玩。
+      </p>
+
+      <div class="game-grid">
+        <div class="game-feat"><b>🎴 单机版</b><span>你 + 电脑，立刻开打，可选 3/4/5 人</span></div>
+        <div class="game-feat"><b>👥 联机开房</b><span>建房间发号码，朋友手机电脑都能进</span></div>
+        <div class="game-feat"><b>🤖 机器人补位</b><span>三缺一时一键加电脑玩家</span></div>
+        <div class="game-feat"><b>📱 手机安装包</b><span>APK 约 1.9MB，点一下就能下</span></div>
+      </div>
+
+      <div class="game-btns">
+        <a class="btn-game primary" href="https://1e4c05272d0b47929a3adb150e9157aa.app.workbuddy.link/" target="_blank" rel="noopener">🎮 在线开玩</a>
+        <a class="btn-game ghost" href="/wushik-50k.apk" download="wushik-50k.apk" data-dl="dl-wushik-apk">📱 下载安卓 APK（1.9MB）<span class="dl-count" data-count="dl-wushik-apk">⏳ 统计中…</span></a>
+        <a class="btn-game ghost" href="https://1e4c05272d0b47929a3adb150e9157aa.app.workbuddy.link/?room=776468" target="_blank" rel="noopener">🎲 试试示例房间</a>
+      </div>
+
+      <div class="game-note">
+        <b>说明：</b>本人业余爱好作品，仅供亲友娱乐交流；全程虚拟积分，不可兑换现金实物。
+        <b>本人不组织任何牌局，严禁任何人私下拿钱结算输赢。</b>
+        玩法速览：各管各的 · 牌型只有 单/对/三张/五十K/炸 · 炸弹 4 张同色 · 5/10/K 计分，全场 200 分。
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="ad">
+    <h4>🔥 限时特惠：微信好友专属价</h4>
+    <p>加微信直接享内部价 —— 饭店系统标准版 <b>20 元</b> / 专业版 <b>40 元</b> / 旗舰版 <b>60 元</b>；美业系统 <b>50 元</b> 一次买断。7 天免费试用，满意再付，不满意不收钱。</p>
+  </div>
+</div>
+
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k">Why us</div>
+      <h2>为什么选知行软件</h2>
+    </div>
+    <div class="grid">
+      <div class="feat"><b>真·买断，不绑架</b><span>一次付费永久使用，没有年费月费，断网也能收银</span></div>
+      <div class="feat"><b>上手快</b><span>界面简单，远程指导安装，小店老板零基础可用</span></div>
+      <div class="feat"><b>多端联动</b><span>手机点单、电脑收银、后厨出单，实时同步</span></div>
+      <div class="feat"><b>敢试用</b><span>7 天全功能免费试用，不满意不付款</span></div>
+      <div class="feat"><b>管售后</b><span>免费 BUG 修复 + 终身技术支持</span></div>
+      <div class="feat"><b>成本低</b><span>比 SAAS 年费省太多，一年回本还倒赚</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="news">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k">Updates</div>
+      <h2>更新动态</h2>
+      <p>后续版本更新、功能说明都会同步到这里</p>
+    </div>
+    <div class="news">
+      <div class="it"><span class="dt">2026.09</span><span class="tx"><b>饭店管理系统 v6.2.0 发布</b>：覆盖点餐、收银、后厨、扫码点餐、打印、交接班、报表，新增连锁店版。</span></div>
+      <div class="it"><span class="dt">2026.09</span><span class="tx"><b>美业管理系统上架</b>：收银 / 会员 / 预约 / 提成 / 库存 一站式管理，Windows + Android 双端。</span></div>
+      <div class="it"><span class="dt">持续</span><span class="tx">免费 BUG 修复中，新功能按计划迭代，老用户同版本免费升级。</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 购买激活码 ===================== -->
+<section id="buy">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k">购买激活码</div>
+      <h2>扫码付款 · 确认后出码</h2>
+      <p>扫码付款 → 拿订单号 → 卖家确认收款后出码。安全可靠。</p>
+    </div>
+
+    <div class="pcard" id="buyCard">
+      <div class="top">
+        <h3>🔑 购买激活码</h3>
+        <span class="badge hot">确认收款后出码</span>
+        <span class="badge">一次买断</span>
+      </div>
+
+      <label style="display:block;font-size:13px;color:var(--sub);margin:12px 0 6px;font-weight:600">① 选产品与版本</label>
+      <select id="buyProduct" style="width:100%;padding:12px 14px;border-radius:12px;font-size:15px;background:var(--card2);color:var(--txt);border:1px solid var(--line);font-family:inherit">
+        <option value="food">知行饭店管理系统</option>
+        <option value="beauty">知行美业管理系统</option>
+        <option value="chain">知行饭店连锁版</option>
+      </select>
+      <div class="price" id="buyTiers" style="margin:12px 0"></div>
+
+      <label style="display:block;font-size:13px;color:var(--sub);margin:14px 0 6px;font-weight:600">② 扫码付款（微信 / 支付宝）</label>
+      <div class="dl" style="grid-template-columns:1fr 1fr">
+        <a style="flex-direction:column;text-align:center;padding:16px;gap:8px" href="/pay-wechat.png" target="_blank">
+          <img src="/pay-wechat.png" alt="微信收款码" style="width:100%;max-width:220px;border-radius:10px;background:#fff" />
+          <b style="font-size:14px">💚 微信支付</b>
+          <span style="font-size:12px;color:var(--sub)">长按识别 / 点开放大</span>
+        </a>
+        <a style="flex-direction:column;text-align:center;padding:16px;gap:8px" href="/pay-alipay.png" target="_blank">
+          <img src="/pay-alipay.png" alt="支付宝收款码" style="width:100%;max-width:220px;border-radius:10px;background:#fff" />
+          <b style="font-size:14px">💙 支付宝</b>
+          <span style="font-size:12px;color:var(--sub)">长按识别 / 点开放大</span>
+        </a>
+      </div>
+
+      <label style="display:block;font-size:13px;color:var(--sub);margin:14px 0 6px;font-weight:600">③ 填机器码，生成激活码（设置 → 授权管理 → 机器码）</label>
+      <input type="text" id="buyMachine" maxlength="12" placeholder="机器码（12位大写字母数字）"
+        style="width:100%;padding:12px 14px;border-radius:12px;font-size:15px;background:var(--card2);color:var(--txt);border:1px solid var(--line);font-family:ui-monospace,Consolas,monospace;letter-spacing:1px;text-transform:uppercase" />
+
+      <div style="margin-top:16px;display:grid;gap:10px">
+        <button class="btn pri" onclick="buyAutoPay()" style="width:100%;font-size:16px;padding:16px">💳 立即付款 · 自动出码（推荐）</button>
+        <button class="btn ghost" id="buyGenBtn" onclick="buyGenerate()" style="width:100%;font-size:15px;padding:13px;border:1px solid var(--line)">④ 已付款？手动出码（备用）</button>
+      </div>
+      <div id="buyLock" style="margin-top:12px;padding:12px 14px;border-radius:12px;background:rgba(245,197,66,.12);border:1px solid rgba(245,197,66,.35);font-size:13px;color:var(--warn);line-height:1.7">
+        <b>⚠️ 出码前需卖家确认收款。</b>流程：
+        <br/>1. 扫码付款 → 2. 生成订单号 → 3. 把订单号发微信 <b>15639928315</b> → 4. 卖家确认收款后发你「确认链接」→ 5. 打开确认链接即可生成激活码。
+      </div>
+      <div id="buyOrder" style="display:none;margin-top:14px;padding:16px;border-radius:14px;background:rgba(61,169,252,.10);border:1px solid rgba(61,169,252,.35);text-align:center">
+        <div style="color:var(--acc);font-weight:800;font-size:14px;margin-bottom:6px">📋 您的订单号（请发给卖家）</div>
+        <div id="buyOrderNo" style="font-family:ui-monospace,Consolas,monospace;font-size:22px;font-weight:800;letter-spacing:2px;color:var(--acc);user-select:all">—</div>
+        <div style="font-size:12px;color:var(--sub);margin-top:8px">付款后请把订单号发微信 <b style="color:var(--pri)">15639928315</b>，确认收款后卖家会发您激活链接。</div>
+      </div>
+
+      <div id="buyResult" style="display:none;margin-top:18px;padding:20px;border-radius:16px;background:rgba(46,204,113,.10);border:1px solid rgba(46,204,113,.35);text-align:center">
+        <div style="color:var(--ok);font-weight:800;font-size:15px;margin-bottom:8px">✅ 激活码生成成功，请复制保存</div>
+        <div id="buyCodeOut" style="background:var(--card2);border:1px dashed var(--ok);border-radius:12px;padding:16px 12px;font-family:ui-monospace,Consolas,monospace;font-size:clamp(15px,4vw,22px);font-weight:800;letter-spacing:1px;color:var(--ok);word-break:break-all;user-select:all">—</div>
+        <button onclick="buyCopyCode()" style="margin-top:12px;padding:12px 22px;border-radius:12px;border:none;background:var(--ok);color:#fff;font-size:15px;font-weight:700;cursor:pointer">📋 复制激活码</button>
+        <div id="buyCodeMeta" style="margin-top:12px;font-size:12px;color:var(--sub);line-height:1.8"></div>
+      </div>
+
+      <div class="note" style="margin-top:16px">
+        <b>激活方法：</b>打开软件 → 设置 → 授权管理 → 粘贴激活码 → 点激活。<br/>
+        遇到问题加微信 <b>15639928315</b>，远程帮你看。
+      </div>
+    </div>
+  </div>
+</section>
+<section id="contact">
+  <div class="wrap">
+    <div class="contact">
+      <div class="k" style="color:var(--pri);font-weight:800;letter-spacing:3px;font-size:12px">CONTACT</div>
+      <h2 style="font-size:28px;margin:10px 0 8px">微信咨询 · 远程指导安装</h2>
+      <p>拍下后发下载链接 + 安装说明，远程帮你装好；激活、售后都在微信解决。</p>
+      <div class="wx">
+        <div>微信号（可直接搜索添加）</div>
+        <code>15639928315</code>
+      </div>
+      <p class="copy-hint">微信好友可享专属内部价 · 也支持手机号搜索添加</p>
+      <div class="btns" style="margin-top:22px">
+        <a class="btn pri" href="#food">立即下载试用</a>
+        <a class="btn ghost" href="weixin://">打开微信</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p style="margin-bottom:10px">
+      <span class="pill">一次买断</span><span class="pill">永久使用</span><span class="pill">离线可用</span>
+      <span class="pill">多端同步</span><span class="pill">7天试用</span><span class="pill">终身售后</span>
+      <span class="pill">五十K免费玩</span>
+    </p>
+    <div class="footer-brand">知行软件 · 餐饮 &amp; 美业管理系统</div>
+    <div class="visit-box">
+      <div class="vb-label">👁 网站累计访问次数</div>
+      <div class="vb-num loading" id="visitCount">加载中…</div>
+      <div class="vb-sub">感谢每一位来访的朋友 · 数据由免费计数服务提供</div>
+      <img class="visit-badge-img" alt="visitor badge"
+           src="https://api.visitorbadge.io/api/combined?path=yxc-homepage-surge&label=Visitors&count_bg=%23FF7A3C&text_bg=%23000000&icon_color=%23E7E7E7&text_color=%23ffffff&label_color=%23FF7A3C" />
+    </div>
+    <p style="margin-top:8px">© 2026 知行软件 · 本页为产品展示与下载导航，下载内容托管于腾讯微云</p>
+  </div>
+</footer>
+
+<script>
+  var btn=document.getElementById('themeBtn');
+  btn.onclick=function(){
+    var cur=document.body.getAttribute('data-theme');
+    var next=cur==='dark'?'light':'dark';
+    document.body.setAttribute('data-theme',next);
+    try{localStorage.setItem('theme',next);}catch(e){}
+    document.querySelector('meta[name=theme-color]').setAttribute('content', next==='dark'?'#0b0d12':'#f4f6fb');
+  };
+  try{
+    var t=localStorage.getItem('theme');
+    if(t)document.body.setAttribute('data-theme',t);
+  }catch(e){}
+  // 注册 Service Worker：加速二次打开，支持添加到主屏幕
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('/sw.js').catch(function(){});
+    });
+  }
+  // 访问计数：打开页面自动 +1，并显示总次数
+  (function(){
+    var elNav = document.getElementById('visitNav');
+    var elBig = document.getElementById('visitCount');
+    function show(n){
+      if (elNav) elNav.textContent = n;
+      if (elBig) {
+        elBig.textContent = n;
+        elBig.classList.remove('loading');
+      }
+    }
+    var cached = null;
+    try { cached = localStorage.getItem('visitCount'); } catch(e){}
+    if (cached) show(cached);
+
+    fetch('https://counterapi.com/api/v1/hit/yxc-homepage')
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        var n = d.value || d.formatted || d.total || 0;
+        n = (typeof n === 'string') ? n : String(n);
+        show(n);
+        try { localStorage.setItem('visitCount', n); } catch(e){}
+      })
+      .catch(function(){
+        fetch('https://api.visitorbadge.io/api/total?path=yxc-homepage-surge')
+          .then(function(r){ return r.json(); })
+          .then(function(d){
+            if (d && d.totalHits) show(String(d.totalHits));
+          })
+          .catch(function(){
+            if (elBig) elBig.textContent = cached || '—';
+          });
+      });
+  })();
+
+  // 下载次数统计：每个下载入口独立计数，点一次 +1
+  (function(){
+    var KEYS = ['dl-food-pkg','dl-food-apk','dl-food-chain','dl-beauty-apk','dl-beauty-pkg','dl-beauty-deliver','dl-wushik-apk'];
+    function fmt(n){
+      n = Number(n)||0;
+      return n >= 10000 ? (n/10000).toFixed(1)+'万' : String(n);
+    }
+    // 页面加载时读取各项下载次数
+    KEYS.forEach(function(k){
+      var el = document.querySelector('[data-count="'+k+'"]');
+      if (!el) return;
+      fetch('https://counterapi.com/api/v1/get/'+k)
+        .then(function(r){ return r.json(); })
+        .then(function(d){ el.textContent = '⬇ 已下载 ' + fmt(d.value||d.formatted||0) + ' 次'; })
+        .catch(function(){ el.textContent = '⬇ 下载次数 —'; });
+    });
+    // 点击下载时 +1
+    document.querySelectorAll('[data-dl]').forEach(function(a){
+      a.addEventListener('click', function(){
+        var k = a.getAttribute('data-dl');
+        var el = document.querySelector('[data-count="'+k+'"]');
+        fetch('https://counterapi.com/api/v1/hit/'+k)
+          .then(function(r){ return r.json(); })
+          .then(function(d){
+            if (el) el.textContent = '⬇ 已下载 ' + fmt(d.value||d.formatted||0) + ' 次';
+          })
+          .catch(function(){});
+      });
+    });
+  })();
+
+  // ===== 购买自助出码 =====
+  var BUY_PRODUCTS = {
+    beauty: { name:'知行美业管理系统', tiers:[{id:'standard',name:'标准版',price:50,rec:true}] },
+    food:   { name:'知行饭店管理系统', tiers:[{id:'standard',name:'标准版',price:20},{id:'professional',name:'专业版',price:40,rec:true},{id:'enterprise',name:'旗舰版',price:60}] },
+    chain:  { name:'知行饭店连锁版', tiers:[{id:'standard',name:'标准版',price:20},{id:'professional',name:'专业版',price:40,rec:true},{id:'enterprise',name:'旗舰版',price:60}] }
+  };
+  var buyProduct = 'food', buyTier = 'professional';
+  function renderBuyTiers(){
+    var box = document.getElementById('buyTiers'); if(!box) return;
+    var p = BUY_PRODUCTS[buyProduct]; box.innerHTML='';
+    p.tiers.forEach(function(t){
+      var d = document.createElement('div'); d.className='plan'+(t.id===buyTier?' rec':'');
+      d.style.cursor='pointer';
+      d.innerHTML = '<div class="nm">'+t.name+'</div><div class="pv">'+t.price+'<small>元</small></div><div class="wx">一次买断</div>';
+      d.onclick = function(){ buyTier=t.id; renderBuyTiers(); };
+      box.appendChild(d);
+    });
+  }
+  var buyProdSel = document.getElementById('buyProduct');
+  if (buyProdSel) buyProdSel.addEventListener('change', function(){
+    buyProduct = this.value;
+    buyTier = BUY_PRODUCTS[buyProduct].tiers.length>1 ? 'professional' : 'standard';
+    renderBuyTiers();
+  });
+
+  function buySha256(msg){
+    var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+    function rotr(n,x){return(x>>>n)|(x<<(32-n));}
+    var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    var l=msg.length,bitLen=l*8,m=msg.slice();
+    m.push(0x80); while(m.length%64!==56)m.push(0);
+    m.push(0,0,0,0,(bitLen>>>24)&255,(bitLen>>>16)&255,(bitLen>>>8)&255,bitLen&255);
+    for(var off=0;off<m.length;off+=64){
+      var w=[],i;
+      for(i=0;i<16;i++) w[i]=(m[off+i*4]<<24)|(m[off+i*4+1]<<16)|(m[off+i*4+2]<<8)|m[off+i*4+3];
+      for(i=16;i<64;i++){var s0=rotr(7,w[i-15])^rotr(18,w[i-15])^(w[i-15]>>>3);var s1=rotr(17,w[i-2])^rotr(19,w[i-2])^(w[i-2]>>>10);w[i]=(w[i-16]+s0+w[i-7]+s1)|0;}
+      var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+      for(i=0;i<64;i++){var S1=rotr(6,e)^rotr(11,e)^rotr(25,e);var ch=(e&f)^((~e)&g);var t1=(h+S1+ch+K[i]+w[i])|0;var S0=rotr(2,a)^rotr(13,a)^rotr(22,a);var maj=(a&b)^(a&c)^(b&c);var t2=(S0+maj)|0;h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;}
+      H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+    }
+    var hex=''; for(var j=0;j<8;j++){var v=H[j];for(var s=28;s>=0;s-=4)hex+=((v>>>s)&15).toString(16);}
+    return hex;
+  }
+  function buyUtf8(str){var out=[],i,c;for(i=0;i<str.length;i++){c=str.charCodeAt(i);if(c<128)out.push(c);else if(c<2048)out.push(192|(c>>6),128|(c&63));else out.push(224|(c>>12),128|((c>>6)&63),128|(c&63));}return out;}
+
+  function buyOrderNo(machine){
+    // 订单号 = 机器码前4位 + 日期 + 简单校验
+    var d = new Date();
+    var ds = '' + d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
+    var suffix = buySha256(buyUtf8(machine + ds)).slice(0,4).toUpperCase();
+    return (machine.slice(0,4) + '-' + ds + '-' + suffix);
+  }
+  function buyIsUnlocked(orderNo){
+    try {
+      var p = new URLSearchParams(location.search);
+      var paid = p.get('paid') || '';
+      if (paid && orderNo && paid.toUpperCase() === orderNo.toUpperCase()) return true;
+      // 也允许卖家用 ?paid=1 通用解锁（临时）
+      if (paid === '1') return true;
+    } catch(e){}
+    return false;
+  }
+  function buyGenerate(){
+    var machine = (document.getElementById('buyMachine').value||'').trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
+    if (machine.length < 4){ alert('请输入至少 4 位机器码（软件 → 设置 → 授权管理）'); return; }
+    var orderNo = buyOrderNo(machine);
+    // 先显示订单号
+    var orderBox = document.getElementById('buyOrder');
+    document.getElementById('buyOrderNo').textContent = orderNo;
+    orderBox.style.display = 'block';
+    // 检查是否已解锁
+    if (!buyIsUnlocked(orderNo)){
+      document.getElementById('buyResult').style.display = 'none';
+      alert('已生成订单号，请把订单号发微信 15639928315 付款确认。确认后卖家会发您激活链接，打开即可出码。');
+      orderBox.scrollIntoView({behavior:'smooth',block:'center'});
+      return;
+    }
+    var code, note, tierName='';
+    BUY_PRODUCTS[buyProduct].tiers.forEach(function(t){ if(t.id===buyTier) tierName=t.name; });
+    if (buyProduct === 'beauty'){
+      var secret='zhixing_beauty_2026_secret';
+      var tierCode={basic:'BA',standard:'ST',flagship:'FL'}[buyTier]||'ST';
+      var payload = machine+'|'+buyTier+'|permanent';
+      var sig = buySha256(buyUtf8(payload+secret)).slice(0,8).toUpperCase();
+      var raw = machine.slice(0,4)+tierCode+'0000'+sig;
+      var padded = raw.padEnd(25,'0');
+      code = [padded.slice(0,5),padded.slice(5,10),padded.slice(10,15),padded.slice(15,20),padded.slice(20,25)].join('-');
+      note = '知行美业 · '+tierName+' · 永久授权';
+    } else {
+      var SECRET='zhixing_restaurant_2024_secret';
+      var ts = Date.now().toString();
+      var data = SECRET+':'+buyTier+':'+ts+':'+machine;
+      var sig = buySha256(buyUtf8(data)).slice(0,16).toUpperCase();
+      code = 'ZX-REST-'+buyTier+'-'+ts+'-'+machine+'-'+sig;
+      note = BUY_PRODUCTS[buyProduct].name+' · '+tierName+' · 永久授权';
+    }
+    document.getElementById('buyCodeOut').textContent = code;
+    document.getElementById('buyCodeMeta').innerHTML =
+      '机器码：<b>'+machine+'</b><br/>订单号：<b>'+orderNo+'</b><br/>'+note+'<br/>生成时间：'+new Date().toLocaleString('zh-CN')+'<br/>'+'<span style="color:var(--warn)">请立即复制保存。激活路径：设置 → 授权管理 → 粘贴激活码。</span>';
+    var r=document.getElementById('buyResult'); r.style.display='block';
+    r.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  // ===== 自动付款出码（接虎皮椒）=====
+  var PAY_BACKEND = 'https://zhixing-pay.你的workers域名.workers.dev'; // 部署后改成实际地址
+  function buyAutoPay(){
+    var machine = (document.getElementById('buyMachine').value||'').trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
+    if (machine.length < 4){ alert('请先填写机器码（软件 → 设置 → 授权管理）'); return; }
+    var priceMap = { food:{standard:20,professional:40,enterprise:60}, beauty:{standard:50}, chain:{standard:20,professional:40,enterprise:60} };
+    var titleMap = { food:'知行饭店管理系统', beauty:'知行美业管理系统', chain:'知行饭店连锁版' };
+    var tierNameMap = { standard:'标准版', professional:'专业版', enterprise:'旗舰版' };
+    var price = (priceMap[buyProduct]||{})[buyTier] || 40;
+    var title = (titleMap[buyProduct]||'知行软件') + ' ' + (tierNameMap[buyTier]||'');
+    // 调后端创建付款单
+    fetch(PAY_BACKEND + '/api/pay', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ product:buyProduct, tier:buyTier, machine:machine, price:price, title:title })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (d.errcode === 0 && d.pay_url){
+        // 手机跳转付款页
+        location.href = d.pay_url;
+      } else if (d.errcode === 0 && d.qrcode){
+        // PC 显示二维码
+        alert('请用手机扫码付款：' + d.qrcode);
+        window.open(d.qrcode, '_blank');
+      } else {
+        alert('下单失败：' + (d.errmsg||'未知错误') + '\n请先联系客服微信 15639928315 手动购买。');
+      }
+    })
+    .catch(function(e){
+      alert('网络错误，请稍后重试或联系微信 15639928315 手动购买。\n' + e.message);
+    });
+  }
+
+  function buyCopyCode(){
+    var code=document.getElementById('buyCodeOut').textContent;
+    if(!code||code==='—')return;
+    if(navigator.clipboard) navigator.clipboard.writeText(code).then(function(){alert('激活码已复制！');});
+    else { var ta=document.createElement('textarea'); ta.value=code; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); alert('激活码已复制！'); }
+  }
+  renderBuyTiers();</script>
+</body>
+</html>
