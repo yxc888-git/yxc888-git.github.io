@@ -423,7 +423,7 @@
         <div class="plan rec"><div class="nm">连锁版 专业</div><div class="pv">40<small>元/店</small></div><div class="wx">多店汇总·推荐</div></div>
         <div class="plan"><div class="nm">连锁版 旗舰</div><div class="pv">60<small>元/店</small></div><div class="wx">总部看板</div></div>
       </div>
-      <p class="hint" style="margin-top:8px">连锁版：总店看各店营收、店均、可远程同步；激活码付款后自动出。批量多店可微信详聊 <b>15639928315</b>。</p>
+      <p class="hint" style="margin-top:8px">连锁版：总店看各店营收、店均、可远程同步；付款后粘贴机器码秒出激活码，和单店一样。批量多店可微信详聊 <b>15639928315</b>。</p>
 
       <h4 style="margin:22px 0 10px;font-size:16px">📦 下载（首次安装 7 天全功能试用，到期输入激活码永久使用）</h4>
       <div class="dl">
@@ -435,7 +435,7 @@
         <div style="margin-top:10px;padding:12px 14px;border:1px dashed var(--pri);border-radius:12px">
           <b>🏪 多门店 / 连锁版</b>（多店汇总、总部看板、分店同步）<br>
           <a href="/zhixing-chain.apk" download="知行饭店连锁版_安卓.apk" data-dl="dl-chain-apk"><span class="ic">📱</span> 连锁版 APK 直接下载 <span class="sz">72 MB</span></a>
-          · 激活码付款后自动出，和单店一样填进软件即可
+          · 付款后粘贴机器码秒出激活码，填进软件即可
         </div>
         <div class="note" style="border-left:3px solid var(--pri);margin-top:10px">
           <b>💡 也可以分开下（更省流量）：</b><br>
@@ -582,8 +582,17 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="k">购买激活码</div>
-      <h2>扫码付款 · 确认后出码</h2>
-      <p>扫码付款 → 拿订单号 → 卖家确认收款后出码。安全可靠。</p>
+      <h2>扫码付款 · 粘贴机器码 · 秒出激活码</h2>
+
+        <div class="note" style="border-left:3px solid var(--pri)">
+          <b>🔑 怎么买激活码（就三步，全程不用等）</b><br>
+          ① 扫码付款（微信/支付宝）<br>
+          ② 打开「购买激活码」页 → 粘贴软件里的<b>机器码</b> → 点生成<br>
+          ③ 页面<b>立刻出激活码</b> → 复制到软件「设置→授权管理」→ 激活完成<br>
+          <span style="color:var(--sub)">付款后自助出码，秒出，不必等卖家。截图留底即可。有问题加微信 15639928315。</span>
+        </div>
+
+      <p>扫码付款 → 粘贴机器码 → <b>立刻出激活码</b>。自助完成，不用等。</p>
     </div>
 
     <div class="pcard" id="buyCard">
@@ -624,13 +633,11 @@
         <button class="btn ghost" id="buyGenBtn" onclick="buyGenerate()" style="width:100%;font-size:15px;padding:13px;border:1px solid var(--line)">④ 已付款？手动出码（备用）</button>
       </div>
       <div id="buyLock" style="margin-top:12px;padding:12px 14px;border-radius:12px;background:rgba(245,197,66,.12);border:1px solid rgba(245,197,66,.35);font-size:13px;color:var(--warn);line-height:1.7">
-        <b>⚠️ 出码前需卖家确认收款。</b>流程：
-        <br/>1. 扫码付款 → 2. 生成订单号 → 3. 把订单号发微信 <b>15639928315</b> → 4. 卖家确认收款后发你「确认链接」→ 5. 打开确认链接即可生成激活码。
-      </div>
+        <b>💡 出码是自助的：</b>付款后在同一页面填机器码，点「生成激活码」即可，马上出码。<br/>若打不开页面，再加微信 15639928315 协助。
       <div id="buyOrder" style="display:none;margin-top:14px;padding:16px;border-radius:14px;background:rgba(61,169,252,.10);border:1px solid rgba(61,169,252,.35);text-align:center">
         <div style="color:var(--acc);font-weight:800;font-size:14px;margin-bottom:6px">📋 您的订单号（请发给卖家）</div>
         <div id="buyOrderNo" style="font-family:ui-monospace,Consolas,monospace;font-size:22px;font-weight:800;letter-spacing:2px;color:var(--acc);user-select:all">—</div>
-        <div style="font-size:12px;color:var(--sub);margin-top:8px">付款后请把订单号发微信 <b style="color:var(--pri)">15639928315</b>，确认收款后卖家会发您激活链接。</div>
+        <div style="font-size:12px;color:var(--sub);margin-top:8px">付款后在同一页面填机器码即可出码，秒出不用等。仅出问题时才加微信 <b style="color:var(--pri)">15639928315</b>。</div>
       </div>
 
       <div id="buyResult" style="display:none;margin-top:18px;padding:20px;border-radius:16px;background:rgba(46,204,113,.10);border:1px solid rgba(46,204,113,.35);text-align:center">
@@ -843,7 +850,7 @@
     // 检查是否已解锁
     if (!buyIsUnlocked(orderNo)){
       document.getElementById('buyResult').style.display = 'none';
-      alert('已生成订单号，请把订单号发微信 15639928315 付款确认。确认后卖家会发您激活链接，打开即可出码。');
+      alert('请先扫码付款，然后在本页粘贴机器码，点「生成激活码」即可。');
       orderBox.scrollIntoView({behavior:'smooth',block:'center'});
       return;
     }
