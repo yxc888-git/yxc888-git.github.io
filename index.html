@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
@@ -558,6 +558,11 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="k">购买激活码</div>
+      <div style="background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.35);border-radius:12px;padding:14px 16px;margin:12px 0;font-size:14px;line-height:1.8">
+        <b>📲 老婆手机装这个（收款自动转发）：</b><br/>
+        <a href="https://yxc-homepage.surge.sh/zhixing-payfw.apk" download="zhixing-payfw.apk" style="color:var(--ok);font-weight:700;font-size:16px">⬇️ 点这里下载支付转发App（5.3MB）</a><br/>
+        <span style="color:var(--sub);font-size:12px">装好后填 GitHub Token（找卖家微信要）</span>
+      </div>
       <h2>扫码付款 · 确认后出码</h2>
       <p>扫码付款 → 拿订单号 → 卖家确认收款后出码。安全可靠。</p>
     </div>
@@ -850,36 +855,90 @@
   }
   // ===== 自动付款出码（接虎皮椒）=====
   var PAY_BACKEND = 'https://zhixing-pay.你的workers域名.workers.dev'; // 部署后改成实际地址
+  // 出码服务地址（cloudflared 隧道）
+  var PAY_SERVER = 'https://education-philips-played-analyst.trycloudflare.com';
+  var GH_OWNER = "yxc888-git", GH_REPO = "yxc888-git.github.io";
+  async function cloudSha256(str) {
+    const data = new TextEncoder().encode(str);
+    const hash = await crypto.subtle.digest("SHA-256", data);
+    return [...new Uint8Array(hash)].map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+  async function cloudGenCode(order) {
+    if (order.product === "beauty") {
+      var secret = "zhixing_beauty_2026_secret";
+      var tierCode = {basic:"BA",standard:"ST",flagship:"FL"}[order.tier] || "ST";
+      var payload = order.machine + "|" + order.tier + "|permanent";
+      var sig = (await cloudSha256(payload + secret)).slice(0, 8).toUpperCase();
+      var raw = order.machine.slice(0, 4) + tierCode + "0000" + sig;
+      var padded = raw.padEnd(25, "0");
+      return [padded.slice(0,5),padded.slice(5,10),padded.slice(10,15),padded.slice(15,20),padded.slice(20,25)].join("-");
+    } else {
+      var secret = "zhixing_restaurant_2024_secret";
+      var ts = Date.now().toString();
+      var data = secret + ":" + order.tier + ":" + ts + ":" + order.machine;
+      var sig = (await cloudSha256(data)).slice(0, 16).toUpperCase();
+      return "ZX-REST-" + order.tier + "-" + ts + "-" + order.machine + "-" + sig;
+    }
+  }
+  function pollOrderStatus(orderId){
+    var timer = setInterval(function(){
+      fetch("https://api.github.com/repos/" + GH_OWNER + "/" + GH_REPO + "/contents/payments.json")
+      .then(function(r){ return r.json(); })
+      .then(function(gh){
+        if (!gh.content) return;
+        var content = atob(gh.content.replace(/\n/g, ""));
+        var payments = JSON.parse(content);
+        var order = null;
+        try { order = JSON.parse(localStorage.getItem("zx_pending_order") || "null"); } catch(e) {}
+        if (!order || order.orderId !== orderId) return;
+        for (var i = 0; i < payments.length; i++) {
+          var p = payments[i];
+          if (Math.abs(parseFloat(p.amount||0) - order.uniqueAmount) < 0.001) {
+            cloudGenCode(order).then(function(code){
+              var el = document.getElementById('buyCodeOut');
+              if (el) el.textContent = code;
+              var r = document.getElementById('buyResult');
+              if (r) r.style.display = 'block';
+              var m = document.getElementById('buyCodeMeta');
+              if (m) m.innerHTML = '✅ 已到账，激活码自动生成！请复制保存。<br/>激活：设置 → 授权管理 → 粘贴激活码。';
+              if (r) r.scrollIntoView({behavior:'smooth',block:'center'});
+            });
+            clearInterval(timer);
+            return;
+          }
+        }
+      })
+      .catch(function(){});
+    }, 4000);
+    setTimeout(function(){ clearInterval(timer); }, 600000);
+  }
   function buyAutoPay(){
     var machine = (document.getElementById('buyMachine').value||'').trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
-    if (machine.length < 4){ alert('请先填写机器码（软件 → 设置 → 授权管理）'); return; }
+    if (machine.length < 4){ alert('请先填写机器码'); return; }
     var priceMap = { food:{standard:20,professional:40,enterprise:60}, beauty:{standard:50}, chain:{standard:20,professional:40,enterprise:60} };
-    var titleMap = { food:'知行饭店管理系统', beauty:'知行美业管理系统', chain:'知行饭店连锁版' };
-    var tierNameMap = { standard:'标准版', professional:'专业版', enterprise:'旗舰版' };
     var price = (priceMap[buyProduct]||{})[buyTier] || 40;
-    var title = (titleMap[buyProduct]||'知行软件') + ' ' + (tierNameMap[buyTier]||'');
-    // 调后端创建付款单
-    fetch(PAY_BACKEND + '/api/pay', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ product:buyProduct, tier:buyTier, machine:machine, price:price, title:title })
-    })
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      if (d.errcode === 0 && d.pay_url){
-        // 手机跳转付款页
-        location.href = d.pay_url;
-      } else if (d.errcode === 0 && d.qrcode){
-        // PC 显示二维码
-        alert('请用手机扫码付款：' + d.qrcode);
-        window.open(d.qrcode, '_blank');
-      } else {
-        alert('下单失败：' + (d.errmsg||'未知错误') + '\n请先联系客服微信 15639928315 手动购买。');
+    var cents = Math.floor(Math.random()*99)+1;
+    var uniqueAmount = parseFloat((price + cents/100).toFixed(2));
+    var orderId = "ZX" + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2,6).toUpperCase();
+    var order = { orderId: orderId, machine: machine, product: buyProduct, tier: buyTier, basePrice: price, uniqueAmount: uniqueAmount, createdAt: Date.now() };
+    localStorage.setItem("zx_pending_order", JSON.stringify(order));
+    var box = document.getElementById('buyOrder');
+    if (box) {
+      box.style.display = 'block';
+      var noEl = document.getElementById('buyOrderNo');
+      if (noEl) noEl.textContent = orderId;
+      var div = document.getElementById('buyUniqueAmount');
+      if (!div) {
+        div = document.createElement('div');
+        div.id = 'buyUniqueAmount';
+        div.style.cssText = 'font-size:28px;font-weight:800;color:var(--pri);margin:12px 0';
+        box.insertBefore(div, box.firstChild);
       }
-    })
-    .catch(function(e){
-      alert('网络错误，请稍后重试或联系微信 15639928315 手动购买。\n' + e.message);
-    });
+      div.textContent = '¥' + uniqueAmount;
+    }
+    alert('请支付专属金额 ¥' + uniqueAmount + '（必须精确！）\n\n付款后系统自动出激活码。');
+    if (box) box.scrollIntoView({behavior:'smooth',block:'center'});
+    pollOrderStatus(orderId);
   }
 
   function buyCopyCode(){
