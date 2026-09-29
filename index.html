@@ -559,14 +559,14 @@
     <div class="sec-head">
       <div class="k">购买激活码</div>
 
-      <h2>扫码付款 · 确认后出码</h2>
-      <p>扫码付款 → 拿订单号 → 卖家确认收款后出码。安全可靠。</p>
+      <h2>扫码付款 · 自动出码</h2>
+      <p>付款后自动弹出激活码，不用等客服。专属金额防错账，款码自动对应。</p>
     </div>
 
     <div class="pcard" id="buyCard">
       <div class="top">
         <h3>🔑 购买激活码</h3>
-        <span class="badge hot">确认收款后出码</span>
+        <span class="badge hot">自动出码</span>
         <span class="badge">一次买断</span>
       </div>
 
@@ -598,11 +598,12 @@
 
       <div style="margin-top:16px;display:grid;gap:10px">
         <button class="btn pri" onclick="buyAutoPay()" style="width:100%;font-size:16px;padding:16px">💳 立即付款 · 自动出码（推荐）</button>
-        <button class="btn ghost" id="buyGenBtn" onclick="buyGenerate()" style="width:100%;font-size:15px;padding:13px;border:1px solid var(--line)">④ 已付款？手动出码（备用）</button>
+        <button class="btn ghost" id="buyGenBtn" onclick="buyGenerate()" style="width:100%;font-size:15px;padding:13px;border:1px solid var(--line)">④ 备用：手动出码</button>
       </div>
       <div id="buyLock" style="margin-top:12px;padding:12px 14px;border-radius:12px;background:rgba(245,197,66,.12);border:1px solid rgba(245,197,66,.35);font-size:13px;color:var(--warn);line-height:1.7">
-        <b>⚠️ 出码前需卖家确认收款。</b>流程：
-        <br/>1. 扫码付款 → 2. 生成订单号 → 3. 把订单号发微信 <b>15639928315</b> → 4. 卖家确认收款后发你「确认链接」→ 5. 打开确认链接即可生成激活码。
+        <b>✅ 全自动出码流程：</b>
+        <br/>1. 选产品、填机器码 → 2. 点「立即付款」生成专属金额 → 3. 扫码支付该金额 → 4. <b>激活码自动弹出</b>，复制即可激活。
+        <br/><span style="color:var(--sub)">专属金额带小数尾数（如¥20.57），别人转账碰不上，款码精确对应。有问题微信 <b>15639928315</b>。</span>
       </div>
       <div id="buyOrder" style="display:none;margin-top:14px;padding:16px;border-radius:14px;background:rgba(61,169,252,.10);border:1px solid rgba(61,169,252,.35);text-align:center">
         <div style="color:var(--acc);font-weight:800;font-size:14px;margin-bottom:6px">📋 您的订单号（请发给卖家）</div>
