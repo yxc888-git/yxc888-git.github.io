@@ -1,0 +1,17 @@
+# 知行软件官网 — 欢迎所有搜索引擎抓取
+User-agent: *
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Sogou spider
+Allow: /
+
+User-agent: 360Spider
+Allow: /
+
+Sitemap: https://yxc888-git.github.io/sitemap.xml
