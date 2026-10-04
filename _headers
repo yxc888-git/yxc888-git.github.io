@@ -1,0 +1,33 @@
+/*
+  Cloudflare Pages 缓存与安全头
+  静态资源长缓存，HTML 短缓存（保证改完立刻生效）
+  安全头顺带补上，提高客户对站点的信任度
+*/
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.apk
+  Cache-Control: public, max-age=604800
+  Content-Type: application/vnd.android.package-archive
+
+/*.zip
+  Cache-Control: public, max-age=604800
+  Content-Type: application/zip
+
+# 大安装包分片：无扩展名，必须显式声明二进制类型
+# 否则浏览器可能按 text/plain 解析，下载下来的包会损坏
+/dl/*.part*
+  Cache-Control: public, max-age=2592000
+  Content-Type: application/octet-stream
+  X-Content-Type-Options: nosniff
+
+/dl/*/manifest.json
+  Cache-Control: public, max-age=300
+  Content-Type: application/json; charset=utf-8
