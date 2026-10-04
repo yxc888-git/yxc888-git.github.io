@@ -14,4 +14,4 @@ Allow: /
 User-agent: 360Spider
 Allow: /
 
-Sitemap: https://yxc888-git.github.io/sitemap.xml
+Sitemap: https://zhixing-site.pages.dev/sitemap.xml
