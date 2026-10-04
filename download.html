@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>下载 · 知行软件</title>
+<link rel="canonical" href="https://zhixing-site.pages.dev/download.html">
+<meta name="robots" content="index,follow">
+<style>
+  :root{
+    --bg:#ffffff; --card:#f7f8fa; --line:#e3e6ea;
+    --tx:#1a1d21; --tx2:#5b6470; --tx3:#8a929c;
+    --acc:#185fa5; --ok:#0f6e56; --err:#a32d2d;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#14161a; --card:#1d2026; --line:#2c3038;
+           --tx:#e8eaed; --tx2:#a8b0ba; --tx3:#7b838e;
+           --acc:#85b7eb; --ok:#5dcaa5; --err:#f09595; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--tx);
+       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;
+       line-height:1.65;padding:32px 20px 64px}
+  .wrap{max-width:760px;margin:0 auto}
+  h1{font-size:22px;font-weight:500;margin:0 0 6px}
+  .sub{color:var(--tx2);font-size:14px;margin:0 0 28px}
+  .pkg{border:1px solid var(--line);border-radius:12px;background:var(--card);
+       padding:20px;margin-bottom:16px}
+  .pkg h2{font-size:16px;font-weight:500;margin:0 0 4px}
+  .meta{color:var(--tx3);font-size:13px;margin:0 0 16px}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  button{font:inherit;font-size:14px;padding:9px 20px;border-radius:8px;
+         border:1px solid var(--acc);background:var(--acc);color:#fff;cursor:pointer}
+  button.ghost{background:transparent;color:var(--acc)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  .bar{height:6px;border-radius:99px;background:var(--line);overflow:hidden;
+       margin:14px 0 8px;display:none}
+  .bar.on{display:block}
+  .bar i{display:block;height:100%;width:0;background:var(--acc);
+         transition:width .15s linear}
+  .stat{font-size:13px;color:var(--tx2);display:none}
+  .stat.on{display:block}
+  .stat.ok{color:var(--ok)} .stat.err{color:var(--err)}
+  .tip{background:var(--card);border:1px solid var(--line);border-radius:12px;
+       padding:18px 20px;margin-top:28px;font-size:13px;color:var(--tx2)}
+  .tip h3{font-size:14px;font-weight:500;color:var(--tx);margin:0 0 10px}
+  .tip ol{margin:0;padding-left:20px} .tip li{margin-bottom:7px}
+  .tip a{color:var(--acc)}
+  code{background:var(--bg);border:1px solid var(--line);border-radius:4px;
+       padding:1px 5px;font-size:12px}
+  footer{margin-top:32px;font-size:13px;color:var(--tx3);text-align:center}
+  footer a{color:var(--tx2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>安装包下载</h1>
+  <p class="sub">点「下载」即可，浏览器会自动把分片拼回完整的安装包，不用你管。</p>
+
+  <div id="list"></div>
+
+  <div class="tip">
+    <h3>下载说明</h3>
+    <ol>
+      <li>点「下载」后浏览器会弹出一个保存窗口，选个位置保存即可。</li>
+      <li>下载过程中请<strong>不要关闭这个标签页</strong>，进度走到 100% 才算完成。</li>
+      <li>如果浏览器没弹保存窗口，会直接开始下载，静静等下就好。</li>
+      <li>下下来的 <code>zhixing-*.zip</code> 需先解压再安装，别直接运行 zip。</li>
+      <li>公司电脑装不上、或需要上门安装，微信 <strong>15639928315</strong> 找我。</li>
+    </ol>
+  </div>
+
+  <footer>© 知行软件 · <a href="/index.html">官网首页</a></footer>
+</div>
+
+<script src="/assets/js/split-download.js"></script>
+<script>
+var BASE = '/dl/';
+var PKGS = [
+  { id:'food-win',     name:'知行饭店管理系统 · Windows 电脑版', size:441993505 },
+  { id:'food-android', name:'知行饭店管理系统 · 安卓手机版',   size:486380261 },
+  { id:'beauty-win',   name:'知行美业管理系统 · Windows 电脑版', size:439729424 },
+  { id:'beauty-android',name:'知行美业管理系统 · 安卓手机版',   size:415154581 }
+];
+
+function el(tag, cls, html){
+  var n = document.createElement(tag);
+  if(cls) n.className = cls;
+  if(html != null) n.innerHTML = html;
+  return n;
+}
+
+function bytesTxt(n){
+  if(n<1048576) return (n/1024).toFixed(0)+' KB';
+  if(n<1073741824) return (n/1048576).toFixed(0)+' MB';
+  return (n/1073741824).toFixed(2)+' GB';
+}
+
+PKGS.forEach(function(p, pi){
+  var card = el('div','pkg');
+  card.id = p.id;
+  card.appendChild(el('h2',null,p.name));
+  card.appendChild(el('p','meta','约 '+bytesTxt(p.size)+' · 内置离线 AI，永久买断'));
+
+  var row = el('div','row');
+  var btn = el('button',null,'下载');
+  var btnTest = el('button','ghost','只校验不下载');
+  row.appendChild(btn); row.appendChild(btnTest);
+
+  var bar = el('div','bar'); bar.appendChild(document.createElement('i'));
+  var stat = el('div','stat');
+  card.appendChild(row); card.appendChild(bar); card.appendChild(stat);
+  document.getElementById('list').appendChild(card);
+
+  var fill = bar.firstChild;
+
+  btn.onclick = function(){
+    btn.disabled = true; btnTest.disabled = true;
+    fill.style.width='0%'; bar.classList.add('on'); stat.classList.add('on');
+    stat.classList.remove('ok','err');
+    stat.textContent = '准备中…';
+
+    ZhixingSplit.download(BASE + p.id, function(v){
+      var pct = (v.done / v.total * 100);
+      fill.style.width = pct.toFixed(1)+'%';
+      stat.textContent = '第 '+v.current+'/'+v.total+' 片 · '+
+                        bytesTxt(v.bytes)+' / '+bytesTxt(v.total2)+
+                        ' ('+pct.toFixed(0)+'%)';
+    }).then(function(r){
+      fill.style.width='100%';
+      stat.classList.add('ok');
+      stat.textContent = '完成！文件已'+(r.streamed?'保存到磁盘':'开始下载')+'，可以去「下载」文件夹看。';
+      btn.disabled=false; btnTest.disabled=false;
+    }).catch(function(e){
+      stat.classList.add('err');
+      stat.textContent = '出错了：'+(e && e.message ? e.message : e);
+      btn.disabled=false; btnTest.disabled=false;
+    });
+  };
+
+  btnTest.onclick = function(){
+    btnTest.disabled = true;
+    stat.classList.add('on'); stat.classList.remove('ok','err');
+    stat.textContent = '正在检查分片是否齐全…';
+    fetch(BASE + p.id + '/manifest.json', {cache:'no-store'})
+      .then(function(r){ return r.json(); })
+      .then(function(m){
+        stat.classList.add('ok');
+        stat.textContent = '分片齐全：共 '+m.parts.length+' 片，合计 '+
+                           bytesTxt(m.size)+'，文件 '+m.filename;
+        btnTest.disabled = false;
+      })
+      .catch(function(e){
+        stat.classList.add('err');
+        stat.textContent = '检查失败：'+e;
+        btnTest.disabled = false;
+      });
+  };
+});
+
+// 从首页带 #food-win 过来时，自动滚到对应那个包并高亮
+(function(){
+  var id = (location.hash || '').replace('#','');
+  if(!id) return;
+  var target = document.getElementById(id);
+  if(!target) return;
+  target.scrollIntoView({behavior:'smooth', block:'center'});
+  target.style.borderColor = 'var(--acc)';
+  setTimeout(function(){ target.style.borderColor = ''; }, 2400);
+})();
+</script>
+</body>
+</html>
