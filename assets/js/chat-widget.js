@@ -14,10 +14,10 @@
 
   var CSS = [
     '.zxb-fab{position:fixed;right:18px;bottom:20px;z-index:99990;',
-    'width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;',
-    'background:#185fa5;color:#fff;font-size:24px;line-height:1;',
+    'height:52px;padding:0 20px 0 16px;border-radius:26px;border:0;cursor:pointer;',
+    'background:#185fa5;color:#fff;font-size:15px;font-weight:600;line-height:1;',
     'box-shadow:0 6px 20px rgba(0,0,0,.28);transition:transform .18s ease;',
-    'display:flex;align-items:center;justify-content:center}',
+    'display:flex;align-items:center;gap:8px;font-family:inherit;letter-spacing:1px}',
     '.zxb-fab:hover{transform:scale(1.08)}',
     '.zxb-fab:active{transform:scale(.96)}',
     '.zxb-fab .zxb-dot{position:absolute;top:-2px;right:-2px;width:13px;height:13px;',
@@ -97,7 +97,7 @@
   fab.type = 'button';
   fab.title = '在线客服';
   fab.setAttribute('aria-label', '打开在线客服');
-  fab.innerHTML = '💬<span class="zxb-dot"></span>';
+  fab.innerHTML = '💬<span class="zxb-fabtx">在线客服</span><span class="zxb-dot"></span>';
 
   var tip = document.createElement('div');
   tip.className = 'zxb-tip';
