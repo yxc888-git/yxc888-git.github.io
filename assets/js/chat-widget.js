@@ -88,7 +88,7 @@
   st.textContent = CSS;
   document.head.appendChild(st);
 
-  var HOST = 'https://yxc888-git.github.io';
+  var HOST = 'https://zhixingruanjian.com.cn';
   var qs = new URLSearchParams(location.search);
   var forceOpen = qs.get('chat') === '1';
 
