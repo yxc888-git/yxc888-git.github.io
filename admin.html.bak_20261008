@@ -1,0 +1,327 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>知行软件 · 卖家管理（出码）</title>
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#0b0d12" />
+<style>
+  :root{--bg:#0b0d12;--card:#161a24;--card2:#1c2130;--txt:#eef1f7;--sub:#98a2b3;--line:#2a3042;--pri:#ff7a3c;--pri2:#ff4d8d;--acc:#4da3ff;--ok:#2ecc71;--warn:#f5c542}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.7;padding:20px}
+  .wrap{max-width:860px;margin:0 auto}
+  h1{font-size:22px;margin:18px 0 6px}
+  .sub{color:var(--sub);font-size:13px;margin-bottom:18px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:14px 0}
+  .panel h2{font-size:16px;margin-bottom:10px}
+  label{display:block;font-size:13px;color:var(--sub);margin:12px 0 6px;font-weight:600}
+  select,input[type=text],input[type=password]{width:100%;padding:12px 14px;border-radius:12px;font-size:15px;background:var(--card2);color:var(--txt);border:1px solid var(--line);font-family:inherit}
+  input[type=text]{font-family:ui-monospace,Consolas,monospace;letter-spacing:1px;text-transform:uppercase}
+  .btn{display:inline-block;padding:13px 22px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:.15s}
+  .btn.pri{background:linear-gradient(90deg,var(--pri),var(--pri2));color:#fff}
+  .btn.ok{background:var(--ok);color:#fff}
+  .btn.ghost{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
+  .btn:hover{transform:translateY(-2px)}
+  .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .out{margin-top:14px;padding:16px;border-radius:12px;background:var(--card2);border:1px dashed var(--line);font-family:ui-monospace,Consolas,monospace;font-size:15px;word-break:break-all;user-select:all;line-height:1.8}
+  .link{color:var(--acc);word-break:break-all;font-size:13px}
+  .alert{background:rgba(245,197,66,.12);border:1px solid rgba(245,197,66,.35);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--warn);margin:12px 0}
+  .ok-box{background:rgba(46,204,113,.10);border:1px solid rgba(46,204,113,.35);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--ok);margin:12px 0}
+  .lock-screen{max-width:420px;margin:80px auto}
+  footer{text-align:center;color:var(--sub);font-size:12px;padding:30px 0}
+  code{background:var(--card2);padding:2px 8px;border-radius:6px;font-family:ui-monospace,Consolas,monospace}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 登录 -->
+  <div class="lock-screen" id="lockScreen">
+    <h1>🔑 知行软件 · 卖家管理</h1>
+    <p class="sub">仅卖家使用。请输入管理密码。</p>
+    <div class="panel">
+      <label>管理密码</label>
+      <input type="password" id="adminPass" placeholder="请输入密码" onkeydown="if(event.key==='Enter')adminLogin()" />
+      <div class="row">
+        <button class="btn pri" onclick="adminLogin()">进入管理</button>
+      </div>
+      <div class="alert">默认密码：<code>zhixing2026</code>。建议尽快改掉（用记事本打开 admin.html，搜索 ADMIN_PASS 改掉）。</div>
+    </div>
+  </div>
+
+  <!-- 管理主界面 -->
+  <div id="adminApp" style="display:none">
+    <h1>🔑 卖家出码台</h1>
+    <p class="sub">确认收款后 → 生成激活码或「确认链接」发给客户。</p>
+
+    <div class="panel">
+      <h2>① 客户信息</h2>
+      <label>产品</label>
+      <select id="aProduct">
+        <option value="food">知行饭店管理系统</option>
+        <option value="beauty">知行美业管理系统</option>
+        <option value="chain">知行饭店连锁版</option>
+      </select>
+      <label>版本</label>
+      <select id="aTier">
+        <option value="standard">标准版</option>
+        <option value="professional" selected>专业版</option>
+        <option value="enterprise">旗舰版</option>
+      </select>
+      <label>客户机器码（软件 → 设置 → 授权管理）</label>
+      <input type="text" id="aMachine" maxlength="12" placeholder="例如：ABCD1234EFGH" />
+      <label>客户名称 / 备注（可选）</label>
+      <input type="text" id="aNote" placeholder="备注" style="text-transform:none;letter-spacing:0" />
+      <div class="row">
+        <button class="btn pri" onclick="adminQuick()" style="width:100%;padding:18px;font-size:18px">✅ 确认收款 · 一键出码</button>
+      </div>
+      <div class="row">
+        <button class="btn ok" onclick="adminGen()">🔑 只看激活码</button>
+        <button class="btn ghost" onclick="adminUnlockLink()">🔗 只要确认链接</button>
+        <button class="btn ghost" onclick="adminReset()">清空</button>
+      </div>
+    </div>
+
+    <div class="panel" id="aResult" style="display:none">
+      <h2>② 出码结果</h2>
+      <div class="ok-box">✅ 请核对机器码后再发给客户。</div>
+      <label>激活码（直接发客户）</label>
+      <div class="out" id="aCode">—</div>
+      <div class="row">
+        <button class="btn ok" onclick="copyText(document.getElementById('aCode').textContent)">📋 复制激活码</button>
+      </div>
+      <label style="margin-top:18px">确认链接（发客户，客户打开后自己出码）</label>
+      <div class="out link" id="aLink">—</div>
+      <div class="row">
+        <button class="btn ok" onclick="copyText(document.getElementById('aLink').textContent)">📋 复制确认链接</button>
+        <a class="btn ghost" id="aLinkOpen" href="#" target="_blank">👁 预览客户看到的页面</a>
+      </div>
+      <div class="alert" id="aMeta"></div>
+    </div>
+
+    <div class="panel">
+      <h2>③ 发货话术（复制发微信）</h2>
+      <div class="out" id="aScript" style="text-transform:none;letter-spacing:0;font-family:inherit;font-size:14px">填入机器码后自动生成。</div>
+      <div class="row">
+        <button class="btn ok" onclick="copyText(document.getElementById('aScript').textContent)">📋 复制话术</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>📋 最近出码记录（仅本机）</h2>
+      <div id="aLogList" style="max-height:260px;overflow:auto"></div>
+    </div>
+
+    <div class="panel">
+      <h2>操作说明</h2>
+      <p class="sub" style="line-height:1.9">
+        1. 客户在网站下单，把<b>订单号</b>发你微信<br/>
+        2. 你在微信收到钱，核对金额<br/>
+        3. 把客户的<b>机器码</b>要过来（或让客户截图授权管理页）<br/>
+        4. 在本页填机器码 → 点「生成确认链接」<br/>
+        5. 把确认链接（或激活码）发给客户<br/>
+        6. 客户打开链接就能出码 / 或直接用你发的激活码<br/>
+        <br/>
+        <span style="color:var(--warn)">⚠️ 一定要先收款，再发链接/激活码。</span>
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  知行软件 · 卖家管理台 · 请勿泄露管理密码<br/>
+  <a href="/" style="color:var(--acc)">← 返回官网</a>
+</footer>
+
+<script>
+// ===== 管理密码（改这里）=====
+var ADMIN_PASS = 'zhixing2026';
+
+function adminLogin(){
+  var p = document.getElementById('adminPass').value;
+  if (p === ADMIN_PASS){
+    document.getElementById('lockScreen').style.display = 'none';
+    document.getElementById('adminApp').style.display = 'block'; renderLog();
+    try { sessionStorage.setItem('zx_admin', '1'); } catch(e){}
+  } else {
+    alert('密码错误');
+  }
+}
+// 已登录直接进
+try {
+  if (sessionStorage.getItem('zx_admin') === '1'){
+    document.getElementById('lockScreen').style.display = 'none';
+    document.getElementById('adminApp').style.display = 'block'; renderLog();
+  }
+} catch(e){}
+
+function adminReset(){
+  document.getElementById('aMachine').value = '';
+  document.getElementById('aNote').value = '';
+  document.getElementById('aResult').style.display = 'none';
+  document.getElementById('aScript').textContent = '填入机器码后自动生成。';
+}
+
+function copyText(t){
+  if (navigator.clipboard) navigator.clipboard.writeText(t).then(function(){ alert('已复制！'); });
+  else { var ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); alert('已复制！'); }
+}
+
+// ===== 算法（与官网/软件一致）=====
+function rotr(n,x){ return (x>>>n)|(x<<(32-n)); }
+function sha256bytes(msg){
+  var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  var l=msg.length, bitLen=l*8, m=msg.slice();
+  m.push(0x80); while(m.length%64!==56) m.push(0);
+  m.push(0,0,0,0,(bitLen>>>24)&255,(bitLen>>>16)&255,(bitLen>>>8)&255,bitLen&255);
+  for(var off=0;off<m.length;off+=64){
+    var w=[],i;
+    for(i=0;i<16;i++) w[i]=(m[off+i*4]<<24)|(m[off+i*4+1]<<16)|(m[off+i*4+2]<<8)|m[off+i*4+3];
+    for(i=16;i<64;i++){var s0=rotr(7,w[i-15])^rotr(18,w[i-15])^(w[i-15]>>>3);var s1=rotr(17,w[i-2])^rotr(19,w[i-2])^(w[i-2]>>>10);w[i]=(w[i-16]+s0+w[i-7]+s1)|0;}
+    var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+    for(i=0;i<64;i++){var S1=rotr(6,e)^rotr(11,e)^rotr(25,e);var ch=(e&f)^((~e)&g);var t1=(h+S1+ch+K[i]+w[i])|0;var S0=rotr(2,a)^rotr(13,a)^rotr(22,a);var maj=(a&b)^(a&c)^(b&c);var t2=(S0+maj)|0;h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;}
+    H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+  }
+  var hex=''; for(var j=0;j<8;j++){var v=H[j];for(var s=28;s>=0;s-=4)hex+=((v>>>s)&15).toString(16);}
+  return hex;
+}
+function utf8Bytes(str){var out=[],i,c;for(i=0;i<str.length;i++){c=str.charCodeAt(i);if(c<128)out.push(c);else if(c<2048)out.push(192|(c>>6),128|(c&63));else out.push(224|(c>>12),128|((c>>6)&63),128|(c&63));}return out;}
+
+function genCode(product, tier, machine){
+  var code, tierName;
+  var names = {
+    food:{standard:'标准版',professional:'专业版',enterprise:'旗舰版'},
+    beauty:{basic:'基础版',standard:'标准版',flagship:'旗舰版'},
+    chain:{standard:'标准版',professional:'专业版',enterprise:'旗舰版'}
+  };
+  tierName = (names[product] && names[product][tier]) || tier;
+  if (product === 'beauty'){
+    var secret='zhixing_beauty_2026_secret';
+    var tierCode={basic:'BA',standard:'ST',flagship:'FL'}[tier]||'ST';
+    // 美业版别与桌面工具一致：basic/standard/flagship
+    var t2 = tier;
+    if (tier==='professional') t2='standard';
+    if (tier==='enterprise') t2='flagship';
+    tierCode = {basic:'BA',standard:'ST',flagship:'FL'}[t2]||'ST';
+    var payload = machine+'|'+t2+'|permanent';
+    var sig = sha256bytes(utf8Bytes(payload+secret)).slice(0,8).toUpperCase();
+    var raw = machine.slice(0,4)+tierCode+'0000'+sig;
+    var padded = raw.padEnd(25,'0');
+    code = [padded.slice(0,5),padded.slice(5,10),padded.slice(10,15),padded.slice(15,20),padded.slice(20,25)].join('-');
+  } else {
+    var SECRET='zhixing_restaurant_2024_secret';
+    var ts = Date.now().toString();
+    var data = SECRET+':'+tier+':'+ts+':'+machine;
+    var sig = sha256bytes(utf8Bytes(data)).slice(0,16).toUpperCase();
+    code = 'ZX-REST-'+tier+'-'+ts+'-'+machine+'-'+sig;
+  }
+  return code;
+}
+
+function getOrderNo(machine){
+  var d = new Date();
+  var ds = '' + d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
+  var suffix = sha256bytes(utf8Bytes(machine + ds)).slice(0,4).toUpperCase();
+  return (machine.slice(0,4) + '-' + ds + '-' + suffix);
+}
+
+function adminGen(){
+  var machine = (document.getElementById('aMachine').value||'').trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
+  if (machine.length < 4){ alert('请填客户机器码'); return; }
+  var product = document.getElementById('aProduct').value;
+  var tier = document.getElementById('aTier').value;
+  var code = genCode(product, tier, machine);
+  var orderNo = getOrderNo(machine);
+  document.getElementById('aCode').textContent = code;
+  document.getElementById('aLink').textContent = buildUnlockLink(orderNo);
+  document.getElementById('aLinkOpen').href = buildUnlockLink(orderNo);
+  document.getElementById('aMeta').innerHTML =
+    '机器码：<b>'+machine+'</b> ｜ 产品：<b>'+product+' / '+tier+'</b> ｜ 订单号：<b>'+orderNo+'</b><br/>'
+    + '生成时间：'+new Date().toLocaleString('zh-CN');
+  document.getElementById('aResult').style.display = 'block';
+  buildScript(machine, product, tier, code, orderNo);
+  document.getElementById('aResult').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function adminUnlockLink(){
+  var machine = (document.getElementById('aMachine').value||'').trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
+  if (machine.length < 4){ alert('请填客户机器码'); return; }
+  var orderNo = getOrderNo(machine);
+  var link = buildUnlockLink(orderNo);
+  document.getElementById('aLink').textContent = link;
+  document.getElementById('aLinkOpen').href = link;
+  document.getElementById('aResult').style.display = 'block';
+  copyText(link);
+  var product = document.getElementById('aProduct').value;
+  var tier = document.getElementById('aTier').value;
+  var code = genCode(product, tier, machine);
+  document.getElementById('aCode').textContent = code;
+  document.getElementById('aMeta').innerHTML =
+    '机器码：<b>'+machine+'</b> ｜ 订单号：<b>'+orderNo+'</b><br/>确认链接已生成并复制，发给客户即可。';
+  buildScript(machine, product, tier, code, orderNo);
+}
+
+function buildUnlockLink(orderNo){
+  // 解锁链接：带 paid=订单号，客户打开官网即解锁
+  return 'https://yxc-homepage.surge.sh/?paid=' + encodeURIComponent(orderNo) + '#buy';
+}
+
+  function adminQuick(){
+    var machine = (document.getElementById('aMachine').value||'').trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
+    if (machine.length < 4){ alert('请先粘贴/输入客户机器码'); return; }
+    adminGen();
+    adminUnlockLink();
+    try {
+      var log = JSON.parse(localStorage.getItem('zx_log') || '[]');
+      log.unshift({
+        t: new Date().toLocaleString('zh-CN'),
+        machine: machine,
+        product: document.getElementById('aProduct').value,
+        tier: document.getElementById('aTier').value,
+        code: document.getElementById('aCode').textContent,
+        note: document.getElementById('aNote').value || ''
+      });
+      log = log.slice(0, 30);
+      localStorage.setItem('zx_log', JSON.stringify(log));
+      renderLog();
+    } catch(e){}
+    copyText(document.getElementById('aScript').textContent);
+  }
+
+  function renderLog(){
+    var box = document.getElementById('aLogList');
+    if (!box) return;
+    try {
+      var log = JSON.parse(localStorage.getItem('zx_log') || '[]');
+      if (!log.length){ box.innerHTML = '<span style="color:var(--sub);font-size:13px">暂无记录</span>'; return; }
+      box.innerHTML = log.map(function(x){
+        return '<div style="padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px">'
+          + '<b style="color:var(--pri)">'+x.t+'</b> ｜ '+x.machine+' ｜ '+x.product+'/'+x.tier
+          + (x.note ? ' ｜ '+x.note : '')
+          + '<div style="font-family:ui-monospace,Consolas,monospace;color:var(--ok);word-break:break-all">'+x.code+'</div>'
+          + '</div>';
+      }).join('');
+    } catch(e){ box.innerHTML = ''; }
+  }
+
+  function buildScript(machine, product, tier, code, orderNo){
+  var pName = {food:'知行饭店管理系统',beauty:'知行美业管理系统',chain:'知行饭店连锁版'}[product] || product;
+  var tName = {standard:'标准版',professional:'专业版',enterprise:'旗舰版',basic:'基础版',flagship:'旗舰版'}[tier] || tier;
+  var link = buildUnlockLink(orderNo);
+  var txt =
+    '您好，确认收到您的款项。【'+pName+' '+tName+'】\n'
+    + '机器码：'+machine+'\n'
+    + '订单号：'+orderNo+'\n\n'
+    + '激活码：'+code+'\n\n'
+    + '也可打开这个链接自己生成激活码（推荐）：\n'
+    + link + '\n\n'
+    + '激活方法：打开软件 → 设置 → 授权管理 → 粘贴激活码 → 点激活。\n'
+    + '有问题随时找我，微信 15639928315。';
+  document.getElementById('aScript').textContent = txt;
+}
+</script>
+</body>
+</html>
