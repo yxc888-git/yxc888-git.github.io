@@ -1,0 +1,8 @@
+.git
+.wrangler
+.gitignore
+wrangler.toml
+*.py
+*.bak
+*.bak_*
+_assetsignore
