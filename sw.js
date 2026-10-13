@@ -1,5 +1,8 @@
 /* 极简 Service Worker：加速二次打开，支持添加到主屏幕 */
-const CACHE = 'zhixing-v1';
+/* 2026-10-13 修复：旧版把每个导航页的响应都写到固定的 '/' 缓存键上，
+   缓存键混乱后用户会看到"只有页脚"的错乱半页。新版导航只走网络，
+   失败才回退预缓存的主页；缓存名升 v2，激活时自动清掉 v1 旧缓存。 */
+const CACHE = 'zhixing-v2';
 const ASSETS = [
   '/',
   '/index.html',
@@ -26,19 +29,14 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
-  // APK 等大文件不走缓存拦截逻辑里的复杂分支，直接网络
+  // 页面导航：只走网络（保证永远最新）；断网才回退到预缓存的主页
   if (e.request.destination === 'document' || e.request.mode === 'navigate') {
     e.respondWith(
-      fetch(e.request)
-        .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE).then((c) => c.put('/', copy)).catch(() => {});
-          return res;
-        })
-        .catch(() => caches.match('/index.html'))
+      fetch(e.request).catch(() => caches.match('/index.html'))
     );
     return;
   }
+  // 静态资源：缓存优先，没有才网络并回填
   e.respondWith(
     caches.match(e.request).then((hit) => hit || fetch(e.request).then((res) => {
       if (res && res.status === 200 && res.type === 'basic') {
