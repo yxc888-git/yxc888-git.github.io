@@ -1,0 +1,3671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#b03a2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>二手车专家 · 郑州知行软件</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#efe9e2;min-height:100vh}
+#app{max-width:480px;margin:0 auto;background:#f5f2ee;min-height:100vh;box-shadow:0 0 40px rgba(0,0,0,.12);display:flex;flex-direction:column;position:relative}
+.brandbar{background:linear-gradient(135deg,#7a1f1f,#b03a2e);color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.brandbar .logo{font-size:20px;font-weight:800;letter-spacing:1px}
+.brandbar .logo span{color:#ffd66b}
+.brandbar .sub{font-size:10px;opacity:.85;margin-top:2px}
+.brandbar .me{font-size:11px;background:rgba(255,255,255,.16);padding:5px 10px;border-radius:20px}
+main{flex:1;padding:14px 14px 80px}
+.page{display:none}.page.on{display:block;animation:fade .25s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#fff;display:flex;border-top:1px solid #e5ded5;padding:6px 0 calc(8px + env(safe-area-inset-bottom));z-index:60}
+.tabbar div{flex:1;text-align:center;font-size:11px;color:#999;cursor:pointer}
+.tabbar div .ic{font-size:20px;display:block;margin-bottom:2px}
+.tabbar div.on{color:#b03a2e;font-weight:700}
+.card{background:#fff;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.card h3{font-size:15px;color:#b03a2e;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.card h3::before{content:"";width:4px;height:16px;background:#b03a2e;border-radius:2px}
+.card h3 small{font-weight:400;color:#a89e91;font-size:11px;margin-left:auto}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{font-size:12px;color:#666;display:block;margin-bottom:4px}
+input,textarea,select{width:100%;border:1px solid #e2ddd6;border-radius:8px;padding:9px 10px;font-size:14px;background:#faf8f5;font-family:inherit}
+input:focus,textarea:focus{outline:none;border-color:#b03a2e}
+textarea{resize:none;height:60px}
+.full{grid-column:1/-1}
+.btn{border:none;border-radius:10px;padding:11px 16px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-main{background:linear-gradient(135deg,#b03a2e,#8c1f18);color:#fff;width:100%}
+.btn-ghost{background:#fff;color:#b03a2e;border:1px solid #b03a2e}
+.btn-row{display:flex;gap:10px;margin-top:12px}.btn-row .btn{flex:1}
+.btn-gold{background:linear-gradient(135deg,#e8b93e,#d4a017);color:#5a3a00}
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tool{background:#fff;border-radius:14px;padding:18px 10px;text-align:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1.5px solid transparent}
+.tool:active{border-color:#b03a2e}
+.tool .ic{font-size:30px;display:block;margin-bottom:6px}
+.tool .nm{font-size:14px;font-weight:700;color:#333}
+.tool .ds{font-size:10px;color:#a89e91;margin-top:3px}
+.overlay{position:fixed;inset:0;background:rgba(20,10,5,.96);z-index:100;display:none;flex-direction:column;color:#fff}
+.overlay.on{display:flex}
+.ov-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.15)}
+.ov-head .t{font-size:16px;font-weight:700}
+.ov-head .x{font-size:24px;padding:0 8px;cursor:pointer;color:#ffd66b}
+.ov-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+.ov-tip{font-size:12px;color:#cbb;margin-top:14px;line-height:1.8}
+.bigbtn{background:#b03a2e;color:#fff;border:none;border-radius:14px;padding:16px 34px;font-size:17px;font-weight:700;cursor:pointer;margin:8px}
+.bigbtn.off{background:#555}
+.screenlight{position:fixed;inset:0;background:#fff;z-index:99;display:none}
+.screenlight.on{display:block}
+.purplelight{position:fixed;inset:0;background:#2a0a4a;z-index:99;display:none}
+.purplelight.on{display:block}
+.purplelight .pl-tip{position:absolute;bottom:40px;left:20px;right:20px;text-align:center;color:#c9a8ff;font-size:13px;line-height:1.9}
+#wmVideo{width:100%;max-height:62vh;background:#000;border-radius:10px}
+.wm-bar{margin-top:12px;background:rgba(0,0,0,.55);border-radius:10px;padding:10px 14px;font-size:13px;line-height:2;text-align:left;width:100%}
+.wm-bar b{color:#ffd66b}
+.lv-wrap{width:220px;height:220px;border-radius:50%;border:2px solid rgba(255,255,255,.3);position:relative;background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.08),transparent)}
+.lv-bubble{width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8a7a,#b03a2e);position:absolute;left:50%;top:50%;margin:-28px;transition:transform .08s;box-shadow:0 0 24px rgba(255,100,80,.6)}
+.lv-num{font-size:34px;font-weight:800;margin-top:18px;color:#ffd66b}
+.sw-time{font-size:52px;font-weight:800;font-variant-numeric:tabular-nums;color:#ffd66b}
+.sw-laps{width:100%;max-height:180px;overflow:auto;margin-top:14px;font-size:14px}
+.sw-laps div{display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.12)}
+.carcard{background:linear-gradient(135deg,#3a2a26,#5a3a30);color:#fff;border-radius:14px;padding:16px}
+.carcard .t{font-size:17px;font-weight:800}
+.carcard .p{font-size:24px;font-weight:800;color:#ffd66b;margin:6px 0 10px}
+.carcard .p small{font-size:12px;color:#ffd66b;font-weight:400}
+.carcard .row{display:flex;flex-wrap:wrap;gap:6px;font-size:12px}
+.carcard .row i{font-style:normal;background:rgba(255,255,255,.14);padding:4px 9px;border-radius:6px}
+.carcard .flaw{margin-top:10px;font-size:12px;background:rgba(255,214,107,.15);border-left:3px solid #ffd66b;padding:8px 10px;border-radius:0 8px 8px 0;color:#ffe9b0}
+.tabs{display:flex;background:#fff;border-radius:12px;padding:4px;margin-bottom:12px;flex-wrap:wrap}
+.tabs div{flex:1;min-width:70px;text-align:center;padding:9px 2px;font-size:13px;color:#888;border-radius:9px;cursor:pointer}
+.tabs div.on{background:#b03a2e;color:#fff;font-weight:600}
+.pane{display:none}.pane.on{display:block}
+.copy-item{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px}
+.copy-item .tag{display:inline-block;font-size:11px;background:#f5e6e0;color:#b03a2e;padding:3px 9px;border-radius:6px;font-weight:600;margin-bottom:8px}
+.copy-item .txt{font-size:14px;line-height:1.75;color:#333;white-space:pre-wrap}
+.copy-item .acts{display:flex;gap:8px;margin-top:10px}
+.copy-item .acts button{flex:1;font-size:12px;padding:7px;border-radius:8px;border:1px solid #e2ddd6;background:#faf8f5;color:#666;cursor:pointer}
+.copy-item .acts button.hot{border-color:#b03a2e;color:#b03a2e;background:#fff;font-weight:600}
+.script-part{margin-bottom:8px}
+.script-part b{font-size:12px;color:#b03a2e;display:block;margin-bottom:2px}
+.script-part span{font-size:14px;line-height:1.7;color:#333}
+.banned .ok{color:#1e8e3e;font-weight:700;font-size:15px}
+.banned .bad{color:#d93025;font-weight:700;font-size:15px}
+.banned ul{margin:10px 0 0 18px;font-size:13px;color:#666;line-height:2}
+.banned ul em{font-style:normal;background:#fdecea;color:#d93025;padding:1px 6px;border-radius:4px;font-weight:600}
+.banned .law{margin-top:12px;font-size:11px;color:#a89e91;line-height:1.8;border-top:1px dashed #e5ded5;padding-top:10px}
+.calc-out{background:linear-gradient(135deg,#3a2a26,#5a3a30);color:#fff;border-radius:14px;padding:16px;margin-top:12px}
+.calc-out .line{display:flex;justify-content:space-between;font-size:14px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.calc-out .line b{color:#ffd66b}
+.calc-out .line.total{font-size:17px;font-weight:800;border:none;padding-top:12px}
+.calc-out .line.total b{font-size:22px}
+.contract-tpl{background:#faf8f5;border:1px solid #e5ded5;border-radius:10px;padding:14px;font-size:13px;line-height:2;color:#444;white-space:pre-wrap;max-height:46vh;overflow:auto}
+.garage-item{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.garage-item .gi-t{font-size:15px;font-weight:700;color:#333}
+.garage-item .gi-s{font-size:12px;color:#a89e91;margin-top:3px}
+.garage-item .gi-a{display:flex;gap:8px;flex-shrink:0}
+.garage-item .gi-a button{border:1px solid #e2ddd6;background:#faf8f5;border-radius:8px;padding:7px 12px;font-size:12px;cursor:pointer;color:#666}
+.garage-item .gi-a button.load{border-color:#b03a2e;color:#b03a2e;font-weight:600}
+.me-line{display:flex;justify-content:space-between;font-size:13px;padding:10px 0;border-bottom:1px solid #f0ebe4;color:#444}
+.me-line b{color:#b03a2e}
+.note{font-size:11px;color:#a89e91;text-align:center;padding:6px 0 4px;line-height:1.8}
+.footer-brand{background:#3a2a26;color:#cbb;text-align:center;padding:18px 14px;font-size:12px;line-height:2}
+.footer-brand b{color:#ffd66b;font-size:15px;display:block}
+#printArea{display:none}
+@media print{body *{visibility:hidden}#printArea,#printArea *{visibility:visible}#printArea{display:block;position:absolute;inset:0;padding:40px;font-size:14px;line-height:2.2;color:#000;background:#fff}}
+
+/* ===== V2 增强：验车清单 / 查询导航 ===== */
+.chk-mod h3 small{color:#b07d00}
+.chk-pgb{height:8px;background:#f0e6df;border-radius:4px;overflow:hidden}
+.chk-pgb i{display:block;height:100%;background:linear-gradient(90deg,#e8b93e,#b03a2e);border-radius:4px;transition:width .3s}
+.chk-pgt{font-size:12px;color:#8a7f72;margin-top:6px}
+.chk-row{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #f3ede6}
+.chk-row:last-child{border:none}
+.chk-name{flex:1;font-size:13.5px;color:#333;line-height:1.5}
+.chk-btns{display:flex;gap:5px;flex-shrink:0}
+.chk-btns .cb{border:1px solid #e2ddd6;background:#faf8f5;border-radius:7px;padding:5px 10px;font-size:12px;color:#999;cursor:pointer}
+.chk-btns .cb.ok.on{background:#e6f4ea;border-color:#1e8e3e;color:#1e8e3e;font-weight:700}
+.chk-btns .cb.bad.on{background:#fdecea;border-color:#d93025;color:#d93025;font-weight:700}
+.chk-btns .cb.on:not(.ok):not(.bad){background:#b03a2e;border-color:#b03a2e;color:#fff}
+.chk-stat{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.chk-stat div{background:#faf8f5;border-radius:10px;padding:10px 4px;text-align:center}
+.chk-stat b{display:block;font-size:22px;color:#b03a2e}
+.chk-stat span{font-size:11px;color:#a89e91}
+.chk-badlist h4{font-size:13px;color:#d93025;margin-bottom:8px}
+.chk-baditem{font-size:13px;color:#444;line-height:1.7;padding:7px 10px;background:#fdf3f2;border-left:3px solid #d93025;border-radius:0 8px 8px 0;margin-bottom:6px}
+.chk-baditem i{display:block;font-style:normal;font-size:12px;color:#a06060;margin-top:2px}
+.chk-nobad{font-size:13px;color:#1e8e3e;background:#f0f9f1;border-radius:10px;padding:12px;text-align:center}
+.query-site{display:flex;gap:12px;align-items:center;background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;border:1.5px solid transparent;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.query-site:active{border-color:#b03a2e}
+.qs-ic{font-size:26px;flex-shrink:0}
+.qs-b b{font-size:14.5px;color:#333;display:block}
+.qs-b span{font-size:12px;color:#8a7f72;display:block;margin-top:2px}
+.qs-b i{font-style:normal;font-size:11.5px;color:#b07d00;display:block;margin-top:3px;line-height:1.6}
+.vin-result{margin-top:12px}
+.vin-ok{font-size:13.5px;color:#1e8e3e;background:#f0f9f1;border-radius:10px;padding:12px;line-height:1.7}
+.vin-bad{font-size:13.5px;color:#d93025;background:#fdf3f2;border-radius:10px;padding:12px;line-height:1.7}
+/* ===== V3：OBD / 车况报告 / 话术库 ===== */
+.obd-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#888;margin-right:6px}
+.obd-dot.on{background:#7be08a;box-shadow:0 0 6px #7be08a}
+.obd-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.obd-cell{background:rgba(255,255,255,.08);border-radius:12px;padding:12px 4px;text-align:center}
+.obd-cell b{display:block;font-size:22px;color:#ffd66b;font-variant-numeric:tabular-nums}
+.obd-cell span{font-size:10.5px;color:#cbb}
+.obd-rpmbar{height:6px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;margin-bottom:14px}
+.obd-rpmbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7be08a,#ffd66b,#d93025);transition:width .2s}
+.obd-dtc{background:rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.obd-dtc b{color:#ffd66b;font-size:15px;display:block}
+.obd-dtc span{font-size:12px;color:#e8dcd0;line-height:1.6;display:block;margin-top:2px}
+/* OBD v2：只读安全声明 / 车辆识别卡 / 里程卡 / ECU 快照卡 */
+.obd-ro{background:rgba(217,48,37,.16);border:1px solid rgba(217,48,37,.55);border-radius:10px;padding:10px 12px;font-size:12px;color:#ffb3ab;line-height:1.7;width:100%;text-align:left;box-sizing:border-box}
+.obd-ro b{color:#ff8a7a}
+.obd-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px 14px;margin-top:14px;width:100%;text-align:left;box-sizing:border-box}
+.obd-card-t{font-size:13px;font-weight:700;color:#ffd66b;margin-bottom:6px}
+.obd-kv{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px dashed rgba(255,255,255,.12);font-size:12.5px;color:#cbb;gap:8px}
+.obd-kv:last-child{border-bottom:none}
+.obd-kv b{color:#fff;font-size:12.5px;text-align:right;word-break:break-all;font-weight:600}
+#obdLog{font-size:11px;color:#9a8f84;margin-top:10px;line-height:1.7;min-height:40px}
+.report-head{text-align:center;border-bottom:2px solid #b03a2e;padding-bottom:14px;margin-bottom:14px}
+.r-title{font-size:20px;font-weight:800;color:#b03a2e;letter-spacing:2px}
+.r-sub{font-size:11px;color:#a89e91;margin-top:4px}
+.r-block{font-size:13px;color:#444;line-height:1.9;padding:8px 0;border-bottom:1px dashed #eee}
+.r-block b{display:inline-block;min-width:88px;color:#b03a2e}
+.r-stat{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.r-stat span{background:#faf8f5;border-radius:8px;padding:8px 2px;text-align:center;font-size:11px;color:#8a7f72}
+.r-stat b{display:block;font-size:18px;color:#333}
+.r-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
+.r-table td{border:1px solid #eee;padding:6px 8px;color:#555}
+.r-table td:first-child{color:#b03a2e;white-space:nowrap}
+.r-foot{text-align:center;font-size:10.5px;color:#a89e91;margin-top:14px}
+.script-item{background:#fff;border-radius:12px;padding:13px 14px;margin-bottom:10px}
+.si-txt{font-size:13.5px;color:#333;line-height:1.85}
+.script-item .acts{margin-top:10px}
+.script-item .acts button{border:1px solid #b03a2e;color:#b03a2e;background:#fff;border-radius:8px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer}
+/* ===== V4：同行圈 ===== */
+.ci-item{display:flex;gap:10px;align-items:center;background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.ci-tag{flex-shrink:0;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px}
+.ci-tag.seek{background:#e8f0fe;color:#1a56c4}
+.ci-tag.sell{background:#fdeee4;color:#c25e1a}
+.ci-b{flex:1;min-width:0}
+.ci-b b{font-size:14px;color:#333;display:block}
+.ci-b span{font-size:11.5px;color:#8a7f72;display:block;margin-top:2px}
+.ci-a{display:flex;gap:6px;flex-shrink:0}
+.ci-a button{border:1px solid #e2ddd6;background:#faf8f5;border-radius:8px;padding:6px 10px;font-size:11.5px;color:#666;cursor:pointer}
+.ci-a button.cp{border-color:#b03a2e;color:#b03a2e;font-weight:600}
+.mq-bar{display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.mq-dot{width:9px;height:9px;border-radius:50%;background:#c9c2b8;flex-shrink:0}
+.mq-dot.on{background:#7be08a;box-shadow:0 0 6px #7be08a}
+.mq-bar .mq-t{flex:1;font-size:11.5px;color:#8a7f72;line-height:1.5}
+.mq-bar button{border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;background:#b03a2e;color:#fff;cursor:pointer}
+/* ===== V5：引导 / 更新 ===== */
+.gd-ic{font-size:52px;text-align:center;margin-bottom:10px}
+#guideBody h3{text-align:center;font-size:18px;color:#b03a2e;margin-bottom:10px}
+#guideBody p{font-size:13.5px;color:#555;line-height:2;text-align:left}
+.gd-dots{display:flex;justify-content:center;gap:6px;margin:16px 0}
+.gd-dots i{width:7px;height:7px;border-radius:50%;background:#e2ddd6}
+.gd-dots i.on{background:#b03a2e;width:18px;border-radius:4px}
+#updateBody{font-size:13.5px;color:#555;line-height:2.1;text-align:left}
+.ov-card{background:#fff;border-radius:16px;padding:20px;max-width:340px;width:88%;max-height:82vh;overflow:auto}
+.ov-card .oc-h{font-size:17px;font-weight:800;color:#b03a2e;text-align:center;margin-bottom:14px}
+.ov-mask{position:fixed;inset:0;background:rgba(20,10,5,.6);z-index:110;display:none;align-items:center;justify-content:center;padding:20px}
+.ov-mask.on{display:flex}
+/* ===== Arduino 实验室 ===== */
+.sim-lab-entry{background:linear-gradient(135deg,#1e2a38,#2c3e50);border-radius:14px;padding:16px;margin-bottom:14px;color:#fff;cursor:pointer;border:1.5px solid transparent}
+.sim-lab-entry:active{border-color:#ffd66b}
+.sim-lab-entry .le-t{font-size:16px;font-weight:800}
+.sim-lab-entry .le-t span{color:#ffd66b}
+.sim-lab-entry .le-s{font-size:11.5px;color:#aac;margin-top:5px;line-height:1.7}
+.sim-tool{display:flex;gap:12px;align-items:center;background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;border:1.5px solid transparent;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.sim-tool:active{border-color:#b03a2e}
+.st-ic{font-size:30px;flex-shrink:0}
+.st-b{flex:1;min-width:0}
+.st-b b{font-size:15px;color:#333;display:block}
+.st-b span{font-size:12px;color:#8a7f72;display:block;margin-top:2px}
+.st-b i{font-style:normal;font-size:11px;color:#1e8e3e;display:block;margin-top:3px}
+.sim-more{text-align:center;font-size:11.5px;color:#a89e91;line-height:1.9;padding:14px}
+.sim-detail{display:none}
+.sim-lcd{background:#0a1a0a;border:2px solid #2c3e50;border-radius:10px;padding:14px;font-family:Menlo,Consolas,monospace;font-size:15px;color:#4fe34f;white-space:pre-wrap;line-height:1.7;min-height:64px}
+.sim-verdict{margin-top:10px;border-radius:10px;padding:11px 14px;font-size:13.5px;font-weight:600;line-height:1.6}
+.sim-verdict.ok{background:#f0f9f1;color:#1e8e3e}
+.sim-verdict.warn{background:#fdf6e3;color:#b07d00}
+.sim-verdict.bad{background:#fdf3f2;color:#d93025}
+.sim-slider{margin:12px 0}
+.sim-slider label{font-size:12.5px;color:#666}
+.sim-slider label b{color:#b03a2e}
+.sim-slider input[type=range]{width:100%;margin-top:6px;accent-color:#b03a2e}
+.sim-led{width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#fff8e0,#ffd66b);margin:14px auto;opacity:.08;transition:opacity .15s}
+#simCanvas{width:100%;border-radius:10px;border:1px solid #e5ded5;display:block}
+.sim-code{background:#263238;color:#c8e6c9;border-radius:10px;padding:14px;font-family:Menlo,Consolas,monospace;font-size:11.5px;line-height:1.8;white-space:pre;overflow:auto;max-height:280px}
+.sim-parts{width:100%;border-collapse:collapse;font-size:12.5px}
+.sim-parts td{border-bottom:1px solid #f0ebe4;padding:9px 6px;color:#444}
+.sim-sec{font-size:13px;font-weight:700;color:#b03a2e;margin:14px 0 8px}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="brandbar">
+    <div><div class="logo">二手车<span>专家</span></div><div class="sub">郑州知行软件 出品</div></div>
+    <div class="me">余晓春 · 郑州</div>
+  </header>
+
+  <main>
+    <!-- ============ 发车 · 内容工厂 ============ -->
+    <section class="page on" id="page-fache">
+      <div class="card">
+        <h3>录车况 <small>语音口述或手填</small></h3>
+        <div class="btn-row" style="margin-top:0">
+          <button class="btn btn-ghost" id="voiceBtn">🎙 语音转写</button>
+          <button class="btn btn-ghost" id="demoBtn">换演示车</button>
+        </div>
+        <textarea id="voiceTxt" style="margin-top:10px" placeholder="语音转写文字会出现在这里，也可以直接粘贴/输入车况描述，点「整理成车档」自动识别"></textarea>
+        <div class="btn-row">
+          <button class="btn btn-ghost" id="parseBtn">整理成车档</button>
+          <button class="btn btn-main" id="genBtn" style="flex:1.4">生成全套内容 →</button>
+        </div>
+        <div class="grid2" style="margin-top:14px">
+          <div><label>年款</label><input id="f_year" value="2019款"></div>
+          <div><label>品牌车型</label><input id="f_model" value="本田雅阁"></div>
+          <div><label>表显里程（万公里）</label><input id="f_mileage" value="6.8"></div>
+          <div><label>过户次数</label><input id="f_transfers" value="2"></div>
+          <div class="full"><label>漆面情况</label><input id="f_paint" value="右后翼子板做过漆，其余原版原漆"></div>
+          <div class="full"><label>事故 / 整备</label><input id="f_accident" value="无重大事故，刚做完大保养，轮胎新换"></div>
+          <div><label>要价（万元）</label><input id="f_price" value="12.8"></div>
+          <div><label>城市</label><input id="f_city" value="郑州"></div>
+          <div class="full"><label>实话实说 · 瑕疵（必填，主动写出来反而有人问）</label><textarea id="f_flaw">前保险杠有划痕补过漆，内饰方向盘轻微使用痕迹</textarea></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>车档 <small>自动整理</small></h3>
+        <div class="carcard" id="carCard"></div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" id="saveBtn">存入车库</button>
+          <button class="btn btn-ghost" id="shareBtn">复制链接发同行群</button>
+        </div>
+      </div>
+
+      <div class="tabs" id="genTabs">
+        <div class="on" data-tab="moments">朋友圈 ×8</div>
+        <div data-tab="douyin">抖音口播 ×3</div>
+        <div data-tab="poster">卖车海报</div>
+        <div data-tab="banned">违禁词自检</div>
+      </div>
+
+      <div class="pane on" id="pane-moments">
+        <div id="momentsList"></div>
+        <button class="btn btn-ghost" style="width:100%" id="regenBtn">↻ 换一批写法</button>
+      </div>
+      <div class="pane" id="pane-douyin"><div id="douyinList"></div>
+        <button class="btn btn-ghost" style="width:100%" id="regenBtn2">↻ 换一批脚本</button>
+      </div>
+      <div class="pane" id="pane-poster">
+        <div class="card">
+          <h3>卖车海报 <small>自动排版</small></h3>
+          <canvas id="posterCanvas" width="750" height="1100" style="width:100%;border-radius:12px;display:block"></canvas>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="photoBtn">上传车辆照片</button>
+            <button class="btn btn-gold" id="dlBtn">保存海报到相册</button>
+          </div>
+          <input type="file" id="photoInput" accept="image/*" style="display:none">
+        </div>
+      </div>
+      <div class="pane" id="pane-platform"><div id="platformList"></div></div>
+      <div class="pane" id="pane-scripts"><div id="scriptsList"></div></div>
+      <div class="pane" id="pane-banned"><div class="card banned" id="bannedBox"></div></div>
+      <div class="note">文案由内置车商提示词引擎生成（参考全网公开话术库 + 广告法违禁词表）；<br>发布前请核对里程、价格与车况事实。</div>
+    </section>
+
+    <!-- ============ 验车 · 132项清单 ============ -->
+    <section class="page" id="page-check">
+      <div class="card">
+        <h3>验车清单 <small>132 项 · 三态标记</small></h3>
+        <div class="grid2">
+          <div><label>关联车库车档</label><select id="checkCarSel"></select></div>
+          <div><label>车档名称</label><input id="checkCarTitle" placeholder="如：2019雅阁 车架号后六位"></div>
+        </div>
+        <div id="checkProgress" style="margin-top:10px"></div>
+        <div class="tabs" id="checkTabs" style="margin-top:12px">
+          <div class="on" data-ct="list">验车清单</div>
+          <div data-ct="sum">检测小结</div>
+        </div>
+        <div class="btn-row"><button class="btn btn-gold" onclick="openReport()">📋 生成车况报告</button></div>
+      </div>
+      <div id="checkList"></div>
+      <div class="card" id="checkSummary" style="display:none"></div>
+      <div class="note">状态只存本机；换车档接着检，不重头来。<br>异常项点「异常」会要求填备注，小结自动汇总。</div>
+    </section>
+
+    <!-- ============ 查查 · 查询导航 ============ -->
+    <section class="page" id="page-query">
+      <div class="card"><h3>查询导航 <small>收车前先查档</small></h3>
+        <div id="querySites"></div>
+      </div>
+      <div class="card"><h3>VIN 核验 <small>车架号校验位</small></h3>
+        <div id="vinBox"></div>
+      </div>
+      <div class="card"><h3>推荐查询顺序</h3>
+        <div style="font-size:13px;color:#666;line-height:2.2">
+          1. <b>执行信息公开网</b>：查封车直接排除，别浪费时间<br>
+          2. <b>12123</b>：违章、扣分、年检状态，过户前算清成本<br>
+          3. <b>查博士/车300</b>：维保 + 出险记录，对照表显里程<br>
+          4. <b>VIN 校验位</b>：抄下的车架号先过一遍，防抄错防打磨<br>
+          5. <b>裁判文书网</b>：原车主有经济纠纷的，谨慎介入
+        </div>
+        <div class="note">第三方查询平台以各家免费额度为准，活动口令不定期更新；本软件不代查、不收任何查询费。</div>
+      </div>
+    </section>
+
+    <!-- ============ 圈子 · 同行圈 ============ -->
+    <section class="page" id="page-circle">
+      <div class="card"><h3>发一条 <small>求购 / 车源</small></h3>
+        <div class="grid2">
+          <div><label>类型</label><select id="ciType"><option value="seek">求购</option><option value="sell">车源</option></select></div>
+          <div><label>城市</label><input id="ciCity" value="郑州"></div>
+          <div><label>年款</label><input id="ciYear" value="2019款"></div>
+          <div><label>品牌车型</label><input id="ciModel" value="本田雅阁"></div>
+          <div><label>表显里程（万公里）</label><input id="ciMileage" value="6.8"></div>
+          <div><label>过户次数</label><input id="ciTransfers" value="2"></div>
+          <div><label>价格（万）</label><input id="ciPrice" value="12.8"></div>
+          <div><label>联系方式（微信号/电话）</label><input id="ciContact" placeholder="如：wxid_yxc888"></div>
+          <div class="full"><label>车况/需求简述</label><input id="ciPaint" value="原版原漆，无重大事故"></div>
+          <div class="full"><label>备注</label><input id="ciNote" placeholder="如：诚心要，车好价好谈"></div>
+        </div>
+        <div class="btn-row"><button class="btn btn-main" onclick="ciPublish()">发布并复制内容</button>
+        <button class="btn btn-ghost" onclick="ciShare()">分享多条</button></div>
+      </div>
+      <div class="mq-bar"><span class="mq-dot" id="ciMqDot"></span><div class="mq-t" id="ciMqTxt">联机关闭：内容只存本机</div><button id="ciMqBtn" onclick="ciToggleMq()">打开联机</button></div>
+      <div class="tabs" id="ciTabs">
+        <div class="on" data-t="mine">我的发布</div>
+        <div data-t="recv">收到的</div>
+      </div>
+      <div id="ciPaneMine"><div id="ciMine"></div></div>
+      <div id="ciPaneRecv" style="display:none"><div id="ciRecv"></div></div>
+      <div class="note">联机版走免费公共服务器（broker.emqx.io），只转发文字信息，不碰钱不碰手续；<br>被网络屏蔽时用微信分享，内容一样到同行手里。</div>
+    </section>
+
+    <!-- ============ 随身工具 ============ -->
+    <section class="page" id="page-tools">
+      <div class="card"><h3>随身工具 <small>现场刚需 · 零配件</small></h3>
+        <div class="tools-grid">
+          <div class="tool" onclick="openTorch()"><span class="ic">🔦</span><div class="nm">强光手电</div><div class="ds">常亮 / 爆闪 / SOS</div></div>
+          <div class="tool" onclick="openScreenLight()"><span class="ic">💡</span><div class="nm">屏幕补光</div><div class="ds">照仪表台不刺眼</div></div>
+          <div class="tool" onclick="openPurple()"><span class="ic">🟣</span><div class="nm">紫光应急</div><div class="ds">泡水痕迹初筛</div></div>
+          <div class="tool" onclick="openCamera()"><span class="ic">📷</span><div class="nm">水印相机</div><div class="ds">时间地点车型水印</div></div>
+          <div class="tool" onclick="openLevel()"><span class="ic">⚖️</span><div class="nm">水平仪</div><div class="ds">看车身是否倾斜</div></div>
+          <div class="tool" onclick="openStopwatch()"><span class="ic">⏱️</span><div class="nm">验车秒表</div><div class="ds">怠速 / 换挡计时</div></div>
+          <div class="tool" onclick="openObd()"><span class="ic">📟</span><div class="nm">OBD 诊断</div><div class="ds">蓝牙读码 / 实时仪表</div></div>
+        </div>
+        <div class="sim-lab-entry" onclick="$('ovSim').classList.add('on')">
+          <div class="le-t">🔬 Arduino 实验室 <span>· 自制工具仿真</span></div>
+          <div class="le-s">软件里先仿真跑通，买硬件照代码烧录落地：漆膜仪 / 红外测温枪 / 电瓶检测仪 / 智能强光手电，每个几十元，替代几千元商用设备。</div>
+        </div>
+      </div>
+      <div class="card"><h3>工具说明</h3>
+        <div style="font-size:13px;color:#666;line-height:2.1">
+          · <b>强光手电</b>：调用手机闪光灯，安卓浏览器支持；不支持的机型自动引导用屏幕补光<br>
+          · <b>紫光应急</b>：白光 LED 发不出真紫外线，只能初筛；精准检测用几毛钱滤光片贴闪光灯<br>
+          · <b>水印相机</b>：拍照自动带时间 + 定位 + 自定义文字，收车留证防纠纷<br>
+          · <b>水平仪</b>：放车顶/门槛测倾斜，判断大梁变形的参考依据
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 算账 ============ -->
+    <section class="page" id="page-calc">
+      <div class="card">
+        <h3>收车成本计算器 <small>各省过户费预置</small></h3>
+        <div class="grid2">
+          <div><label>收车价（万元）</label><input id="c_price" value="12.8"></div>
+          <div><label>所在省份</label><select id="c_prov"></select></div>
+          <div><label>过户费（元，可改）</label><input id="c_transfer" value="600"></div>
+          <div><label>整备费（元）</label><input id="c_fix" value="2000"></div>
+          <div><label>路途油费过路费（元）</label><input id="c_road" value="300"></div>
+          <div><label>违章押金（元）</label><input id="c_deposit" value="1000"></div>
+          <div class="full"><label>计划零售价（万元）</label><input id="c_retail" value="15.5"></div>
+        </div>
+        <div class="calc-out" id="calcOut"></div>
+        <div class="note">过户费为常见参考值，各地以实际为准；结果为测算参考，不构成定价建议。</div>
+      </div>
+      <div class="card">
+        <h3>合同模板 <small>自动填当前车档</small></h3>
+        <div class="tabs" id="ctTabs">
+          <div class="on" data-ct="buy">收车合同</div>
+          <div data-ct="dep">定金协议</div>
+        </div>
+        <div class="contract-tpl" id="ctTpl"></div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" onclick="copyContract()">复制合同全文</button>
+          <button class="btn btn-gold" onclick="printContract()">打印 / 存 PDF</button>
+        </div>
+        <div class="note">模板仅供参考，重大交易建议请律师审核后使用。</div>
+      </div>
+    </section>
+
+    <!-- ============ 车库 ============ -->
+    <section class="page" id="page-garage">
+      <div class="card"><h3>我的车库 <small>只存在本机 · 不上传</small></h3>
+        <div id="garageList"></div>
+      </div>
+    </section>
+
+    <!-- ============ 我的 ============ -->
+    <section class="page" id="page-me">
+      <div class="card"><h3>关于二手车专家</h3>
+        <div style="text-align:center;padding:10px 0 16px">
+          <div style="font-size:26px;font-weight:800;color:#b03a2e">二手车<span style="color:#d4a017">专家</span></div>
+          <div style="font-size:12px;color:#a89e91;margin-top:6px">V1.8 · 内容 + 验车 + OBD 深度诊断 + 同行圈 + 语音录车况 + 查询导航</div>
+        </div>
+        <div class="me-line"><span>出品方</span><b>郑州知行软件</b></div>
+        <div class="me-line"><span>主理人</span><b>余晓春 · 郑州</b></div>
+        <div class="me-line"><span>费用</span><b>基础功能永久免费</b></div>
+        <div class="me-line"><span>数据</span><b>全部存本机，不收集不上传</b></div>
+        <div class="me-line"><span>数据备份</span><b><a href="javascript:exportData()" style="color:#b03a2e">导出</a> ｜ <a href="javascript:importData()" style="color:#b03a2e">导入</a></b></div>
+        <div class="me-line" style="border:none"><span>定位</span><b style="text-align:right">车300/查博士/剪映/CRM<br>一年几千块，这一个全包</b></div>
+      </div>
+      <div class="card"><h3>怎么用（像 App 一样）</h3>
+        <div style="font-size:13px;color:#666;line-height:2.2">
+          1. 在微信里点开本页面<br>
+          2. 点右上角「···」→ <b>添加到主屏幕</b><br>
+          3. 桌面就会出现「二手车专家」图标，点开即用，不用安装不用注册<br>
+          4. 觉得好用，点「我的」里把链接甩进同行群
+        </div>
+        <div class="btn-row"><button class="btn btn-main" onclick="copyLink()">复制链接，发同行群</button></div>
+      </div>
+      <div class="card"><h3>V1.8 已上线</h3>
+        <div style="font-size:13px;color:#666;line-height:2.2">· <b>132 项验车清单</b> + 检测小结 + 车况报告（打印/存 PDF）<br>· <b>OBD 只读深度诊断</b>：车辆识别 / 数据流 / 故障码 + 中文释义 / 冻结帧 / 多 ECU（含变速箱）里程交叉比对；兼容 ¥25 经典蓝牙接头（安卓 APP）与 BLE 接头（网页版）<br>· <b>同行圈</b>：求购/车源本机发布 + 免费联机接收<br>· <b>多平台文案</b> + 应对话术库（砍价/私信/评论）<br>· 查询导航 + VIN 校验位核验 + 收车成本计算 + 合同模板<br>· <b>只读安全红线</b>：全程只查不改，绝不清码不动车<br>· <b>语音录车况</b>（V1.7 修复）：点「🎙 语音转写」直接念，松口自动识别填入，无需打字；念的过程中文字实时上屏<br>· <b>模拟演示真实化</b>（V1.8）：演示数据随秒级漂移（怠速/车速/水温/电瓶 13.8V 等真实区间），仪表是活的，不再一串死数</div>
+      </div>
+      <div class="card"><h3>开发路线图</h3>
+        <div style="font-size:13px;color:#666;line-height:2.2">· <b>估值参考</b>：车龄 × 里程 × 新车指导价折旧估算（三档：建议价 / 封顶价 / 不收线），以实时行情为准<br>· <b>记录查询指引</b>：维保 / 出险 / 过户次数一键直达（不代查、不收查询费）<br>· 自建服务端版同行圈（数据自主可控）<br>· 更多话术库内容（按月更新）</div>
+      </div>
+      <div class="footer-brand"><b>二手车专家</b>郑州知行软件 出品 ｜ 余晓春 · 郑州<br>收车卖车，一个专家全包</div>
+    </section>
+  </main>
+
+  <nav class="tabbar" id="tabbar">
+    <div class="on" data-page="fache"><span class="ic">🚗</span>发车</div>
+    <div data-page="check"><span class="ic">🔍</span>验车</div>
+    <div data-page="tools"><span class="ic">🧰</span>工具</div>
+    <div data-page="calc"><span class="ic">🧮</span>算账</div>
+    <div data-page="query"><span class="ic">🌐</span>查查</div>
+    <div data-page="circle"><span class="ic">🤝</span>圈子</div>
+    <div data-page="garage"><span class="ic">📁</span>车库</div>
+    <div data-page="me"><span class="ic">👤</span>我的</div>
+  </nav>
+</div>
+
+<!-- 覆盖层：手电 -->
+<div class="overlay" id="ovTorch">
+  <div class="ov-head"><span class="t">🔦 强光手电</span><span class="x" onclick="closeTorch()">✕</span></div>
+  <div class="ov-body">
+    <button class="bigbtn" id="torchBtn" onclick="toggleTorch()">开启手电</button>
+    <button class="bigbtn off" id="strobeBtn" onclick="toggleStrobe()">爆闪模式</button>
+    <div class="ov-tip" id="torchTip">调用手机闪光灯；不支持闪光的机型请用「屏幕补光」</div>
+  </div>
+</div>
+<!-- 覆盖层：水印相机 -->
+<div class="overlay" id="ovCam">
+  <div class="ov-head"><span class="t">📷 水印相机</span><span class="x" onclick="closeCamera()">✕</span></div>
+  <div class="ov-body" style="justify-content:flex-start">
+    <video id="wmVideo" playsinline autoplay muted></video>
+    <div class="wm-bar">
+      时间：<b id="wmTime">--</b><br>
+      地点：<b id="wmLoc">定位中…</b><br>
+      自定义：<input id="wmText" placeholder="如：2019款雅阁 车架号后六位" style="margin-top:6px">
+    </div>
+    <div class="btn-row" style="width:100%;margin-top:12px">
+      <button class="btn btn-ghost" onclick="switchCam()">翻转镜头</button>
+      <button class="btn btn-gold" onclick="snap()">拍照存证</button>
+    </div>
+    <div class="ov-tip">照片自动带时间/地点/自定义水印，保存到相册，收车留证防纠纷</div>
+  </div>
+</div>
+<!-- 覆盖层：水平仪 -->
+<div class="overlay" id="ovLevel">
+  <div class="ov-head"><span class="t">⚖️ 水平仪</span><span class="x" onclick="closeLevel()">✕</span></div>
+  <div class="ov-body">
+    <div class="lv-wrap"><div class="lv-bubble" id="lvBubble"></div></div>
+    <div class="lv-num" id="lvNum">0.0°</div>
+    <div class="ov-tip">手机平放车顶/门槛上看倾斜度<br>参考：左右差超过 1° 建议进一步查大梁<br><button class="bigbtn" style="margin-top:14px" onclick="calibLevel()">校准归零</button></div>
+  </div>
+</div>
+<!-- 覆盖层：秒表 -->
+<div class="overlay" id="ovSw">
+  <div class="ov-head"><span class="t">⏱️ 验车秒表</span><span class="x" onclick="closeSw()">✕</span></div>
+  <div class="ov-body">
+    <div class="sw-time" id="swTime">00:00.00</div>
+    <div>
+      <button class="bigbtn" id="swBtn" onclick="swToggle()">开始</button>
+      <button class="bigbtn off" onclick="swLap()">计次</button>
+      <button class="bigbtn off" onclick="swReset()">清零</button>
+    </div>
+    <div class="sw-laps" id="swLaps"></div>
+    <div class="ov-tip">测怠速稳定时间、换挡响应，分段记录</div>
+  </div>
+</div>
+
+<div class="screenlight" id="screenLight" onclick="this.classList.remove('on')"></div>
+<div class="purplelight" id="purpleLight" onclick="this.classList.remove('on')">
+  <div class="pl-tip">🟣 紫光应急模式<br>白光 LED 发不出真紫外线，只能初筛大概痕迹<br>精准检测：几毛钱滤光片贴闪光灯 + 本软件补光<br>点击任意处退出</div>
+</div>
+
+<!-- 覆盖层：OBD 诊断 -->
+<div class="overlay" id="ovObd">
+  <div class="ov-head"><span class="t">📟 OBD 蓝牙诊断</span><span class="x" onclick="closeObd()">✕</span></div>
+  <div class="ov-body" style="justify-content:flex-start;overflow:auto">
+    <div class="obd-ro">🔒 只读模式：软件只发送读取指令（数据流/故障码/VIN/里程），<b>绝不执行任何写入操作</b>——不清故障码、不改参数、不动里程。只查不改，看坏看不坏都不碰车。</div>
+    <div id="obdStatus" style="font-size:14px;color:#fff;margin-top:12px"><span class="obd-dot"></span>未连接</div>
+    <div class="btn-row" style="margin-top:12px">
+      <button class="btn btn-main" onclick="obdConnect()">连接蓝牙 OBD</button>
+      <button class="btn btn-ghost" style="color:#fff;border-color:#ffd66b" onclick="obdSimStart()">模拟演示</button>
+    </div>
+    <!-- 车辆识别卡 -->
+    <div class="obd-card">
+      <div class="obd-card-t">🚗 车辆识别</div>
+      <div class="obd-kv"><span>VIN 车架号</span><b id="obdVin">—</b></div>
+      <div class="obd-kv"><span>通信协议</span><b id="obdProto">—</b></div>
+      <div class="obd-kv"><span>就绪状态</span><b id="obdReady">—</b></div>
+    </div>
+    <div class="obd-rpmbar"><i id="obdRpmBar"></i></div>
+    <div class="obd-grid">
+      <div class="obd-cell"><b id="obdRpm">0</b><span>转速 rpm</span></div>
+      <div class="obd-cell"><b id="obdSpd">0</b><span>车速 km/h</span></div>
+      <div class="obd-cell"><b id="obdTemp">0</b><span>水温 ℃</span></div>
+      <div class="obd-cell"><b id="obdLoad">0</b><span>负荷 %</span></div>
+      <div class="obd-cell"><b id="obdVolt">0.0</b><span>电瓶 V</span></div>
+      <div class="obd-cell"><b id="obdThrottle">0</b><span>节气门 %</span></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-gold" onclick="obdReadMileage()">读表显里程</button>
+      <button class="btn btn-gold" onclick="obdEcuSnapshot()">多 ECU 里程比对</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-gold" onclick="obd2ReadDtcs()">读取故障码</button>
+      <button class="btn btn-gold" onclick="obd2ReadFreezeFrame()">读冻结帧</button>
+      <button class="btn btn-ghost" style="color:#fff;border-color:#cbb" onclick="obdReadMileageDid()">自定义 DID</button>
+    </div>
+    <!-- 表显里程检测卡 -->
+    <div class="obd-card">
+      <div class="obd-card-t">🛣️ 表显里程检测<span style="font-size:10px;color:#9a8f84;font-weight:400">（调表初筛，最终以维保记录为准）</span></div>
+      <div class="obd-kv"><span>自定义 DID</span><input id="obdDidInput" placeholder="如 F1A0" maxlength="4" style="width:90px;background:rgba(255,255,255,.1);border:1px solid #555;border-radius:6px;color:#ffd66b;padding:4px 8px;font-size:12px"></div>
+      <div id="obdMileageBody" style="margin-top:6px"><div style="color:#888">点「读表显里程」开始；读不到属正常（私有协议各品牌不同）</div></div>
+      <div id="obdMileageVerdict"></div>
+    </div>
+    <!-- 多 ECU 快照卡 -->
+    <div class="obd-card">
+      <div class="obd-card-t">🧩 多 ECU 快照<span style="font-size:10px;color:#9a8f84;font-weight:400">（发动机/变速箱/ABS/车身，交叉验证里程）</span></div>
+      <div id="obdEcuBody"><div style="color:#888">逐个询问各 ECU 的里程数据——调表通常只改仪表，变速箱 ECU 的真实里程常会露馅</div></div>
+    </div>
+    <div id="obdDtcBox" style="width:100%;margin-top:12px"></div>
+    <div id="obdLog"></div>
+    <div class="obd-card">
+      <div class="obd-card-t">💡 接头怎么买（避坑指引）</div>
+      <div style="font-size:12px;color:#cbb;line-height:1.9">
+        ① 安卓 APP 用户：买<b style="color:#ffd66b">「经典蓝牙」款最便宜（¥25 左右）</b>——包装写「蓝牙 2.0/3.0」「能连 Torque」的就是，本 APP 直接连<br>
+        ② iPhone / 网页版用户：必须买 <b style="color:#ffd66b">「BLE 4.0」款</b>（¥150-200，Vgate iCar Pro BLE / Veepeak BLE+）——写「支持 iPhone」的即是<br>
+        ③ 别买「自带 APP」的一体机（如 Mucar BT200 要 ¥350+）——那是修车师傅用的；咱这软件读完数据直接估价、砍价、出报告，一条龙<br>
+        ④ 接头插方向盘下方 OBD 眼，点火（不用着火）即可读；读完拔掉，不常插
+      </div>
+    </div>
+    <!-- 车型覆盖矩阵 -->
+    <div class="obd-card">
+      <div class="obd-card-t">🚗 能查哪些车（诚实版）</div>
+      <div style="font-size:12px;color:#cbb;line-height:1.9">
+        · <b style="color:#7be08a">所有 2008 年后 OBD2 车</b>：故障码 / 数据流 / VIN / 就绪状态——收车高频场景全覆盖<br>
+        · <b style="color:#ffd66b">大众/奥迪/斯柯达 2003 后 UDS 车型</b>：可试读里程、多 ECU 比对——德系调表重灾区重点覆盖<br>
+        · <b style="color:#ffd66b">奔驰 / 宝马 / 通用 / 福特</b>：部分车型可读里程，逐个试<br>
+        · <b style="color:#ff8a7a">日系（丰田/本田/日产）</b>：标准数据能读，私有里程基本读不到——以维保记录 + 实车磨损为准<br>
+        · 2008 前老车：无 OBD2 口或协议不全，查不了<br>
+        · 读不到 ≠ 软件问题，是厂商私有协议不公开——任何 ELM327 类工具都一样，431 行是因为买了车型数据库
+      </div>
+    </div>
+    <!-- 431 对照 -->
+    <div class="obd-card">
+      <div class="obd-card-t">⚖ 和 431 诊断平板的差距（说透）</div>
+      <div style="font-size:12px;color:#cbb;line-height:1.9">
+        · <b style="color:#7be08a">能替代的</b>：读故障码、数据流、就绪状态、VIN、部分车型表显里程、多 ECU 里程比对（自动出调表结论，431 得人工比对数据流）——收车初筛全覆盖<br>
+        · <b style="color:#ff8a7a">替代不了的</b>：全车系深度故障码（431 靠车型数据库）、动作测试、保养归零等 15 项特殊功能、ECU 编程——那是修车师傅的活，且大多是写操作，咱只读不做<br>
+        · 431 要 ¥1000-10000；咱这 ¥25-200 接头 + 免费软件，还白送估价 / 砍价 / 报告一条龙
+      </div>
+    </div>
+    <!-- 艾迪拓对标 -->
+    <div class="obd-card">
+      <div class="obd-card-t">🏷️ 和艾迪拓检测仪对标（他卖 ¥6188，你用手机）</div>
+      <div style="font-size:12px;color:#cbb;line-height:1.9">
+        艾迪拓魔估 X3 Pro 宣传的看家本领就两块：<br>
+        · <b style="color:#7be08a">OBD 多系统里程</b>（变速箱/ABS/发动机/仪表/气囊交叉比对）→ <b style="color:#fff">咱有，还免费</b>：多 ECU 快照自动比对，不一致直接红字警告「疑似调表」<br>
+        · <b style="color:#ffd66b">8 亿份诊断报告库改表分析</b> → <b style="color:#fff">咱做不了云数据库</b>：靠维保记录（第三方查询）+ 实车磨损 + 冻结帧比对替代；收车必查维保记录这条不变<br>
+        · 其他项：4S 维保记录 / 出险记录查询 → 上传行驶证走第三方渠道，软件内引导；读码 / 读数据流 / 读冻结帧 / 偶发故障码 → <b style="color:#7be08a">全部具备</b><br>
+        · <b style="color:#ff8a7a">明确不做</b>：一键清码等写操作（会抹掉调表证据，也可能搞坏车担责）
+      </div>
+    </div>
+    <div class="ov-tip">本软件只读不写，读出数据仅供参考，最终车况以实车检测+维保记录为准。</div>
+  </div>
+</div>
+<!-- 覆盖层：车况报告 -->
+<div class="overlay" id="ovReport">
+  <div class="ov-head"><span class="t">📋 车况检测报告</span><span class="x" onclick="closeReport()">✕</span></div>
+  <div class="ov-body" style="justify-content:flex-start;overflow:auto;background:#f5f2ee">
+    <div style="background:#fff;border-radius:14px;padding:18px;width:100%;color:#333" id="reportBody"></div>
+    <div class="btn-row" style="width:100%">
+      <button class="btn btn-ghost" onclick="copyReport()">复制</button>
+      <button class="btn btn-main" style="flex:1.4" onclick="printReport()">打印 / 存 PDF</button>
+    </div>
+  </div>
+</div>
+<!-- 覆盖层：新手引导 -->
+<div class="ov-mask" id="ovGuide"><div class="ov-card" id="guideBody"></div></div>
+<!-- 覆盖层：更新提示 -->
+<div class="ov-mask" id="ovUpdate"><div class="ov-card"><div class="oc-h">🎉 二手车专家已更新</div><div id="updateBody"></div><div class="btn-row"><button class="btn btn-main" onclick="closeUpdate()">知道了</button></div></div></div>
+
+<!-- 覆盖层：Arduino 实验室 -->
+<div class="overlay" id="ovSim">
+  <div class="ov-head"><span class="t" id="simTitle">🔬 Arduino 实验室</span><span class="x" onclick="closeSim()">✕</span></div>
+  <div class="ov-body" style="justify-content:flex-start;overflow:auto;align-items:stretch;text-align:left">
+    <!-- 工具库列表 -->
+    <div id="simListWrap">
+      <div style="font-size:12px;color:#cbb;line-height:1.9;margin-bottom:14px">软硬一体工具箱：在软件里拖动滑块模拟传感器，看虚拟屏幕出什么结论；觉得靠谱，照购物清单买模块（每个几十元），照代码烧录，工具落地。</div>
+      <div id="simList"></div>
+    </div>
+    <!-- 工具详情 -->
+    <div class="sim-detail" id="simDetail">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <button class="btn btn-ghost" style="width:auto;padding:8px 14px;font-size:12px;color:#fff;border-color:#cbb" onclick="closeSimDetail()">‹ 返回工具库</button>
+        <span style="font-size:12px;color:#ffd66b" id="simCost"></span>
+      </div>
+      <div style="font-size:12.5px;color:#cbb;line-height:1.9" id="simDesc"></div>
+      <div class="sim-sec" style="color:#ffd66b">🧪 仿真实验（拖滑块，相当于拧传感器）</div>
+      <div id="simInputs"></div>
+      <div class="sim-led" id="simLed" style="display:none"></div>
+      <div class="sim-lcd" id="simLcd"></div>
+      <div class="sim-verdict ok" id="simVerdict"></div>
+      <div class="sim-sec" style="color:#ffd66b">🔌 接线示意</div>
+      <canvas id="simCanvas" width="360" height="110"></canvas>
+      <div class="sim-sec" style="color:#ffd66b">📟 Arduino 代码（复制到 IDE 烧录）</div>
+      <div class="sim-code" id="simCode"></div>
+      <div class="btn-row"><button class="btn btn-ghost" style="color:#fff;border-color:#cbb" onclick="copySimCode()">复制代码</button><button class="btn btn-main" onclick="copySimParts()">复制购物清单</button></div>
+      <div class="sim-sec" style="color:#ffd66b">🛒 购物清单（淘宝/拼多多搜关键词）</div>
+      <table class="sim-parts"><tbody id="simParts"></tbody></table>
+      <div class="sim-sec" style="color:#ffd66b">💡 收车怎么用</div>
+      <div style="font-size:13px;color:#ddd;line-height:2" id="simUsage"></div>
+      <div class="ov-tip" style="margin-top:14px">硬件成本就是清单合计，模块化拼插不用电烙铁；<br>代码由本软件生成，直接烧录。烧录教程不会的，B 站搜「Arduino 入门第一个程序」。</div>
+    </div>
+  </div>
+</div>
+
+<div id="printArea"></div>
+
+<script>
+/* ===== 全局 HTML 转义（防 XSS：所有用户输入/外部数据进 innerHTML 前必须过 esc） ===== */
+window.esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+</script>
+<script>
+var $=function(id){return document.getElementById(id)};
+/* ========== 数据 ========== */
+var demos=[
+ {year:"2019款",model:"本田雅阁",mileage:"6.8",transfers:"2",paint:"右后翼子板做过漆，其余原版原漆",accident:"无重大事故，刚做完大保养，轮胎新换",price:"12.8",city:"郑州",flaw:"前保险杠有划痕补过漆，内饰方向盘轻微使用痕迹"},
+ {year:"2021款",model:"丰田凯美瑞",mileage:"3.2",transfers:"1",paint:"全车原版原漆，螺丝没动过",accident:"全程4S店保养，记录可查",price:"14.5",city:"郑州",flaw:"右前门一处小凹坑，已无痕修复"},
+ {year:"2020款",model:"大众迈腾",mileage:"9.6",transfers:"3",paint:"前后保险杠补漆，机盖原版",accident:"无结构性事故，底盘整备过",price:"10.2",city:"郑州",flaw:"天窗排水管通过一次已疏通，内饰有烟味"},
+ {year:"2022款",model:"特斯拉Model 3",mileage:"2.1",transfers:"1",paint:"全车原漆",accident:"官方超充为主，电池健康度可查",price:"17.6",city:"郑州",flaw:"后保险杠有 minor 划痕，左后轮毂有磕碰"}
+];
+var demoIdx=0,variant=0,uploadedImg=null;
+function car(){return{year:$("f_year").value.trim()||"20XX款",model:$("f_model").value.trim()||"车型",mileage:$("f_mileage").value.trim()||"—",transfers:$("f_transfers").value.trim()||"—",paint:$("f_paint").value.trim()||"车况见图",accident:$("f_accident").value.trim()||"实车为准",price:$("f_price").value.trim()||"—",city:$("f_city").value.trim()||"郑州",flaw:$("f_flaw").value.trim()||""}}
+function flawS(c){return c.flaw?"说句实话，"+c.flaw+"，价格里已经扣过了，不影响开。":"车况透明，实车为准。"}
+function flawShort(c){return c.flaw?"除了"+c.flaw.split(/[，。；]/)[0]:"车况"}
+function renderCarCard(){var c=car();$("carCard").innerHTML='<div class="t">'+esc(c.year)+" "+esc(c.model)+'</div><div class="p">¥'+esc(c.price)+'<small> 万 · 明盘</small></div><div class="row"><i>表显 '+esc(c.mileage)+' 万公里</i><i>过户 '+esc(c.transfers)+' 次</i><i>'+esc(c.paint)+'</i><i>'+esc(c.accident)+'</i><i>📍'+esc(c.city)+'</i></div>'+(c.flaw?'<div class="flaw">实话实说：'+esc(c.flaw)+'（主动写出来，客户才敢问价）</div>':"")}
+/* ========== 提示词引擎（全网话术库提炼） ========== */
+var momentTags=["首发 · 明盘","第3天 · 催单","第5天 · 场景","第7天 · 换角度","第10天 · 对比","第14天 · 降价预告","周末 · 到店","深夜 · 随缘"];
+var momentTagsB=["收车日记","交个朋友","手续齐全","同城自提","同行调车","一口价","实车视频","明早更新"];
+function genMoments(c){
+ var hi=(parseFloat(c.price)+1).toFixed(1),lo=(parseFloat(c.price)-0.6).toFixed(1);
+ var A=[
+ "新收一台"+c.year+c.model+"，表显"+c.mileage+"万公里，过户"+c.transfers+"次。"+c.accident+"。要价"+c.price+"万，明盘发，同行什么价心里都有数，别互相耽误。"+flawS(c)+"车在"+c.city+"，随时来看。",
+ c.model+"还在。问的人不少，真心想定的没几个。"+flawShort(c)+"，其他没得说，光点赞不行动的，车可不等人。",
+ "家里添了老二、想换台大空间轿车的，看这台"+c.year+c.model+"。"+c.mileage+"万公里家用正当年，"+c.accident+"。一年跑不到一万公里的慎入，这车适合踏踏实实开的。",
+ "换个角度再看"+c.year+c.model+"："+c.paint+"。"+flawS(c)+"看完实车再决定，"+c.city+"本地优先，外地可发物流。",
+ "同年份同配置的"+c.model+"，市场上喊"+hi+"万的大有人在。我这台"+c.price+"万，差别就在"+flawShort(c)+"。你要精品的价，我这台是实在的车，各取所需。",
+ c.model+"挂了半个月，实话实说要往下调了。"+c.price+"万之内今天能定的，按这个数走；明天开始调价，别怪我没提醒。",
+ "周末不休。"+c.year+c.model+"，"+c.mileage+"万公里，"+c.price+"万，车在"+c.city+"。提前打招呼直接看车试驾，看完当场聊价，不墨迹。",
+ "深夜翻到这条的，都是有缘人。"+c.year+c.model+"，"+c.price+"万，"+flawShort(c)+"，其他没毛病。想了解的私信，明早回。"
+ ];
+ var B=[
+ "收车日记：今天拿下这台"+c.model+"，"+c.mileage+"万公里，"+c.paint+"。"+c.accident+"。整备已做，"+c.price+"万出，"+c.city+"自提。",
+ "做二手车第N年，就认一个理：车况说清楚，价格不墨迹。"+c.year+c.model+"，"+c.price+"万，"+flawS(c)+"合适就聊，不合适交个朋友。",
+ c.year+c.model+"，手续齐全，"+c.transfers+"手，过户干净。"+c.paint+"。"+c.price+"万，"+c.city+"随时过户，不拖泥带水。",
+ c.city+"同城看车："+c.model+"，表显"+c.mileage+"万，"+c.price+"万。"+flawShort(c)+"，其他没瞒的。车在店里，提前打招呼就行。",
+ "同行调车："+c.year+c.model+"，"+c.price+"万出，"+(parseFloat(c.price)-0.4).toFixed(1)+"万以上可谈，车况资料齐全，外地发物流。",
+ c.year+c.model+"，"+c.price+"万，不议价不是霸道，是车况值这个数："+c.paint+"，"+c.accident+"。诚心要的来，砍价的请看下一台。",
+ "实车视频已拍好："+c.model+"，外观/内饰/机舱/里程表都有，要看的私信我发你。"+c.price+"万，"+c.city+"，看完再聊价，不耽误彼此。",
+ "明早更新一批车源，先预告这台："+c.year+c.model+"，"+c.mileage+"万公里，"+c.price+"万。"+flawS(c)+"设个关注，不错过。"
+ ];
+ return variant%2===0?A:B;
+}
+function genDouyin(c){
+ var hi=(parseFloat(c.price)+1).toFixed(1);
+ var S1=[
+ {name:"A · 干货型",parts:[
+  ["前3秒钩子",c.year+"的"+c.model+"，表显才"+c.mileage+"万，但我今天要先说它一个毛病。"],
+  ["定人群","预算"+c.price+"万左右、想买合资B级车的，这台合适；追求极品车况的，你别看。"],
+  ["车况事实",c.mileage+"万公里，过户"+c.transfers+"次，"+c.paint+"。"+c.accident+"。"],
+  ["价格逻辑","同年份市场价"+hi+"万上下，我报"+c.price+"万，便宜的部分就是"+flawShort(c)+"。"],
+  ["结尾行动","车在"+c.city+"，想看实车的，评论区扣1，私信你。"]]},
+ {name:"B · 专业型",parts:[
+  ["前3秒钩子","收"+c.model+"，我只看三个地方，看完再谈价。"],
+  ["第一看漆","全车漆面数值过一遍："+c.paint+"，哪面动过手，数不说谎。"],
+  ["第二看骨架","大梁、ABC柱、防火墙，原厂焊点均匀，"+c.accident+"。"],
+  ["第三看记录","维保出险可查，表显"+c.mileage+"万，和记录对得上，调没调表一眼的事。"],
+  ["结尾行动","同款你怎么看？"+c.price+"万，"+c.city+"，关注我，收车不踩坑。"]]},
+ {name:"C · 故事型",parts:[
+  ["前3秒钩子","这台"+c.model+"，卖家急着用钱，我砍了三次价。"],
+  ["故事","车主开了"+c.mileage+"万公里，一直规规矩矩保养，"+c.accident+"。这次换车，干脆。"],
+  ["转折","但我得说清楚："+flawS(c)+"买二手车，图的就是一个明白。"],
+  ["价格",c.price+"万，"+c.city+"看车，当天过户，不拖泥带水。"],
+  ["结尾行动","你是要精品的，还是要实在的？评论区聊聊。"]]}];
+ var S2=[
+ {name:"A · 避坑型",parts:[
+  ["前3秒钩子","想买"+c.model+"又怕被坑？今天这台，我把毛病先说完。"],
+  ["避坑点1",c.paint+"——哪面补过漆，我指给你看。"],
+  ["避坑点2","表显"+c.mileage+"万，维保记录我对得上，调表车在这活不过第一集。"],
+  ["价格逻辑","同年份"+hi+"万的行情，我这台"+c.price+"万，就差在"+flawShort(c)+"。"],
+  ["结尾行动","车在"+c.city+"，带师傅来随便验，有问题当场走人。"]]},
+ {name:"B · 对比型",parts:[
+  ["前3秒钩子","同年份"+c.model+"，有人卖"+hi+"万，我这台"+c.price+"万，差在哪？"],
+  ["差在车况",c.paint+"，"+c.accident+"，一样都不瞒。"],
+  ["差在心态","我做的是回头客，不是一锤子买卖。"+flawS(c)],
+  ["适合谁","预算务实、车况透明就行的，这台就是为你准备的。"],
+  ["结尾行动",""+c.city+"看车，私信「对比」两个字，发你详细资料。"]]},
+ {name:"C · 催单型",parts:[
+  ["前3秒钩子",c.model+"，"+c.mileage+"万公里，"+c.price+"万，今天必须推一次。"],
+  ["为什么急","问的人多，下定的就一个，好车不等人。"],
+  ["车况兜底",c.paint+"，"+c.accident+"，资料齐全可过户。"],
+  ["价格兜底",c.price+"万，今天定，明天调价前最后一天。"],
+  ["结尾行动",""+c.city+"，私信「1」，发位置。"]]}];
+ return Math.floor(variant/2)%2===0?S1:S2;
+}
+/* ========== 违禁词（广告法第九条 + 真实处罚案例） ========== */
+var BANNED=["最低价","全网最低","全市最低","全国最低","最便宜","最","最佳","最具","最爱","最优","最好","最大","最高","最低","最先","最后","最新","第一","全网第一","销量第一","排名第一","唯一","独一无二","NO.1","TOP1","首选","独家","首发","国家级","世界领先","领导者","之王","王者","冠军","史无前例","前无古人","永久","万能","无敌","纯天然","100%","零风险","保证","假一赔","秒杀","限时抢","绝无仅有"];
+function renderBanned(c){
+ var all=genMoments(c).join("\n")+"\n"+genDouyin(c).map(function(s){return s.parts.map(function(p){return p[1]}).join("")}).join("\n");
+ var hits=[];BANNED.forEach(function(w){if(all.indexOf(w)>-1&&w!=="最")hits.push(w)});
+ if(all.indexOf("最")>-1){var ctx=all.match(/.{0,4}最.{0,6}/);hits.push("最（"+esc(ctx[0])+"…）")}
+ $("bannedBox").innerHTML=hits.length
+ ? '<div class="bad">⚠ 检出 '+hits.length+' 处高风险词，发布前改掉：</div><ul>'+hits.map(function(w){return '<li><em>'+w+'</em> — 换成可验证的事实（里程/漆面/记录/价格理由）</li>';}).join("")+'</ul><div class="law">依据《广告法》第九条：禁用「国家级/最高级/最佳」等绝对化用语，违者责令停止发布 + 罚款 20 万起、最高 100 万。真实案例：烟台某二手车商 2026 年因「全市最低价」被罚；瓜子曾因「遥遥领先」被罚 1250 万。</div>'
+ : '<div class="ok">✓ 未检出违禁词 / 极限词，可发布</div><div style="font-size:12px;color:#888;margin-top:8px">二手车是广告法重点监管行业。本工具每次生成自动过检，把「最低价」换成「同年份市场价 X 万，我这台便宜的部分是 Y」这类事实描述。</div><div class="law">依据《广告法》第九条：禁用绝对化用语，罚款 20 万起、最高 100 万。</div>';
+}
+function renderAll(){
+ renderCarCard();
+ var c=car(),list=genMoments(c),box=$("momentsList");box.innerHTML="";
+ list.forEach(function(t,i){
+  var d=document.createElement("div");d.className="copy-item";
+  d.innerHTML='<span class="tag">'+(variant%2===0?momentTags[i]:momentTagsB[i])+'</span><div class="txt">'+esc(t)+'</div><div class="acts"><button class="hot">复制文案</button><button onclick="toast(\'正式版：一键分发抖音/快手/视频号/闲鱼\')">一键分发</button></div>';
+  d.querySelector(".hot").onclick=function(){copyTxt(this,t)};
+  box.appendChild(d);
+ });
+ var dbox=$("douyinList");dbox.innerHTML="";
+ genDouyin(c).forEach(function(s){
+  var d=document.createElement("div");d.className="copy-item",html='<span class="tag">'+esc(s.name)+'（约30秒）</span>';
+  s.parts.forEach(function(p){html+='<div class="script-part"><b>'+esc(p[0])+'</b><span>'+esc(p[1])+'</span></div>'});
+  var full=s.parts.map(function(p){return p[0]+"："+p[1]}).join("；");
+  html+='<div class="acts"><button class="hot">复制脚本</button></div>';
+  d.innerHTML=html;d.querySelector(".hot").onclick=function(){copyTxt(this,full)};
+  dbox.appendChild(d);
+ });
+ renderBanned(c);drawPoster(c);
+}
+/* 剪贴板降级链：clipboard API → execCommand → prompt；任何环境都不冒未捕获错误 */
+function legacyCopy(t){
+  try{
+    var ta=document.createElement("textarea");ta.value=t;
+    ta.style.cssText="position:fixed;left:-999px;top:0;opacity:0";document.body.appendChild(ta);
+    ta.focus();ta.select();var r=document.execCommand("copy");ta.remove();return !!r;
+  }catch(e){return false}
+}
+function copyAny(t,cbOk,cbFail){
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(cbOk).catch(function(){legacyCopy(t)?cbOk():cbFail()})
+  }
+  else{legacyCopy(t)?cbOk():cbFail()}
+}
+function copyTxt(btn,t){
+  copyAny(t,
+    function(){btn.textContent="已复制 ✓";setTimeout(function(){btn.textContent="复制文案"},1500)},
+    function(){btn.textContent="复制失败，请长按选中文字";setTimeout(function(){btn.textContent="复制文案"},2500)})
+}
+function toast(m){var t=document.createElement("div");t.textContent=m;t.style.cssText="position:fixed;bottom:110px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;z-index:200";document.body.appendChild(t);setTimeout(function(){t.remove()},2200)}
+/* ========== 海报 ========== */
+function roundRect(x,rx,ry,rw,rh,r){x.beginPath();x.moveTo(rx+r,ry);x.arcTo(rx+rw,ry,rx+rw,ry+rh,r);x.arcTo(rx+rw,ry+rh,rx,ry+rh,r);x.arcTo(rx,ry+rh,rx,ry,r);x.arcTo(rx,ry,rx+rw,ry,r);x.closePath()}
+function drawPoster(c){
+ var cv=$("posterCanvas"),x=cv.getContext("2d"),W=750,H=1100;
+ var g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"#8c1f18");g.addColorStop(.55,"#b03a2e");g.addColorStop(1,"#5e150f");
+ x.fillStyle=g;x.fillRect(0,0,W,H);
+ x.fillStyle="#ffd66b";x.fillRect(0,0,W,8);
+ x.textAlign="left";x.fillStyle="#fff";x.font="800 44px sans-serif";x.fillText("二手车专家",40,96);
+ x.textAlign="right";x.fillStyle="rgba(255,255,255,.75)";x.font="24px sans-serif";x.fillText("郑州知行软件 出品",W-40,92);
+ var px=40,py=130,pw=670,ph=400;
+ x.save();x.beginPath();roundRect(x,px,py,pw,ph,18);x.clip();
+ if(uploadedImg){x.drawImage(uploadedImg,px,py,pw,ph)}
+ else{x.fillStyle="rgba(0,0,0,.25)";x.fillRect(px,py,pw,ph);x.fillStyle="rgba(255,255,255,.85)";x.font="30px sans-serif";x.textAlign="center";x.fillText("上传车辆照片",px+pw/2,py+ph/2-8);x.font="22px sans-serif";x.fillStyle="rgba(255,255,255,.55)";x.fillText("绕车 / 内饰 / 里程表",px+pw/2,py+ph/2+32)}
+ x.restore();
+ x.strokeStyle="rgba(255,214,107,.6)";x.lineWidth=2;roundRect(x,px,py,pw,ph,18);x.stroke();
+ x.textAlign="left";x.fillStyle="#fff";x.font="800 44px sans-serif";x.fillText(c.year+" "+c.model,40,606);
+ x.fillStyle="#ffd66b";x.font="800 88px sans-serif";x.fillText("¥"+c.price+" 万",40,706);
+ var tw=x.measureText("¥"+c.price+" 万").width;x.font="26px sans-serif";x.fillStyle="#ffd66b";x.fillText("明盘 · 实车为准",56+tw,700);
+ var chips=["表显 "+c.mileage+" 万公里","过户 "+c.transfers+" 次",c.paint.length>12?c.paint.slice(0,12)+"…":c.paint];
+ var cx=40;x.font="25px sans-serif";
+ chips.forEach(function(t){var w=x.measureText(t).width+34;x.fillStyle="rgba(255,255,255,.16)";roundRect(x,cx,736,w,50,25);x.fill();x.fillStyle="#fff";x.fillText(t,cx+17,768);cx+=w+12});
+ x.fillStyle="rgba(0,0,0,.28)";roundRect(x,40,816,W-80,c.flaw?118:76,14);x.fill();
+ x.fillStyle="#ffd66b";x.font="700 27px sans-serif";x.fillText("实话实说",64,856);
+ x.fillStyle="rgba(255,255,255,.92)";x.font="24px sans-serif";
+ if(c.flaw){var line="",lines=[];for(var i=0;i<c.flaw.length;i++){if(x.measureText(line+c.flaw[i]).width>W-128){lines.push(line);line=c.flaw[i];if(lines.length>=1)break}else line+=c.flaw[i]}lines.push(line.slice(0,36));lines.slice(0,2).forEach(function(l,i){x.fillText(l,64,898+i*36)})}
+ else x.fillText("车况透明，无隐瞒，欢迎带师傅来看。",64,898);
+ x.fillStyle="#fff";x.font="800 38px sans-serif";x.fillText("余晓春 · "+c.city,40,1000);
+ x.font="23px sans-serif";x.fillStyle="rgba(255,255,255,.8)";x.fillText("看车提前联系 · 朋友圈第一时间更新车源",40,1038);
+ x.fillStyle="#fff";roundRect(x,560,956,138,138,12);x.fill();
+ x.fillStyle="#b03a2e";x.font="23px sans-serif";x.textAlign="center";x.fillText("二维码",629,1026);x.fillText("看实车",629,1058);x.textAlign="left";
+ x.fillStyle="rgba(255,255,255,.75)";x.font="22px sans-serif";x.fillText("加微信 · 发车况视频",40,1084);
+ x.fillStyle="rgba(255,255,255,.6)";x.font="21px sans-serif";x.textAlign="center";x.fillText("二手车专家 制作 ｜ 郑州知行软件 出品 ｜ 余晓春 · "+c.city,W/2,H-22);
+}
+/* ========== 语音转写 ========== */
+var recognizing=false,recog=null;
+$("voiceBtn").onclick=function(){
+ var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){toast("当前浏览器不支持语音识别，请直接输入文字");return}
+ if(recognizing){recog.stop();return}
+ recog=new SR();recog.lang="zh-CN";recog.continuous=true;recog.interimResults=true;
+ var finalTxt="";
+ recog.onresult=function(e){var it="";for(var i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)finalTxt+=e.results[i][0].transcript;else it+=e.results[i][0].transcript}$("voiceTxt").value=finalTxt+it};
+ recog.onstart=function(){recognizing=true;$("voiceBtn").textContent="⏹ 停止转写";toast("开始聆听，念车况即可")};
+ recog.onend=function(){recognizing=false;$("voiceBtn").textContent="🎙 语音转写"};
+ recog.onerror=function(e){recognizing=false;$("voiceBtn").textContent="🎙 语音转写";toast("识别出错："+(e.error||"未知")+"，可手动输入")};
+ recog.start();
+};
+$("parseBtn").onclick=function(){
+ var t=$("voiceTxt").value;if(!t.trim()){toast("先语音或输入一段车况描述");return}
+ var filled=[];
+ var m;
+ if((m=t.match(/((?:19|20)\d{2})年?款?/))&&!$("f_year").dataset.lock){$("f_year").value=m[1]+"款";filled.push("年款")}
+ if((m=t.match(/(\d+(?:\.\d+)?)\s*万?\s*(?:公里|km)/i))){$("f_mileage").value=m[1];filled.push("里程")}
+ if((m=t.match(/过户\s*(\d+)\s*次|(\d+)\s*手/))){$("f_transfers").value=m[1]||m[2];filled.push("过户")}
+ if((m=t.match(/(\d+(?:\.\d+)?)\s*万(?!公里)/))){$("f_price").value=m[1];filled.push("要价")}
+ if((m=t.match(/(全车原版原漆|原版原漆|原漆[^。；，]*|做过漆[^。；，]*|补漆[^。；，]*|钣金[^。；，]*)/))){$("f_paint").value=m[1];filled.push("漆面")}
+ if((m=t.match(/(无重大事故|无事故|事故[^。；，]*|磕碰[^。；，]*)/))){$("f_accident").value=m[1];filled.push("事故/整备")}
+ if((m=t.match(/(郑州|北京|上海|广州|深圳|杭州|南京|武汉|成都|西安|苏州|重庆|天津|合肥|济南|石家庄)/))){$("f_city").value=m[1];filled.push("城市")}
+ renderAll();
+ toast(filled.length?"已识别："+filled.join("、")+"，请核对":"没识别到关键信息，请手动填写");
+};
+$("demoBtn").onclick=function(){demoIdx=(demoIdx+1)%demos.length;var d=demos[demoIdx];for(var k in d)$("f_"+k).value=d[k];variant++;renderAll();toast("已切换演示车")};
+$("genBtn").onclick=function(){renderAll();document.getElementById("genTabs").scrollIntoView({behavior:"smooth"})};
+$("regenBtn").onclick=$("regenBtn2").onclick=function(){variant++;renderAll();toast("已换一批")};
+["f_year","f_model","f_mileage","f_transfers","f_paint","f_accident","f_price","f_city","f_flaw"].forEach(function(id){$(id).oninput=renderAll});
+$("photoBtn").onclick=function(){$("photoInput").click()};
+$("photoInput").onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){var img=new Image();img.onload=function(){uploadedImg=img;drawPoster(car());toast("照片已上海报")};img.src=ev.target.result};r.readAsDataURL(f)};
+$("dlBtn").onclick=function(){var a=document.createElement("a");a.download="二手车专家-卖车海报.png";a.href=$("posterCanvas").toDataURL("image/png");a.click();toast("海报已保存，去相册查看")};
+/* ========== 导航 ========== */
+$("tabbar").querySelectorAll("div").forEach(function(t){t.onclick=function(){$("tabbar").querySelectorAll("div").forEach(function(x){x.classList.remove("on")});document.querySelectorAll(".page").forEach(function(x){x.classList.remove("on")});t.classList.add("on");$("page-"+t.dataset.page).classList.add("on");window.scrollTo(0,0)}});
+$("genTabs").querySelectorAll("div").forEach(function(t){t.onclick=function(){$("genTabs").querySelectorAll("div").forEach(function(x){x.classList.remove("on")});document.querySelectorAll("#page-fache .pane").forEach(function(x){x.classList.remove("on")});t.classList.add("on");$("pane-"+t.dataset.tab).classList.add("on")}});
+/* ========== 车库 ========== */
+function garage(){try{return JSON.parse(localStorage.getItem("yzs_garage")||"[]")}catch(e){return[]}}
+function saveGarage(g){localStorage.setItem("yzs_garage",JSON.stringify(g))}
+$("saveBtn").onclick=function(){var c=car();var g=garage();g.unshift({id:Date.now(),d:c});saveGarage(g);renderGarage();toast("已存入车库（只存本机）")};
+function renderGarage(){
+ var g=garage(),box=$("garageList");
+ if(!g.length){box.innerHTML='<div style="text-align:center;color:#a89e91;font-size:13px;padding:30px 0">车库还是空的<br>在「发车」页点「存入车库」，收的每台车都有档</div>';return}
+ box.innerHTML="";
+ g.forEach(function(it){
+  var d=document.createElement("div");d.className="garage-item";
+  d.innerHTML='<div><div class="gi-t">'+esc(it.d.year)+" "+esc(it.d.model)+'</div><div class="gi-s">¥'+esc(it.d.price)+' 万 · '+esc(it.d.mileage)+' 万公里 · '+esc(it.d.city)+'</div></div><div class="gi-a"><button class="load">调出</button><button class="del">删除</button></div>';
+  d.querySelector(".load").onclick=function(){for(var k in it.d)$("f_"+k).value=it.d[k];renderAll();toast("已调出到发车页");$("tabbar").querySelector("div").click()};
+  d.querySelector(".del").onclick=function(){saveGarage(garage().filter(function(x){return x.id!==it.id}));renderGarage()};
+  box.appendChild(d);
+ });
+}
+function copyLink(){
+  var u=location.href;
+  copyAny(u,function(){toast("链接已复制，甩进同行群即可")},function(){prompt("复制链接：",u)})
+}
+$("shareBtn").onclick=copyLink;
+/* ========== 计算器 ========== */
+var PROV=[["河南",600],["北京",800],["上海",900],["广东",700],["浙江",700],["江苏",700],["山东",600],["河北",600],["四川",700],["湖北",600],["福建",700],["湖南",600],["安徽",600],["陕西",600],["辽宁",600],["其他",600]];
+(function(){var s=$("c_prov");PROV.forEach(function(p){var o=document.createElement("option");o.value=p[1];o.textContent=p[0]+"（约"+p[1]+"元）";s.appendChild(o)});s.onchange=function(){$("c_transfer").value=s.value;calc()}})();
+function num(v){var n=parseFloat(v);return isNaN(n)?0:n}
+function calc(){
+ var price=num($("c_price").value),cost=num($("c_transfer").value)+num($("c_fix").value)+num($("c_road").value)+num($("c_deposit").value);
+ var total=price+cost/10000;
+ var profit=num($("c_retail").value)-total;
+ var rate=total>0?(profit/total*100):0;
+ var wholesale=(total*1.08).toFixed(2),retailSug=(total*1.15).toFixed(2);
+ $("calcOut").innerHTML='<div class="line"><span>收车价</span><b>'+price.toFixed(2)+' 万</b></div>'+
+ '<div class="line"><span>过户费 + 整备 + 路途 + 押金</span><b>'+cost+' 元</b></div>'+
+ '<div class="line total"><span>落地总成本</span><b>'+total.toFixed(2)+' 万</b></div>'+
+ '<div class="line"><span>建议批发价（成本+8%）</span><b>'+wholesale+' 万</b></div>'+
+ '<div class="line"><span>建议零售价（成本+15%）</span><b>'+retailSug+' 万</b></div>'+
+ '<div class="line"><span>按计划零售 '+$("c_retail").value+' 万的利润空间</span><b style="color:'+(profit>=0?"#7be08a":"#ff8a7a")+'">'+profit.toFixed(2)+' 万（'+rate.toFixed(1)+'%）</b></div>';
+}
+["c_price","c_transfer","c_fix","c_road","c_deposit","c_retail"].forEach(function(id){$(id).oninput=calc});
+/* ========== 合同 ========== */
+function ctText(){
+ var c=car(),today=new Date(),ds=today.getFullYear()+" 年 "+(today.getMonth()+1)+" 月 "+today.getDate()+" 日";
+ var head="甲方（卖方）：＿＿＿＿＿＿＿＿　　身份证号：＿＿＿＿＿＿＿＿＿＿＿＿\n乙方（买方）：余晓春（郑州知行软件 · 二手车专家）\n签订日期："+ds+"\n签订地点："+c.city+"\n\n";
+ if($("ctTabs").querySelector(".on").dataset.ct==="buy"){
+  return head+"《二手车收车合同》\n一、车辆信息\n品牌车型："+c.year+c.model+"\n车架号（VIN）：＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿\n表显里程："+c.mileage+" 万公里\n过户次数："+c.transfers+" 次\n二、成交价格\n人民币 "+c.price+" 万元（￥"+c.price+"0000 元）。签订本合同时乙方已支付购车款，甲方同时交付车辆及相关手续（行驶证、登记证书、购车发票/二手车发票、交强险保单等）。\n三、车况约定\n甲方承诺："+c.accident+"；"+c.paint+"。已知瑕疵："+(c.flaw||"无")+"。\n四、过户约定\n双方于 ____ 年 __ 月 __ 日前共同办理过户手续，过户费由 ____ 方承担。甲方应保证车辆无抵押、无查封、无盗抢、无经济纠纷，如有隐瞒，甲方承担全部责任并赔偿乙方损失。\n五、违约责任\n任何一方违约，向守约方支付车价 10% 的违约金；造成损失的，据实赔偿。\n六、其他\n本合同一式两份，双方各执一份，自签字之日起生效。\n\n甲方签字：＿＿＿＿＿＿　　乙方签字：＿＿＿＿＿＿"
+ }
+ return head+"《购车定金协议》\n一、标的车辆\n品牌车型："+c.year+c.model+"\n车架号（VIN）：＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿\n表显里程："+c.mileage+" 万公里\n二、定金\n乙方于 "+ds+" 向甲方支付购车定金人民币 ＿＿＿＿ 元（大写：＿＿＿＿）。\n三、车况与价格约定\n车辆成交总价 "+c.price+" 万元。"+c.accident+"；"+c.paint+"。已知瑕疵："+(c.flaw||"无")+"。\n四、有效期\n双方约定于 ____ 年 __ 月 __ 日前完成交易并过户。逾期甲方不售的，双倍返还定金；逾期乙方不买的，定金不退。\n五、其他\n本协议为定金性质，正式交易时另签《二手车收车合同》。\n\n甲方签字：＿＿＿＿＿＿　　乙方签字：＿＿＿＿＿＿"
+}
+function renderCt(){$("ctTpl").textContent=ctText()}
+$("ctTabs").querySelectorAll("div").forEach(function(t){t.onclick=function(){$("ctTabs").querySelectorAll("div").forEach(function(x){x.classList.remove("on")});t.classList.add("on");renderCt()}});
+function copyContract(){copyTxt({textContent:"复制合同全文"},ctText());toast("合同已复制，粘贴到微信或WPS")}
+function printContract(){$("printArea").textContent=ctText();window.print()}
+/* ========== 工具：手电 ========== */
+var torchTrack=null,torchOn=false,strobeTimer=null;
+function openTorch(){$("ovTorch").classList.add("on")}
+function closeTorch(){stopTorch();$("ovTorch").classList.remove("on")}
+async function ensureCam(){
+ if(torchTrack)return torchTrack;
+ try{var s=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});torchTrack=s.getVideoTracks()[0];return torchTrack}catch(e){return null}
+}
+async function toggleTorch(){
+ var t=await ensureCam();
+ if(!t){$("torchTip").textContent="当前浏览器/机型不支持闪光灯，请用「屏幕补光」";return}
+ try{
+  torchOn=!torchOn;
+  await t.applyConstraints({advanced:[{torch:torchOn}]});
+  $("torchBtn").textContent=torchOn?"关闭手电":"开启手电";
+  $("torchBtn").className="bigbtn"+(torchOn?" off":"");
+ }catch(e){$("torchTip").textContent="闪光灯调用失败，请用「屏幕补光」"}
+}
+async function toggleStrobe(){
+ if(strobeTimer){clearInterval(strobeTimer);strobeTimer=null;$("strobeBtn").textContent="爆闪模式";$("strobeBtn").className="bigbtn off";return}
+ var t=await ensureCam();if(!t){$("torchTip").textContent="不支持闪光灯";return}
+ $("strobeBtn").textContent="停止爆闪";$("strobeBtn").className="bigbtn";
+ var on=false;strobeTimer=setInterval(function(){on=!on;t.applyConstraints({advanced:[{torch:on}]}).catch(function(){clearInterval(strobeTimer);strobeTimer=null})},120);
+}
+function stopTorch(){if(strobeTimer){clearInterval(strobeTimer);strobeTimer=null}if(torchTrack){torchTrack.applyConstraints({advanced:[{torch:false}]}).catch(function(){});torchTrack.stop();torchTrack=null;torchOn=false}}
+function openScreenLight(){$("screenLight").classList.add("on")}
+function openPurple(){$("purpleLight").classList.add("on")}
+/* ========== 工具：水印相机 ========== */
+var camStream=null,camFacing="environment",wmTimer=null;
+async function openCamera(){
+ $("ovCam").classList.add("on");
+ try{camStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:camFacing},audio:false})}catch(e){toast("相机打开失败："+(e.name||""));return}
+ $("wmVideo").srcObject=camStream;
+ if(!wmTimer)wmTimer=setInterval(function(){var d=new Date();$("wmTime").textContent=d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)+" "+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)+":"+("0"+d.getSeconds()).slice(-2)},500);
+ if(navigator.geolocation){navigator.geolocation.getCurrentPosition(function(p){$("wmLoc").textContent=p.coords.latitude.toFixed(5)+", "+p.coords.longitude.toFixed(5)},function(){$("wmLoc").textContent="定位失败（检查权限）"},{timeout:8000})}
+ else $("wmLoc").textContent="浏览器不支持定位";
+}
+async function switchCam(){
+ camFacing=camFacing==="environment"?"user":"environment";
+ if(camStream)camStream.getTracks().forEach(function(t){t.stop()});
+ try{camStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:camFacing},audio:false});$("wmVideo").srcObject=camStream}catch(e){toast("切换失败")}
+}
+function closeCamera(){if(camStream)camStream.getTracks().forEach(function(t){t.stop()});camStream=null;$("ovCam").classList.remove("on")}
+function snap(){
+ var v=$("wmVideo");if(!v.videoWidth){toast("相机未就绪");return}
+ var cv=document.createElement("canvas");cv.width=v.videoWidth;cv.height=v.videoHeight;
+ var x=cv.getContext("2d");x.drawImage(v,0,0);
+ var bh=Math.round(cv.height*0.16);
+ x.fillStyle="rgba(0,0,0,.55)";x.fillRect(0,cv.height-bh,cv.width,bh);
+ x.fillStyle="#ffd66b";x.font="bold "+Math.round(bh*0.22)+"px sans-serif";
+ x.fillText("二手车专家 · 水印存证",24,cv.height-bh+bh*0.34);
+ x.fillStyle="#fff";x.font=Math.round(bh*0.2)+"px sans-serif";
+ x.fillText($("wmTime").textContent+"　"+$("wmLoc").textContent,24,cv.height-bh+bh*0.62);
+ var custom=$("wmText").value.trim();
+ if(custom){x.fillStyle="#ffd66b";x.font="bold "+Math.round(bh*0.22)+"px sans-serif";x.fillText(custom,24,cv.height-bh+bh*0.88)}
+ var a=document.createElement("a");a.download="水印存证-"+Date.now()+".png";a.href=cv.toDataURL("image/png");a.click();
+ toast("已存证，保存到相册");
+}
+/* ========== 工具：水平仪 ========== */
+var lvCalib=null;
+function openLevel(){$("ovLevel").classList.add("on");startLevel()}
+function closeLevel(){$("ovLevel").classList.remove("on");window.removeEventListener("deviceorientation",lvHandler)}
+function lvHandler(e){
+ var beta=e.beta||0,gamma=e.gamma||0;
+ if(lvCalib===null)lvCalib={b:beta,g:gamma};
+ var db=beta-lvCalib.b,dg=gamma-lvCalib.g;
+ var tilt=Math.sqrt(db*db+dg*dg);
+ $("lvNum").textContent=tilt.toFixed(1)+"°";
+ var mx=Math.max(-40,Math.min(40,dg)),my=Math.max(-40,Math.min(40,db));
+ $("lvBubble").style.transform="translate("+(mx*1.6)+"px,"+(my*1.6)+"px)";
+ $("lvBubble").style.background=tilt>2?"radial-gradient(circle at 35% 35%,#ffb3a0,#d93025)":"radial-gradient(circle at 35% 35%,#ff8a7a,#b03a2e)";
+}
+function startLevel(){
+ if(typeof DeviceOrientationEvent!=="undefined"&&DeviceOrientationEvent.requestPermission){
+  DeviceOrientationEvent.requestPermission().then(function(r){if(r==="granted")window.addEventListener("deviceorientation",lvHandler)}).catch(function(){toast("无法获取传感器权限")})
+ }else if(window.DeviceOrientationEvent){window.addEventListener("deviceorientation",lvHandler)}
+ else toast("当前设备不支持水平仪");
+}
+function calibLevel(){lvCalib=null;toast("已归零，手机放平后再测")}
+/* ========== 工具：秒表 ========== */
+var swRun=false,swT0=0,swAcc=0,swTimer=null,lapN=0;
+function openStopwatch(){$("ovSw").classList.add("on")}
+function closeSw(){$("ovSw").classList.remove("on");swReset()}
+function fmt(ms){var m=Math.floor(ms/60000),s=Math.floor(ms%60000/1000),c=Math.floor(ms%1000/10);return("0"+m).slice(-2)+":"+("0"+s).slice(-2)+"."+("0"+c).slice(-2)}
+function swToggle(){
+ if(swRun){clearInterval(swTimer);swRun=false;$("swBtn").textContent="继续";$("swBtn").className="bigbtn"}
+ else{swT0=Date.now()-swAcc;swRun=true;$("swBtn").textContent="暂停";$("swBtn").className="bigbtn off";swTimer=setInterval(function(){$("swTime").textContent=fmt(Date.now()-swT0)},31)}
+}
+function swLap(){if(!swRun&&!swAcc)return;lapN++;var d=document.createElement("div");d.innerHTML="<span>第 "+lapN+" 次</span><span>"+$("swTime").textContent+"</span>";$("swLaps").insertBefore(d,$("swLaps").firstChild)}
+function swReset(){clearInterval(swTimer);swRun=false;swAcc=0;lapN=0;$("swTime").textContent="00:00.00";$("swLaps").innerHTML="";$("swBtn").textContent="开始";$("swBtn").className="bigbtn"}
+/* ========== 初始化 ========== */
+renderAll();renderGarage();calc();renderCt();
+</script>
+<script>
+/* app-extra.js */
+/* ============================================================
+ * 二手车专家 V2 增强模块（app-extra.js）
+ * 1. 验车清单 132 项（9 大模块，三态标记，按车档存本机）
+ * 2. 检测小结生成（复制/分享）
+ * 3. 查询导航（12123/车300/查博士/裁判文书/执行信息公开）
+ * 4. VIN 校验位核验（第 9 位加权算法，同行没有的精细功能）
+ * 5. APK 原生能力增强（语音/分享/定位，CapBridge 优先，网页自动降级）
+ * 本文件在主脚本之后加载，同名函数/属性为增强覆盖
+ * ============================================================ */
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ================= 1. 验车清单数据（132 项） ================= */
+  var CHECK_MODULES = [
+    { name: "手续证件", icon: "📋", items: [
+      "行驶证真伪，注册/发证日期核对",
+      "机动车登记证书（大绿本）原件在手",
+      "车架号（VIN）打刻处与证件一致，无打磨",
+      "发动机号与证件一致",
+      "交强险保单在有效期内",
+      "商业险保单可随车过户",
+      "购置税完税证明（较新车需）",
+      "登记证无抵押记录 / 已解押",
+      "无查封记录（执行信息公开网查询）",
+      "年检在有效期内（标或电子凭证）",
+      "排放标准 / 环保信息随车清单",
+      "新车购车发票或二手车销售发票",
+      "原车主身份证原件（过户必需）",
+      "迁入地限排 / 提档落户政策确认"] },
+    { name: "外观漆面", icon: "🎨", items: [
+      "前后保险杠缝隙均匀，无拆卸痕迹",
+      "机盖缝隙均匀，铰链螺丝无拧动",
+      "左前翼子板漆面（数值/色差）",
+      "右前翼子板漆面",
+      "左前门漆面",
+      "右前门漆面",
+      "左后门漆面",
+      "右后门漆面",
+      "左后翼子板漆面",
+      "右后翼子板漆面",
+      "行李厢盖缝隙 / 漆面",
+      "车顶漆面（重点：切割换顶）",
+      "ABC 柱封胶为原厂胶",
+      "车门密封条无后期打胶",
+      "全车玻璃原厂标，日期编码核对",
+      "雨刮臂 / 饰条无拆卸",
+      "外观划痕凹陷清单记录",
+      "后视镜壳无更换色差"] },
+    { name: "车身结构", icon: "🏗", items: [
+      "前纵梁无褶皱 / 烧焊",
+      "前防火墙无变形",
+      "A 柱无切割焊接",
+      "B 柱无切割焊接",
+      "C 柱无切割焊接",
+      "后围板无变形",
+      "后纵梁无褶皱",
+      "备胎池无切割",
+      "行李箱地板无烧焊",
+      "机盖锁扣无更换",
+      "翼子板内梁无变形",
+      "水箱框架无更换",
+      "大梁矫正痕迹排查",
+      "全车焊点均匀性抽查"] },
+    { name: "发动机舱", icon: "🔧", items: [
+      "机油油量 / 油色（乳化=危险信号）",
+      "防冻液液位 / 颜色",
+      "制动液液位",
+      "助力转向油（液压车型）",
+      "电瓶健康度 / 生产日期",
+      "发电机 / 压缩机皮带无裂纹",
+      "发动机无渗油点",
+      "变速箱无渗漏",
+      "半轴油封无渗油",
+      "机爪垫无塌陷老化",
+      "气门室罩无拆卸痕迹",
+      "进气管无异常油泥积碳",
+      "皮带轮无松旷异响",
+      "冷启动抖动 / 异音",
+      "怠速抖动 / 方向盘共振",
+      "机油加注口无金属屑"] },
+    { name: "内饰电器", icon: "🪑", items: [
+      "座椅电动调节各方向",
+      "座椅加热 / 通风",
+      "方向盘上下前后调节",
+      "多功能方向盘按键",
+      "仪表盘无故障灯",
+      "里程数与维保记录交叉比对",
+      "中控屏触控 / CarPlay",
+      "倒车影像 / 360 影像",
+      "空调制冷 / 制热",
+      "前后雨刮各档位",
+      "喷水嘴角度 / 水量",
+      "天窗开启 / 关闭 / 翘起",
+      "车窗一键升降 + 防夹",
+      "后视镜电动折叠 / 加热",
+      "门板内饰无泡水水渍",
+      "安全带根部无泥沙霉斑",
+      "点烟器 / USB 接口带电",
+      "音响各喇叭",
+      "室内灯 / 氛围灯",
+      "钥匙各按键 + 备用钥匙"] },
+    { name: "底盘悬挂", icon: "🔩", items: [
+      "减震器无渗油",
+      "弹簧无断裂塌陷",
+      "下摆臂球头无松旷",
+      "转向拉杆球头无松旷",
+      "稳定杆胶套无开裂",
+      "副车架衬套无老化",
+      "半轴防尘套无破损",
+      "传动轴无变形",
+      "排气管无锈穿",
+      "三元催化原厂在位",
+      "油箱无凹瘪渗漏",
+      "纵梁下部无刮擦变形",
+      "差速器无渗漏",
+      "轮胎螺丝无锈死更换",
+      "底盘装甲完整度",
+      "托底痕迹评估"] },
+    { name: "路试动态", icon: "🛣", items: [
+      "冷车启动 3 秒内着车",
+      "怠速转速稳定",
+      "怠速方向盘抖动",
+      "起步顿挫（变速箱）",
+      "加速响应 / 动力衰减",
+      "换挡逻辑（升降挡时机）",
+      "60-80 再加速能力",
+      "刹车制动距离 / 跑偏",
+      "刹车踏板行程 / 软硬",
+      "转向轻重 / 旷量",
+      "过减速带异响",
+      "高速方向盘抖动（100+）",
+      "过弯侧倾 / 支撑",
+      "倒车雷达 / 影像触发"] },
+    { name: "轮胎轮毂", icon: "⭕", items: [
+      "左前胎纹深度 / 生产日期",
+      "右前胎纹深度 / 生产日期",
+      "左后胎纹深度 / 生产日期",
+      "右后胎纹深度 / 生产日期",
+      "备胎胎压 / 花纹",
+      "四轮轮毂无失圆裂纹",
+      "轮毂螺丝齐全",
+      "轮胎品牌一致性",
+      "备胎与随车工具齐全",
+      "胎压监测系统工作"] },
+    { name: "泡水火烧排查", icon: "💧", items: [
+      "门槛空腔泥沙 / 锈蚀",
+      "座椅滑轨泥沙锈蚀",
+      "安全带根部泥沙 / 霉斑",
+      "保险盒内锈蚀 / 泥沙",
+      "仪表台内部支架锈蚀",
+      "地毯下积水痕迹 / 霉味",
+      "防火墙隔音棉水渍",
+      "发动机缸体无泡水锈蚀",
+      "全车线束无更换 / 泥渍",
+      "机舱烧焊 / 熏黑痕迹"] }
+  ];
+  var ST_PENDING = 0, ST_OK = 1, ST_BAD = 2;
+  window.CHECK_MODULES = CHECK_MODULES; // 供车况报告模块读取
+
+  /* ---------- 验车状态存取（按车档） ---------- */
+  var checkCar = { id: "tmp", title: "临时验车" };
+  function checkKey() { return "yzs_check_" + checkCar.id; }
+  function checkLoad() {
+    try { return JSON.parse(localStorage.getItem(checkKey()) || "{}"); } catch (e) { return {}; }
+  }
+  function checkSave(d) { localStorage.setItem(checkKey(), JSON.stringify(d)); }
+
+  function renderCheckCars() {
+    var sel = $("checkCarSel");
+    if (!sel) return;
+    var g = [];
+    try { g = JSON.parse(localStorage.getItem("yzs_garage") || "[]"); } catch (e) {}
+    sel.innerHTML = "";
+    var o0 = document.createElement("option");
+    o0.value = "tmp"; o0.textContent = "临时验车（不关联车库）";
+    sel.appendChild(o0);
+    g.forEach(function (it) {
+      var o = document.createElement("option");
+      o.value = String(it.id);
+      o.textContent = it.d.year + " " + it.d.model + "（¥" + it.d.price + "万）";
+      sel.appendChild(o);
+    });
+    var cur = checkLoad();
+    if (cur._carTitle) {
+      for (var i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value === String(cur._carId || "tmp")) sel.selectedIndex = i;
+      }
+    }
+    var t = $("checkCarTitle");
+    if (t) t.value = cur._carTitle || "";
+  }
+
+  function switchCheckCar() {
+    var sel = $("checkCarSel");
+    var d = checkLoad();
+    d._carId = sel.value;
+    d._carTitle = $("checkCarTitle").value.trim() || (sel.value === "tmp" ? "临时验车" : sel.options[sel.selectedIndex].textContent);
+    checkSave(d);
+    checkCar.id = d._carId; checkCar.title = d._carTitle;
+    window.__checkCarId = checkCar.id; window.__checkCarTitle = checkCar.title;
+    renderCheckList(); renderCheckSummary();
+    toast("已切换：" + checkCar.title);
+  }
+
+  /* ---------- 清单渲染 ---------- */
+  function renderCheckList() {
+    var box = $("checkList");
+    if (!box) return;
+    var d = checkLoad();
+    var html = "";
+    var total = 0, done = 0;
+    CHECK_MODULES.forEach(function (m, mi) {
+      html += '<div class="card chk-mod"><h3>' + m.icon + " " + m.name +
+        ' <small data-mod="' + mi + '"></small></h3>';
+      m.items.forEach(function (it, ii) {
+        var k = mi + "_" + ii;
+        var st = d[k] ? d[k].s : ST_PENDING;
+        total++;
+        if (st !== ST_PENDING) done++;
+        html += '<div class="chk-row" data-k="' + k + '">' +
+          '<div class="chk-name">' + it + '</div>' +
+          '<div class="chk-btns">' +
+          '<button class="cb ' + (st === ST_PENDING ? "on" : "") + '" data-v="0">待检</button>' +
+          '<button class="cb ok ' + (st === ST_OK ? "on" : "") + '" data-v="1">正常</button>' +
+          '<button class="cb bad ' + (st === ST_BAD ? "on" : "") + '" data-v="2">异常</button>' +
+          "</div></div>";
+      });
+      html += "</div>";
+    });
+    box.innerHTML = html;
+    var pg = $("checkProgress");
+    if (pg) pg.innerHTML = '<div class="chk-pgb"><i style="width:' + (total ? Math.round(done / total * 100) : 0) + '%"></i></div>' +
+      '<div class="chk-pgt">已检 ' + done + " / " + total + " 项（剩 " + (total - done) + " 项）</div>";
+    box.querySelectorAll(".chk-row .cb").forEach(function (b) {
+      b.onclick = function () {
+        var row = b.closest(".chk-row"), k = row.dataset.k, v = parseInt(b.dataset.v, 10);
+        var dd = checkLoad();
+        dd[k] = { s: v, n: dd[k] ? dd[k].n : "" };
+        checkSave(dd);
+        row.querySelectorAll(".cb").forEach(function (x) { x.classList.remove("on"); });
+        b.classList.add("on");
+        if (v === ST_BAD) {
+          var note = prompt("记录异常详情（如：做过漆 / 渗油 / 异响）：", dd[k].n || "");
+          if (note !== null) { dd[k].n = note.trim(); checkSave(dd); }
+        }
+        renderCheckList(); renderCheckSummary();
+      };
+    });
+  }
+
+  /* ---------- 小结 ---------- */
+  function renderCheckSummary() {
+    var box = $("checkSummary");
+    if (!box) return;
+    var d = checkLoad();
+    var ok = 0, bad = 0, pend = 0, badItems = [];
+    CHECK_MODULES.forEach(function (m, mi) {
+      m.items.forEach(function (it, ii) {
+        var k = mi + "_" + ii;
+        var st = d[k] ? d[k].s : ST_PENDING;
+        if (st === ST_OK) ok++;
+        else if (st === ST_BAD) { bad++; badItems.push({ m: m.name, it: it, n: d[k].n || "" }); }
+        else pend++;
+      });
+    });
+    box.innerHTML =
+      '<div class="chk-stat"><div><b>' + ok + '</b><span>正常</span></div>' +
+      '<div><b style="color:#d93025">' + bad + '</b><span>异常</span></div>' +
+      '<div><b style="color:#b07d00">' + pend + '</b><span>待检</span></div>' +
+      '<div><b>' + (ok + bad) + '</b><span>已检</span></div></div>' +
+      (badItems.length
+        ? '<div class="chk-badlist"><h4>异常项清单（' + badItems.length + '）</h4>' +
+          badItems.map(function (b) {
+            return '<div class="chk-baditem"><b>[' + b.m + "]</b> " + b.it + (b.n ? "<i>备注：" + esc(b.n) + "</i>" : "") + "</div>";
+          }).join("") + "</div>"
+        : '<div class="chk-nobad">暂无异常项，或还没检到出问题的地方。</div>') +
+      '<div class="btn-row"><button class="btn btn-main" onclick="copyCheckSummary()">复制小结</button>' +
+      '<button class="btn btn-ghost" onclick="shareCheckSummary()">分享小结</button></div>' +
+      '<div class="note">小结只存本机；发给客户或档口前，请人工复核异常项。</div>';
+  }
+
+  window.copyCheckSummary = function () {
+    var d = checkLoad();
+    var ok = 0, bad = 0, pend = 0, lines = [];
+    CHECK_MODULES.forEach(function (m, mi) {
+      m.items.forEach(function (it, ii) {
+        var k = mi + "_" + ii;
+        var st = d[k] ? d[k].s : ST_PENDING;
+        if (st === ST_OK) ok++;
+        else if (st === ST_BAD) { bad++; lines.push("· [" + m.name + "] " + it + (d[k].n ? "（" + d[k].n + "）" : "")); }
+        else pend++;
+      });
+    });
+    var t = "【二手车专家 · 验车小结】\n车档：" + (checkCar.title || "未命名") +
+      "\n检测项 132 项：正常 " + ok + " ｜ 异常 " + bad + " ｜ 待检 " + pend +
+      (lines.length ? "\n异常明细：\n" + lines.join("\n") : "\n异常明细：无") +
+      "\n结论：＿＿＿＿＿＿\n检测人：＿＿＿  日期：＿＿＿\n—— 二手车专家 · 郑州知行软件";
+    copyTxt({ textContent: "复制" }, t);
+    toast("小结已复制");
+  };
+
+  window.shareCheckSummary = function () {
+    var d = checkLoad();
+    var ok = 0, bad = 0, pend = 0, lines = [];
+    CHECK_MODULES.forEach(function (m, mi) {
+      m.items.forEach(function (it, ii) {
+        var k = mi + "_" + ii;
+        var st = d[k] ? d[k].s : ST_PENDING;
+        if (st === ST_OK) ok++;
+        else if (st === ST_BAD) { bad++; lines.push("· [" + m.name + "] " + it + (d[k].n ? "（" + d[k].n + "）" : "")); }
+        else pend++;
+      });
+    });
+    var t = "【二手车专家 · 验车小结】\n车档：" + (checkCar.title || "未命名") +
+      "\n检测项 132 项：正常 " + ok + " ｜ 异常 " + bad + " ｜ 待检 " + pend +
+      (lines.length ? "\n异常明细：\n" + lines.join("\n") : "\n异常明细：无");
+    if (window.CapBridge && window.CapBridge.isNative()) {
+      window.CapBridge.shareText("验车小结", t).then(function (r) { if (!r) { copyTxt({ textContent: "复制" }, t); toast("已复制（分享不可用）"); } });
+    } else { copyTxt({ textContent: "复制" }, t); toast("已复制，粘贴发送"); }
+  };
+
+  /* ================= 2. 查询导航 ================= */
+  var QUERY_SITES = [
+    { name: "交管12123", icon: "🚔", url: "https://gab.122.gov.cn/m/index/", ds: "违章 / 记分 / 年检 / 车牌业务", tip: "查未处理违章和车辆状态，收车前必看" },
+    { name: "车300", icon: "💰", url: "https://www.che300.com/", ds: "二手车估价 / 车况报告", tip: "估价参考；免费额度有限，别指望全免费" },
+    { name: "查博士", icon: "🔍", url: "https://www.chaboshi.com/", ds: "维保记录 / 出险记录", tip: "历史车况核心渠道，活动口令可试 666888" },
+    { name: "裁判文书网", icon: "⚖️", url: "https://wenshu.court.gov.cn/", ds: "车主涉诉信息检索", tip: "查原车主有没有经济纠纷，防扯皮" },
+    { name: "执行信息公开网", icon: "📢", url: "http://zxgk.court.gov.cn/", ds: "失信 / 被执行 / 查封", tip: "查封车绝对不能碰，这里一查便知" },
+    { name: "保险公司查询", icon: "🛡", url: "https://www.iachina.cn/", ds: "出险记录核验渠道", tip: "结合保单号核对出险金额和部位" }
+  ];
+
+  function renderQuerySites() {
+    var box = $("querySites");
+    if (!box) return;
+    box.innerHTML = "";
+    QUERY_SITES.forEach(function (s) {
+      var d = document.createElement("div");
+      d.className = "query-site";
+      d.innerHTML = '<div class="qs-ic">' + s.icon + '</div><div class="qs-b"><b>' + s.name + "</b><span>" + s.ds + "</span><i>" + s.tip + "</i></div>";
+      d.onclick = function () {
+        if (window.CapBridge && window.CapBridge.isNative()) {
+          window.open(s.url, "_system");
+        } else { window.open(s.url, "_blank"); }
+      };
+      box.appendChild(d);
+    });
+  }
+
+  /* ---------- VIN 校验位核验 ---------- */
+  var TR = { A: 1, B: 2, C: 3, D: 4, E: 5, F: 6, G: 7, H: 8, J: 1, K: 2, L: 3, M: 4, N: 5, P: 7, R: 9, S: 2, T: 3, U: 4, V: 5, W: 6, X: 7, Y: 8, Z: 9 };
+  var VW = [8, 7, 6, 5, 4, 3, 2, 10, 0, 9, 8, 7, 6, 5, 4, 3, 2];
+  function vinCheck(vin) {
+    vin = (vin || "").trim().toUpperCase();
+    if (vin.length !== 17) return { ok: false, msg: "长度应为 17 位（当前 " + vin.length + "）" };
+    var sum = 0;
+    for (var i = 0; i < 17; i++) {
+      var ch = vin.charAt(i), v;
+      if (TR[ch] !== undefined) v = TR[ch];
+      else if (ch >= "0" && ch <= "9") v = +ch;
+      else return { ok: false, msg: "第 " + (i + 1) + " 位「" + ch + "」非法（VIN 不含 I/O/Q）" };
+      sum += v * VW[i];
+    }
+    var r = sum % 11, exp = r === 10 ? "X" : String(r);
+    return { ok: exp === vin.charAt(8), msg: "校验位应为「" + exp + "」" };
+  }
+
+  function renderVinPanel() {
+    var c = (typeof car === "function") ? car() : null;
+    var box = $("vinBox");
+    if (!box) return;
+    box.innerHTML =
+      '<div class="grid2">' +
+      '<div class="full"><label>车架号 VIN（17 位，从行驶证或前挡风左下角抄）</label><input id="vinInput" maxlength="17" placeholder="如 LSVXXXXXXXXXXXXXXX" value=""></div>' +
+      "</div>" +
+      '<div class="btn-row" style="margin-top:0"><button class="btn btn-ghost" onclick="copyVin()">复制 VIN</button>' +
+      '<button class="btn btn-main" style="flex:1.4" onclick="doVinCheck()">校验位核验</button></div>' +
+      '<div id="vinResult" class="vin-result"></div>' +
+      '<div class="note">VIN 第 9 位是校验位（按 GB 16735 加权算法）。抄错一位、打磨车架号，这里立刻现形。抄下的 VIN 存进车库车档，查档时一键复制。</div>';
+  }
+  window.copyVin = function () {
+    var v = ($("vinInput") || {}).value || "";
+    if (!v.trim()) { toast("先输入 VIN"); return; }
+    copyTxt({ textContent: "复制" }, v.trim());
+    toast("VIN 已复制，去各查询网站粘贴");
+  };
+  window.doVinCheck = function () {
+    var v = ($("vinInput") || {}).value || "";
+    var r = vinCheck(v);
+    var box = $("vinResult");
+    if (!box) return;
+    box.innerHTML = r.ok
+      ? '<div class="vin-ok">✓ ' + r.msg + "，与第 9 位一致，VIN 格式有效</div>"
+      : '<div class="vin-bad">✗ ' + r.msg + "，请核对是否抄错，或车架号被打磨</div>";
+  };
+
+  /* ================= 3. APK 原生能力增强（覆盖 V1 弱实现） ================= */
+  /* 语音：原生 SpeechRecognition 优先，WebView webkitSpeechRecognition 兜底 */
+  var v1Voice = $("voiceBtn") ? $("voiceBtn").onclick : null;
+  $("voiceBtn").onclick = function () {
+    var CB = window.CapBridge;
+    if (CB && CB.isNative()) {
+      var btn = this;
+      if (btn.dataset.on === "1") { CB.speechStop(); return; }
+      btn.dataset.on = "1";
+      btn.textContent = "⏹ 停止转写";
+      CB.speechStart(function (text) {
+        var el = $("voiceTxt");
+        if (el) { el.value = text; el.scrollTop = el.scrollHeight; }
+      }, function () {
+        btn.dataset.on = "0"; btn.textContent = "🎙 语音转写"; toast("转写结束");
+      }, function (err) {
+        btn.dataset.on = "0"; btn.textContent = "🎙 语音转写";
+        toast("语音识别不可用（" + err + "），已切回手动输入");
+      });
+      return;
+    }
+    if (v1Voice) v1Voice.call(this);
+  };
+
+  /* 海报保存：APK 下唤起系统分享（可直接发微信） */
+  var v1Dl = $("dlBtn") ? $("dlBtn").onclick : null;
+  $("dlBtn").onclick = function () {
+    var CB = window.CapBridge;
+    if (CB && CB.isNative()) {
+      var data = $("posterCanvas").toDataURL("image/png");
+      CB.shareDataUrl(data, "二手车专家-海报-" + Date.now() + ".png").then(function (ok) {
+        toast(ok ? "已唤起分享，选微信发给客户" : "分享失败，请截图保存");
+      });
+      return;
+    }
+    if (v1Dl) v1Dl.call(this);
+  };
+
+  /* 分享车档：APK 下走系统分享文本 */
+  var v1Share = $("shareBtn") ? $("shareBtn").onclick : null;
+  $("shareBtn").onclick = function () {
+    var CB = window.CapBridge;
+    if (CB && CB.isNative()) {
+      var c = car();
+      var t = c.year + " " + c.model + "，表显 " + c.mileage + " 万公里，过户 " + c.transfers +
+        " 次，" + c.paint + "。" + c.accident + "。要价 " + c.price + " 万，" + c.city +
+        " 看车。（二手车专家 · 郑州知行软件）";
+      CB.shareText("车源信息", t).then(function (ok) { if (!ok) { copyTxt({ textContent: "复制" }, t); toast("已复制车源信息"); } });
+      return;
+    }
+    if (v1Share) v1Share.call(this);
+  };
+
+  /* 水印相机定位：原生 GPS 优先（更准、WebView 里定位权限更稳） */
+  var v1Cam = window.openCamera;
+  window.openCamera = async function () {
+    if (v1Cam) await v1Cam();
+    var CB = window.CapBridge;
+    var locEl = $("wmLoc");
+    if (CB && CB.isNative() && locEl) {
+      locEl.textContent = "定位中…";
+      var p = await CB.getPos();
+      locEl.textContent = p ? p.lat.toFixed(5) + ", " + p.lng.toFixed(5) : "定位失败（检查权限）";
+    }
+  };
+
+  /* ================= 4. 初始化 ================= */
+  function init() {
+    renderCheckCars(); renderCheckList(); renderCheckSummary();
+    renderQuerySites(); renderVinPanel();
+    var cs = $("checkCarSel");
+    if (cs) cs.onchange = switchCheckCar;
+    var ct = $("checkCarTitle");
+    if (ct) ct.onchange = function () {
+      var d = checkLoad(); d._carTitle = ct.value.trim() || "临时验车"; checkSave(d);
+      checkCar.title = d._carTitle;
+    };
+    var ctk = $("checkTabs");
+    if (ctk) ctk.querySelectorAll("div").forEach(function (t) {
+      t.onclick = function () {
+        ctk.querySelectorAll("div").forEach(function (x) { x.classList.remove("on"); });
+        t.classList.add("on");
+        var isList = t.dataset.ct === "list";
+        $("checkList").style.display = isList ? "" : "none";
+        $("checkSummary").style.display = isList ? "none" : "";
+      };
+    });
+    /* 每次切到验车页，刷新车库车档下拉（用户可能刚在发车页存了新车） */
+    var tb = $("tabbar");
+    if (tb) tb.addEventListener("click", function (e) {
+      var t = e.target && e.target.closest ? e.target.closest("div[data-page]") : null;
+      if (t && t.dataset.page === "check") {
+        var d = checkLoad();
+        checkCar.id = d._carId || "tmp"; checkCar.title = d._carTitle || "临时验车";
+        window.__checkCarId = checkCar.id; window.__checkCarTitle = checkCar.title;
+        renderCheckCars(); renderCheckList(); renderCheckSummary();
+      }
+    }, true);
+    window.__checkCarId = checkCar.id; window.__checkCarTitle = checkCar.title;
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+
+</script>
+<script>
+/* v3.js */
+/* ============================================================
+ * 二手车专家 V3 模块（v3.js）
+ * 1. OBD 蓝牙诊断（ELM327：连接/实时仪表/故障码读取/清除/中文释义）
+ * 2. 车况报告（验车清单 → 品牌报告页 → 打印/存PDF/分享）
+ * 3. 内容工厂扩展（多平台文案变体 + 砍价/私信/评论话术库）
+ * ============================================================ */
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ================= 1. OBD 蓝牙诊断 ================= */
+  var OBD = {
+    dev: null, srv: null, wch: null, nch: null, link: null,
+    timer: null, connected: false, rpm: 0, spd: 0, temp: 0, volt: 0,
+    load: 0, dtcs: [], log: ""
+  };
+  var OBD_SVC = "0000fff0-0000-1000-8000-00805f9b34fb";
+  var OBD_W = "0000fff1-0000-1000-8000-00805f9b34fb"; // 写
+  var OBD_N = "0000fff2-0000-1000-8000-00805f9b34fb"; // 通知
+
+  function obdLog(s) {
+    OBD.log += s + "\n";
+    var el = $("obdLog");
+    if (el) { el.textContent = OBD.log.split("\n").slice(-4).join("\n"); }
+  }
+  window.obdLog = obdLog;
+  function obdSetStatus(s, ok) {
+    var el = $("obdStatus");
+    if (el) { el.innerHTML = '<span class="obd-dot' + (ok ? " on" : "") + '"></span>' + s; }
+  }
+
+  async function obdSend(cmd) {
+    if (!OBD.wch) throw new Error("未连接");
+    var enc = new TextEncoder().encode(cmd + "\r");
+    await OBD.wch.writeValue(enc);
+  }
+
+  function obdParseFrame(line) {
+    // 返回 {mode,pid,bytes:[...]} 或 null；line 形如 "41 0C 1A F8"
+    var p = line.replace(/>/g, "").trim().split(/\s+/);
+    if (p.length >= 3 && p[0] === "41") {
+      return { mode: 1, pid: parseInt(p[1], 16), bytes: p.slice(2).map(function (x) { return parseInt(x, 16); }) };
+    }
+    if (p.length >= 1 && p[0] === "43") { // 故障码
+      return { mode: 3, dtc: p.slice(1).map(function (x) { return parseInt(x, 16); }) };
+    }
+    return null;
+  }
+  function obdDecodeDtc(bs) {
+    var out = [];
+    var n = bs.length - (bs.length % 2);   // 奇数长度保护
+    for (var i = 0; i < n; i += 2) {
+      if (bs[i] === 0 && bs[i + 1] === 0) continue;
+      var b0 = bs[i], b1 = bs[i + 1];
+      var pre = { 0: "P", 1: "C", 2: "B", 3: "U" }[b0 >> 6];
+      out.push(pre + ((b0 >> 4) & 3) + (b0 & 15).toString(16) + ((b1 >> 4) & 15).toString(16) + (b1 & 15).toString(16));
+    }
+    return out;
+  }
+  window.obdDecodeDtc = obdDecodeDtc;
+  var DTC_LIB = {
+    P0300: "随机/多缸失火——查火花塞、点火线圈、缸压",
+    P0301: "第1缸失火——查火花塞/点火线圈/喷油嘴",
+    P0302: "第2缸失火——查火花塞/点火线圈/喷油嘴",
+    P0303: "第3缸失火——查火花塞/点火线圈/喷油嘴",
+    P0304: "第4缸失火——查火花塞/点火线圈/喷油嘴",
+    P0420: "三元催化效率低于阈值——查氧传感器/三元，调表车常见伴随",
+    P0171: "混合气过稀——查进气漏气、氧传感器、燃油压力",
+    P0172: "混合气过浓——查喷油嘴、空气流量计、氧传感器",
+    P0135: "前氧传感器加热电路故障",
+    P0141: "后氧传感器加热电路故障",
+    P0113: "进气温度传感器信号过高",
+    P0118: "水温传感器信号过高",
+    P0128: "冷却液节温器温度低——暖车慢，查节温器",
+    P0442: "燃油蒸发系统小泄漏——查油箱盖/碳罐电磁阀",
+    P0455: "燃油蒸发系统大泄漏——查油箱盖密封",
+    P0500: "车速信号无——轮速传感器/线路",
+    P0700: "变速箱电控系统报故障——需用变速箱专用设备细读",
+    P0715: "涡轮/输入转速传感器故障",
+    P0011: "进气凸轮轴位置提前超范围——查正时/VVT电磁阀",
+    P0016: "曲轴/凸轮轴位置相关性错误——正时跳齿风险，重点查",
+    P0335: "曲轴位置传感器故障",
+    P0340: "凸轮轴位置传感器故障",
+    P0401: "EGR 流量不足——查 EGR 阀积碳",
+    P0411: "二次空气喷射流量错误",
+    P0506: "怠速转速低于目标——查节气门积碳/进气漏气",
+    P0507: "怠速转速高于目标——查节气门/真空漏气",
+    P1130: "空燃比传感器故障（部分车型）",
+    P2002: "柴油颗粒过滤器（DPF）效率低",
+    P2453: "DPF 压差传感器故障",
+    U0100: "与发动机控制模块通信丢失——查 ECM 供电/线路",
+    U0121: "与 ABS 模块通信丢失",
+    U0155: "与仪表盘通信丢失——调表/换表现象相关，重点留意",
+    C0035: "左前轮速传感器故障",
+    B0001: "安全气囊模块相关故障",
+    P0562: "系统电压低——查电瓶/发电机",
+    P0563: "系统电压高——查发电机调节器"
+  };
+
+  window.openObd = function () {
+    if (!navigator.bluetooth) {
+      toast("本机环境不支持蓝牙 OBD（部分 WebView 限制）\n可用系统浏览器打开网页版，或换 Chrome 内核浏览器");
+      $("ovObd").classList.add("on");
+      obdSetStatus("蓝牙不可用", false);
+      return;
+    }
+    $("ovObd").classList.add("on");
+    if (!OBD.connected) { obdSetStatus("未连接", false); obdLog("等待连接…"); }
+  };
+  window.closeObd = function () { obdStopPoll(); if (window.obd2Close) window.obd2Close(); $("ovObd").classList.remove("on"); };
+
+  /* ================= OBD 连接：双链路（经典蓝牙 SPP / BLE） ================= */
+  /* 安卓 APP：经典蓝牙（25 元接头）与 BLE 都可用；网页版只有 BLE */
+  window.obdConnect = function () {
+    if (window.BTSerial && BTSerial.available()) {
+      renderBtPickChoice();
+      $("ovBtPick").classList.add("on");
+    } else {
+      obdConnectBLE();
+    }
+  };
+
+  var btPickDefault = null;
+  function renderBtPickChoice() {
+    var el = $("btPickBody");
+    if (!el) return;
+    if (!btPickDefault) btPickDefault = el.innerHTML;
+    el.innerHTML = btPickDefault;
+  }
+  function renderBtPickDevices(devices) {
+    var el = $("btPickBody");
+    if (!el) return;
+    if (!devices.length) {
+      el.innerHTML = '<div style="font-size:13px;color:#cbb;line-height:1.9">没有已配对的蓝牙设备。<br>请先去手机【设置 → 蓝牙】和 OBD 接头配对（PIN 一般是 1234 或 0000），再回来刷新。</div>' +
+        '<button class="btn btn-gold" style="width:100%;margin-top:12px" onclick="obdSerialPick()">刷新列表</button>';
+      return;
+    }
+    var h = '<div style="font-size:13px;color:#cbb;margin-bottom:4px">点你的 OBD 接头（名称一般是 OBDII / ELM327 / V-Link 开头）：</div>';
+    devices.forEach(function (d) {
+      var nm = String(d.name || "未命名设备");
+      h += '<div class="obd-card" style="cursor:pointer;margin-top:8px" onclick="obdSerialConnect(\'' + String(d.address).replace(/'/g, "") + '\',\'' + nm.replace(/'/g, "").replace(/"/g, "") + '\')">' +
+        '<div class="obd-kv" style="border:none"><b>' + esc(nm) + '</b><span style="font-size:11px">' + esc(d.address) + '</span></div></div>';
+    });
+    h += '<button class="btn btn-ghost" style="color:#fff;border-color:#cbb;width:100%;margin-top:12px" onclick="obdSerialPick()">刷新列表</button>';
+    el.innerHTML = h;
+  }
+  window.closeBtPick = function () { $("ovBtPick").classList.remove("on"); };
+
+  window.obdSerialPick = async function () {
+    try {
+      var en = await BTSerial.isEnabled();
+      if (!en.enabled) { toast("请先打开手机蓝牙"); return; }
+      obdLog("正在读取已配对设备…");
+      var res = await BTSerial.listPairedDevices();
+      renderBtPickDevices(res.devices || []);
+    } catch (e) {
+      toast("读取已配对设备失败：" + (e && e.message || e));
+    }
+  };
+
+  window.obdSerialConnect = async function (addr, name) {
+    try {
+      obdSetStatus("正在连接 " + name + " …", false);
+      var r = await BTSerial.connect(addr);
+      OBD.link = "serial";
+      OBD.dev = { name: r.name || name };
+      BTSerial.onData(function (txt, disc) {
+        if (disc) { obdDisconnected(); return; }
+        obdOnData(txt);
+      });
+      OBD.connected = true;
+      $("ovBtPick").classList.remove("on");
+      obdSetStatus("已连接 " + (r.name || name) + "（经典蓝牙）", true);
+      obdLog("经典蓝牙已连接，启动深度诊断引擎（只读模式）…");
+      if (window.obd2OnConnect) window.obd2OnConnect();
+    } catch (e) {
+      obdSetStatus("连接失败：" + (e && e.message || e), false);
+      obdLog("失败：" + (e && e.message || e));
+    }
+  };
+
+  /* 统一发送入口：两条链路的数据都汇入 obdOnData → obd2 队列 */
+  OBD.rawSend = function (cmd) {
+    if (OBD.link === "serial" && window.BTSerial) {
+      BTSerial.write(cmd + "\r").catch(function () {});
+    } else if (OBD.wch) {
+      OBD.wch.writeValue(new TextEncoder().encode(cmd + "\r")).catch(function () {});
+    }
+  };
+  window.OBD_RAW_SEND = OBD.rawSend;
+
+  window.obdConnectBLE = async function () {
+    if (!navigator.bluetooth) { toast("本机不支持 Web Bluetooth"); return; }
+    try {
+      obdSetStatus("正在选择设备…", false);
+      OBD.dev = await navigator.bluetooth.requestDevice({
+        filters: [{ services: [0xfff0] }],
+        optionalServices: [OBD_SVC]
+      });
+      obdLog("已选：" + (OBD.dev.name || OBD.dev.id.slice(0, 8)));
+      obdSetStatus("连接中…", false);
+      OBD.srv = await OBD.dev.gatt.connect();
+      var s = await OBD.srv.getPrimaryService(OBD_SVC);
+      OBD.wch = await s.getCharacteristic(OBD_W);
+      OBD.nch = await s.getCharacteristic(OBD_N);
+      await OBD.nch.startNotifications();
+      OBD.nch.addEventListener("characteristicvaluechanged", function (e) {
+        var txt = new TextDecoder().decode(e.target.value);
+        obdOnData(txt);
+      });
+      OBD.dev.addEventListener("gattserverdisconnected", function () { obdDisconnected(); });
+      OBD.link = "ble";
+      OBD.connected = true;
+      obdSetStatus("已连接 " + (OBD.dev.name || "OBD"), true);
+      obdLog("蓝牙已连接，启动深度诊断引擎（只读模式）…");
+      /* 深度诊断（协议/VIN/就绪/数据流/里程/DTC）全部交给 obd2.js 引擎统一调度，
+         停用旧轮询避免两条命令流争抢总线 */
+      if (window.obd2OnConnect) window.obd2OnConnect();
+    } catch (err) {
+      obdSetStatus("连接失败：" + (err && err.message || err), false);
+      obdLog("失败：" + (err && err.message || err));
+    }
+  };
+
+  var obdBuf = "";
+  function obdOnData(txt) {
+    obdBuf += txt;
+    var idx;
+    while ((idx = obdBuf.indexOf("\r")) >= 0 || (idx = obdBuf.indexOf("\n")) >= 0) {
+      var line = obdBuf.slice(0, idx).trim();
+      obdBuf = obdBuf.slice(idx + 1);
+      if (line) obdHandleLine(line);
+    }
+    /* 原始数据同步汇入 obd2.js 的命令队列（raw chunk 级别） */
+    if (window.obd2OnData) window.obd2OnData(txt);
+  }
+  function obdHandleLine(line) {
+    if (/^(OK|ELM327|STOPPED|SEARCHING|BUS INIT|[\d.]+V)/i.test(line)) { obdLog("‹ " + line); return; }
+    var f = obdParseFrame(line);
+    if (!f) return;
+    if (f.mode === 1) {
+      if (f.pid === 0x0c && f.bytes.length >= 2) OBD.rpm = (f.bytes[0] * 256 + f.bytes[1]) / 4;
+      if (f.pid === 0x0d) OBD.spd = f.bytes[0];
+      if (f.pid === 0x05) OBD.temp = f.bytes[0] - 40;
+      if (f.pid === 0x04) OBD.load = f.bytes[0] * 100 / 255;
+      if (f.pid === 0x42) OBD.volt = (f.bytes[0] * 256 + f.bytes[1]) / 1000;
+      obdRender();
+    } else if (f.mode === 3) {
+      OBD.dtcs = obdDecodeDtc(f.dtc);
+      obdRenderDtcs();
+    }
+  }
+  function obdStartPoll() {
+    /* 已由 obd2.js 引擎统一调度数据流（每秒一轮 6 个 PID），
+       此处不再自建轮询，避免两条命令流争抢总线 */
+  }
+  function obdStopPoll() { if (OBD.timer) { clearInterval(OBD.timer); OBD.timer = null; } }
+  function obdDisconnected() {
+    OBD.connected = false; OBD.wch = null;
+    if (OBD.link === "serial" && window.BTSerial) {
+      try { BTSerial.disconnect(); } catch (e) {}
+    }
+    OBD.link = null;
+    obdStopPoll();
+    if (window.obd2OnDisconnect) window.obd2OnDisconnect();
+    obdSetStatus("已断开", false); obdLog("设备断开");
+  }
+  function obdRender() {
+    var map = [["obdRpm", Math.round(OBD.rpm), "rpm"], ["obdSpd", Math.round(OBD.spd), "km/h"], ["obdTemp", Math.round(OBD.temp), "℃"], ["obdLoad", Math.round(OBD.load), "%"], ["obdVolt", OBD.volt.toFixed(1), "V"]];
+    map.forEach(function (m) { var el = $(m[0]); if (el) el.textContent = m[1]; });
+    var bar = $("obdRpmBar");
+    if (bar) bar.style.width = Math.min(100, OBD.rpm / 60) + "%";
+    var warn = $("obdTempWarn");
+    if (warn) warn.style.color = OBD.temp > 105 ? "#d93025" : "#fff";
+  }
+  window.obdReadDtc = function () {
+    /* 优先走 obd2.js 命令队列（串行不撞车）；引擎未加载时降级原生路径 */
+    if (window.obd2ReadDtcs) { window.obd2ReadDtcs(); return; }
+    if (!OBD.connected) { toast("先连接 OBD"); return; }
+    OBD.dtcs = []; obdLog("读取故障码…");
+    $("obdDtcBox").innerHTML = '<div style="color:#cbb;font-size:13px">读取中…</div>';
+    obdSend("03").then(function () { }).catch(function () { toast("读取失败"); });
+  };
+  window.obdClearDtc = function () {
+    /* 只读安全红线：Mode 04 是标准 OBD 中唯一会写车辆 ECU 的指令，
+       且会抹掉「清码后距离」这个调表洗码的关键证据——本软件绝不提供 */
+    toast("本软件只读不写，不清故障码——清码需到修理厂处理");
+    obdLog("已拒绝清故障码请求（只读模式）");
+  };
+  window.obdRenderDtcs = function (dtcs) {
+    var box = $("obdDtcBox");
+    if (!box) return;
+    var list = dtcs || OBD.dtcs;
+    if (!list.length) { box.innerHTML = '<div style="color:#7be08a;font-size:13px">✓ 无故障码（或未读到）</div>'; return; }
+    box.innerHTML = list.map(function (c) {
+      var d = DTC_LIB[c] || "通用故障码，建议到修理厂用专业设备细读";
+      return '<div class="obd-dtc"><b>' + esc(c) + "</b><span>" + esc(d) + "</span></div>";
+    }).join("");
+  };
+  function obdRenderDtcs() { window.obdRenderDtcs(); }
+  /* 与表显里程比对（防调表） */
+  window.obdCompareMileage = function () {
+    var c = (typeof car === "function") ? car() : null;
+    var shown = c ? parseFloat(c.mileage) : 0;
+    var msg = "表显里程：" + (shown || "未填") + " 万公里\n\n" +
+      "OBD 读的是发动机电脑记录的里程参考值（部分车型可读 01 A6 / 22 xxxx，视车型协议开放程度）。\n" +
+      "若 OBD 里程明显大于表显 → 调表嫌疑大，压价或放弃。\n\n" +
+      "提示：不是所有车型开放里程读取，读不到属正常，以维保记录（查博士）为准。";
+    toast("OBD 里程比对说明");
+    alert(msg);
+  };
+
+  /* ================= 2. 车况报告（验车清单导出） ================= */
+  window.openReport = function () {
+    var d = {};
+    try { d = JSON.parse(localStorage.getItem("yzs_check_" + (window.__checkCarId || "tmp")) || "{}"); } catch (e) { }
+    var c = (typeof car === "function") ? car() : null;
+    var ok = 0, bad = 0, pend = 0, badItems = [];
+    (window.CHECK_MODULES || []).forEach(function (m, mi) {
+      m.items.forEach(function (it, ii) {
+        var k = mi + "_" + ii;
+        var st = d[k] ? d[k].s : 0;
+        if (st === 1) ok++;
+        else if (st === 2) { bad++; badItems.push({ m: m.name, it: it, n: d[k].n || "" }); }
+        else pend++;
+      });
+    });
+    var title = (window.__checkCarTitle) || (c ? c.year + " " + c.model : "未命名车档");
+    var today = new Date();
+    var ds = today.getFullYear() + "-" + ("0" + (today.getMonth() + 1)).slice(-2) + "-" + ("0" + today.getDate()).slice(-2);
+    var html = '<div class="report-head"><div class="r-title">二 手 车 况 检 测 报 告</div>' +
+      '<div class="r-sub">二手车专家 · 郑州知行软件 ｜ 余晓春 · 郑州</div></div>' +
+      '<div class="r-block"><b>车档</b>' + esc(title) + (c ? "（表显 " + esc(c.mileage) + " 万公里 · " + esc(c.paint) + "）" : "") + '</div>' +
+      '<div class="r-block"><b>检测日期</b>' + ds + '</div>' +
+      '<div class="r-stat"><span>检测项 <b>132</b></span><span>正常 <b style="color:#1e8e3e">' + ok + '</b></span><span>异常 <b style="color:#d93025">' + bad + '</b></span><span>待检 <b style="color:#b07d00">' + pend + '</b></span></div>' +
+      (badItems.length
+        ? '<div class="r-block"><b>异常明细</b><table class="r-table">' + badItems.map(function (b) {
+          return "<tr><td>" + esc(b.m) + "</td><td>" + esc(b.it) + "</td><td>" + esc(b.n || "—") + "</td></tr>";
+        }).join("") + "</table></div>"
+        : '<div class="r-block"><b>异常明细</b>无异常记录</div>') +
+      '<div class="r-block"><b>结论</b>＿＿＿＿＿＿＿＿＿＿＿＿＿＿</div>' +
+      '<div class="r-block"><b>检测人 / 复核人</b>＿＿＿＿＿＿ / ＿＿＿＿＿＿</div>' +
+      '<div class="r-foot">本报告由「二手车专家」App 生成 · 数据仅存本机 · 交易前请以实车为准</div>';
+    $("reportBody").innerHTML = html;
+    $("ovReport").classList.add("on");
+  };
+  window.closeReport = function () { $("ovReport").classList.remove("on"); };
+  window.printReport = function () {
+    $("printArea").innerHTML = $("reportBody").innerText;
+    window.print();
+  };
+  window.copyReport = function () {
+    var t = $("reportBody").innerText;
+    copyTxt({ textContent: "复制" }, t);
+    toast("报告已复制");
+  };
+
+  /* ================= 3. 内容工厂扩展：多平台 + 话术库 ================= */
+  var PLATFORMS = [
+    { name: "闲鱼", tip: "口语化、参数前置、防砍价话术收尾", fn: function (c) {
+      return c.year + c.model + "，表显" + c.mileage + "万公里，过户" + c.transfers + "次。" + c.paint + "。" + c.accident + "。\n要价" + c.price + "万，明盘不议价，车况透明实车为准。" + (c.flaw ? "小瑕疵：" + c.flaw + "，价格里扣过了。" : "") + "\n" + c.city + "同城自提，外地可发物流，手续齐全当天过户。";
+    } },
+    { name: "快手/视频号", tip: "短平快、三句话一个信息点、带钩子", fn: function (c) {
+      return c.year + c.model + "！表显" + c.mileage + "万，" + c.price + "万明盘。" + flawShort(c) + "，" + c.paint + "。" + c.accident + "。" + c.city + "看车，评论区扣1发位置。";
+    } },
+    { name: "同行调车群", tip: "专业参数全上、留利空间、物流方案", fn: function (c) {
+      return "【同行调车】" + c.year + c.model + "，表显" + c.mileage + "万，过户" + c.transfers + "次，" + c.paint + "，" + c.accident + "。" + (parseFloat(c.price) - 0.3).toFixed(1) + "万以上可谈，" + c.price + "万明盘出。资料齐全，可过户可物流，" + c.city + "自提。";
+    } },
+    { name: "瓜子/人人车 比价文案", tip: "对标大平台话术，突出透明和差价理由", fn: function (c) {
+      return "同款大平台挂" + (parseFloat(c.price) + 1.2).toFixed(1) + "万，服务费再收一笔。我这是" + c.price + "万明盘：" + c.paint + "，" + c.accident + "，" + (c.flaw ? "唯一瑕疵" + c.flaw : "车况透明") + "。省下的服务费够两年保险，钱花在车况上不花在平台上。";
+    } }
+  ];
+  function renderPlatforms() {
+    var box = $("platformList");
+    if (!box) return;
+    var c = (typeof car === "function") ? car() : null;
+    box.innerHTML = "";
+    PLATFORMS.forEach(function (p) {
+      var t = p.fn(c);
+      var d = document.createElement("div");
+      d.className = "copy-item";
+      d.innerHTML = '<span class="tag">' + p.name + '</span><div class="txt">' + t + '</div><div class="acts"><button class="hot">复制文案</button><button>' + p.tip + '</button></div>';
+      d.querySelector(".hot").onclick = function () { copyTxt(this, t); };
+      d.querySelectorAll(".acts button")[1].onclick = function () { toast(p.tip); };
+      box.appendChild(d);
+    });
+  }
+
+  var SCRIPTS_LIB = [
+    { cat: "砍价应对", items: [
+      "「还能少不？」→ 哥，价里没水分，" + "车况摆在这：" + "漆面/记录都能查。真要少，我送一次保养，车况绝不含糊。",
+      "「别家比你便宜」→ 那他车况您看好了吗？同年份差三千，差在" + "哪面漆哪个件上。我这台记录齐全，您带师傅随便验。",
+      "「我就出X万」→ 这个数我收车成本都不够。这样，您实车看完觉得值，" + "咱们谈;觉得不值，交个朋友，不耽误您。",
+      "「再送我个油」→ 油可以加满，价真让不动了。我这人实在，车上有啥说啥，您看" + "实车就知道了。",
+      "「定金能少点不」→ 定金是诚意的门槛，不是赚您钱。您付了我留车，您不要了按协议走，两清。",
+      "「网上说这车毛病多」→ 哪个车没通病?我提前告诉您咋检查:" + "看这里、看那里。有隐患我早写在车况里了。",
+      "「等降价再说」→ 懂，但这车问的人不少，" + "真定了不等咱。您考虑期我给您留着，别人先订我就没法了。",
+      "「保险保养太贵」→ 我给你算笔账：保险哪家便宜找哪家，" + "保养在哪做都行。买的是车，不是后续焦虑。"
+    ] },
+    { cat: "私信回复模板", items: [
+      "首问回复：在的，" + "车在店里随时看。您预算多少?我给您挑最合适的，不一定最贵。",
+      "看车邀约：" + "今天下午方便吗?提前说一声我留车，" + "到了直接看，看完当场聊价。",
+      "外地客户：车可以物流发您当地，" + "定金+物流单号齐全。不放心可以先视频验车，细节我拍给您。",
+      "价格试探：这个价是实价，" + "您要诚心要，咱们见面聊;光问问的，我真报价也是浪费您时间。",
+      "复购/转介绍：哥您上次照顾我生意，" + "这次给您按老客户价走。您朋友要看车，直接推我微信。",
+      "售后安抚：过户完有任何手续问题随时找我，" + "我跑不了。车有啥不懂的，问我也行。"
+    ] },
+    { cat: "评论区维护", items: [
+      "「在吗」→ 在的，车在，" + "私信我发您详细车况和视频。",
+      "「哪里看车」→ " + "私信发定位，提前打招呼，到了直接看。",
+      "「最低多少」→ 私信聊，" + "评论区不报价，行情价不绕弯子。",
+      "「事故了吗」→ 记录可查，" + "无重大事故，瑕疵都写在车况里，私信发您。",
+      "「还能便宜吗」→ 明盘价，" + "诚心要私信聊，别在评论区砍着玩了。"
+    ] }
+  ];
+  function renderScripts() {
+    var box = $("scriptsList");
+    if (!box) return;
+    box.innerHTML = "";
+    SCRIPTS_LIB.forEach(function (g) {
+      var h = '<div class="card"><h3>' + g.cat + " <small>" + g.items.length + " 条</small></h3>";
+      g.items.forEach(function (t) {
+        h += '<div class="script-item"><div class="si-txt">' + t + '</div><div class="acts"><button class="hot">复制</button></div></div>';
+      });
+      h += "</div>";
+      box.insertAdjacentHTML("beforeend", h);
+    });
+    box.querySelectorAll(".script-item .hot").forEach(function (b) {
+      b.onclick = function () { copyTxt(b, b.closest(".script-item").querySelector(".si-txt").innerText); };
+    });
+  }
+
+  /* ================= 初始化 ================= */
+  function init() {
+    var gt = $("genTabs");
+    if (gt) {
+      gt.insertAdjacentHTML("beforeend", '<div data-tab="platform">多平台文案</div><div data-tab="scripts">应对话术库</div>');
+      gt.querySelectorAll("div").forEach(function (t) {
+        t.onclick = function () {
+          gt.querySelectorAll("div").forEach(function (x) { x.classList.remove("on"); });
+          document.querySelectorAll("#page-fache .pane").forEach(function (x) { x.classList.remove("on"); });
+          t.classList.add("on");
+          $("pane-" + t.dataset.tab).classList.add("on");
+        };
+      });
+    }
+    if ($("platformList")) renderPlatforms();
+    if ($("scriptsList")) renderScripts();
+    /* 车档变化时刷新多平台文案 */
+    if (typeof window.__v3Refresh === "undefined") {
+      window.__v3Refresh = setInterval(function () { if ($("platformList") && $("pane-platform") && $("pane-platform").classList.contains("on")) renderPlatforms(); }, 3000);
+    }
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+
+</script>
+<script>
+/* obd2.js */
+/* ============================================================
+ * 二手车专家 OBD 深度诊断 v2.1（obd2.js）
+ * ------------------------------------------------------------
+ * 【只读安全红线】本引擎只发送读取指令：
+ *   Mode 01（实时数据流）/ Mode 03（读故障码）/ Mode 09（读 VIN）
+ *   Mode 22（UDS 读 DID：里程/VIN 等）/ AT 命令（仅配置适配器会话）
+ * 标准 OBD 中唯一会写车辆 ECU 的指令是 Mode 04（清故障码）——已彻底移除，
+ * 并由 window.obd2WriteGuard 在发送前拦截一切疑似写操作。
+ * 设计原则：只查不改，看坏看不坏都不碰车，绝不给用户的车搞坏担责风险。
+ * ------------------------------------------------------------
+ * ELM327 协议引擎：自适应协议 / 标准 PID 数据流 / VIN / 就绪状态
+ * 里程引擎：表显读取（私有 DID 候选 + Mode01 辅助）+ 多 ECU 快照（调表初筛）
+ *   ECU 清单含变速箱 TCM——调表通常只改仪表，变速箱 ECU 的真实里程常露馅
+ * 痕迹分析：清码距离/就绪状态/ECU 间里程矛盾 → 综合可信度结论
+ * 含模拟模式（无硬件演示全流程）
+ * ============================================================ */
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ================= 只读安全红线（发送前强制检查） ================= */
+  /* 拦截一切写操作：标准 OBD 唯一写指令是 Mode 04（清故障码），
+     它还会抹掉「清码后距离」这个调表洗码的关键证据，一律禁绝 */
+  window.obd2WriteGuard = function (cmd) {
+    var c = String(cmd).replace(/\s+/g, "").toUpperCase();
+    if (/^0?4$/.test(c) || /^14$/.test(c) || /^2E|^27|^31|^34|^36|^37/.test(c)) {
+      obd2Log("已拦截写入指令 " + cmd + "——本软件只读，拒绝执行");
+      return false;
+    }
+    return true;
+  };
+
+  /* ================= 命令队列（串行 请求→响应） ================= */
+  var Q = {
+    items: [], busy: false,
+    push: function (cmd, expect, timeout, cb) {
+      Q.items.push({ cmd: cmd, expect: expect || ">", timeout: timeout || 4000, cb: cb });
+      Q.next();
+    },
+    next: function () {
+      if (Q.busy || !Q.items.length) return;
+      var it = Q.items.shift();
+      Q.busy = true;
+      var buf = "";
+      var done = false;
+      var timer = setTimeout(function () {
+        if (done) return; done = true; Q.busy = false;
+        if (it.cb) it.cb({ ok: false, raw: buf, timeout: true });
+        Q.next();
+      }, it.timeout);
+      OBD2.sendRaw(it.cmd, function (chunk) {
+        buf += chunk;
+        // ELM327 以 '>' 作为提示符结束一次响应
+        if (buf.indexOf(">") >= 0 || /NO DATA|UNABLE|ERROR/i.test(buf)) {
+          if (done) return; done = true;
+          clearTimeout(timer); Q.busy = false;
+          if (it.cb) it.cb({ ok: true, raw: buf.replace(/>/g, "") });
+          Q.next();
+        }
+      });
+    },
+    clear: function () { Q.items = []; Q.busy = false; }
+  };
+
+  /* ================= 状态 ================= */
+  var OBD2 = {
+    connected: false, sim: false,
+    proto: "", vin: "", protoName: "",
+    sup01: 0, sup20: 0,           // 支持的 PID 位图（01~20 / 21~40）
+    dtcs: [], ready: null,        // 就绪状态字节
+    ecuSnaps: [],                 // 多 ECU 里程快照
+    dataTimer: null
+  };
+
+  /* 日志统一汇入 v3 的 obdLog（单一日志流），v3 未加载时本地兜底 */
+  var localLog = "";
+  function obd2Log(s) {
+    localLog += s + "\n";
+    if (window.obdLog) { window.obdLog(s); return; }
+    var el = $("obdLog");
+    if (el) el.textContent = localLog.split("\n").slice(-4).join("\n");
+  }
+  function status(s, ok) {
+    var el = $("obdStatus");
+    if (el) el.innerHTML = '<span class="obd-dot' + (ok ? " on" : "") + '"></span>' + s;
+  }
+
+  /* ================= 底层发送（真实/模拟，过只读 guard） ================= */
+  /* 两条真实链路（BLE / 经典蓝牙 SPP）统一由 v3.js 的 OBD_RAW_SEND 出口，
+     响应数据全部汇回 obdOnData → OBD2.onData → 命令队列 */
+  var rawListener = null;
+  OBD2.sendRaw = function (cmd, cb) {
+    if (!window.obd2WriteGuard(cmd)) { if (cb) cb(""); return; }
+    if (OBD2.sim) { simRespond(cmd, cb); return; }
+    rawListener = cb;
+    if (window.OBD_RAW_SEND) { window.OBD_RAW_SEND(cmd); return; }
+    if (!OBD.wch) { if (cb) cb(""); return; }
+    var enc = new TextEncoder().encode(cmd + "\r");
+    OBD.wch.writeValue(enc).catch(function () { if (cb) cb(""); });
+  };
+
+  /* 复用 v3.js 的蓝牙连接对象（OBD.wch 等），onData 汇入队列 */
+  OBD2.onData = function (txt) {
+    if (rawListener) { var cb = rawListener; rawListener = null; cb(txt); }
+  };
+
+  /* ================= ELM327 初始化 ================= */
+  /* ATH0：不显示 CAN ID 头（响应保持 "41 0C ..." 干净格式，避免 PCI 长度字节干扰解析） */
+  var PROTO_NAMES = {
+    "0": "自动", "1": "SAE J1850 PWM", "2": "SAE J1850 VPW", "3": "ISO 9141-2",
+    "4": "ISO 14230-4 KWP", "5": "ISO 14230-4 KWP 快启", "6": "ISO 15765-4 CAN 11位/500k",
+    "7": "ISO 15765-4 CAN 29位/500k", "8": "ISO 15765-4 CAN 11位/250k", "9": "ISO 15765-4 CAN 29位/250k",
+    "A": "ISO 15765-4 CAN 11位/500k", "B": "ISO 15765-4 CAN 29位/500k", "C": "ISO 15765-4 CAN 11位/250k"
+  };
+  function elmInit(cb) {
+    var seq = ["ATZ", "ATE0", "ATL0", "ATH0", "ATSP0", "ATDPN", "0100"];
+    var i = 0;
+    (function step() {
+      if (i >= seq.length) { if (cb) cb(); return; }
+      var c = seq[i++];
+      Q.push(c, ">", 6000, function (r) {
+        if (c === "ATDPN") {
+          /* 真 ELM327 返回协议号（6/C/A…）；部分实现带 A 前缀表示自动探测（A6 = 自动·协议6） */
+          var code = r.raw.replace(/[\r\n\s]/g, "").toUpperCase();
+          if (/^A[0-9A-F]$/.test(code)) code = code.slice(1);
+          OBD2.protoName = PROTO_NAMES[code] || (code ? "协议 " + code : "未知");
+          obd2Log("协议：" + OBD2.protoName);
+        }
+        if (c === "0100") {
+          var f = parseMode01(r.raw);
+          if (f) { OBD2.sup01 = f.pids; obd2Log("ECU 在线，支持 PID 位图 " + f.pids.toString(16)); }
+          else obd2Log("ECU 未响应 0100（点火开关是否打开？）");
+        }
+        step();
+      });
+    })();
+  }
+
+  /* ================= 帧解析（真实 ELM327 格式兼容） ================= */
+  /* 真实 ELM327 默认返回【无空格连续 hex】（如 010C → "410C0CF5"），
+     部分固件带空格；VIN 等长响应走 ISO-TP 多帧（"014" + "0:490201..." ）。
+     tokenize 统一三种格式为字节词元数组，解析层只认词元。 */
+  function tokenize(raw) {
+    var lines = String(raw).replace(/\r/g, "\n").split("\n");
+    var out = [];
+    for (var li = 0; li < lines.length; li++) {
+      var line = lines[li].trim();
+      if (!line || line === ">" || line === "?") continue;
+      /* ISO-TP 续帧："N:hexdata"（N 为帧序号）——数据拼入主字节流 */
+      var m = /^(\d+):([0-9A-Fa-f]+)$/.exec(line);
+      if (m) { pushHex(out, m[2]); continue; }
+      /* ISO-TP 首帧 PCI（如 014 = 首帧 20 字节）——单独成行时跳过 */
+      if (/^[0-9A-Fa-f]{3}$/.test(line)) continue;
+      /* 普通响应行：去 CAN ID 头（ATH1 模式下的 7E8 等三位 hex 词元）后拼紧 */
+      var toks = line.split(/\s+/);
+      var compact = "";
+      for (var t = 0; t < toks.length; t++) {
+        var tk = toks[t].toUpperCase();
+        if (/^7[0-9A-F]{2}$/.test(tk) && toks.length > 1) continue;
+        compact += tk;
+      }
+      /* 只接受纯 hex 行（响应数据）；OK / ELM327 v2.2 / NO DATA 等非 hex 行忽略 */
+      if (/^[0-9A-F]+$/.test(compact) && compact.length >= 4) pushHex(out, compact);
+    }
+    return out;
+  }
+  function pushHex(out, hex) {
+    for (var k = 0; k + 1 < hex.length + 1; k += 2) {
+      if (k + 1 < hex.length) out.push(hex.substr(k, 2).toUpperCase());
+    }
+  }
+  /* Mode01 响应解析：兼容 1 字节（车速/水温/负荷/节气门）、
+     2 字节（转速/电压/MAF）与 4 字节（PID 位图）三种长度 */
+  function parseMode01(raw) {
+    var f = tokenize(raw);
+    for (var i = 0; i < f.length - 1; i++) {
+      if (f[i] === "41") {
+        var bytes = [];
+        for (var j = i + 2; j < f.length; j++) {
+          var b = parseInt(f[j], 16);
+          if (isNaN(b)) break;
+          bytes.push(b);
+        }
+        if (!bytes.length) return null;
+        var pids = 0;
+        if (bytes.length >= 4) {
+          pids = parseInt(bytes.slice(0, 4).map(function (x) { return (x < 16 ? "0" : "") + x.toString(16); }).join(""), 16);
+        }
+        return {
+          pid: parseInt(f[i + 1], 16),
+          pids: pids,
+          A: bytes[0], B: bytes[1], C: bytes[2], D: bytes[3],
+          bytes: bytes
+        };
+      }
+    }
+    return null;
+  }
+
+  /* ================= 标准 PID 数据流 ================= */
+  var PIDS = {
+    "04": { n: "发动机负荷", u: "%", f: function (b) { return b[0] * 100 / 255; } },
+    "05": { n: "冷却液温度", u: "℃", f: function (b) { return b[0] - 40; } },
+    "0C": { n: "发动机转速", u: "rpm", f: function (b) { return (b[0] * 256 + b[1]) / 4; } },
+    "0D": { n: "车速", u: "km/h", f: function (b) { return b[0]; } },
+    "10": { n: "空气流量", u: "g/s", f: function (b) { return (b[0] * 256 + b[1]) / 100; } },
+    "11": { n: "节气门开度", u: "%", f: function (b) { return b[0] * 100 / 255; } },
+    "1F": { n: "发动机运行时间", u: "s", f: function (b) { return b[0] * 256 + b[1]; } },
+    "21": { n: "MIL灯亮后行驶距离", u: "km", f: function (b) { return b[0] * 256 + b[1]; } },
+    "31": { n: "清码后行驶距离", u: "km", f: function (b) { return b[0] * 256 + b[1]; } },
+    "42": { n: "控制模块电压", u: "V", f: function (b) { return (b[0] * 256 + b[1]) / 1000; } },
+    "46": { n: "环境温度", u: "℃", f: function (b) { return b[0] - 40; } },
+    "5C": { n: "机油温度", u: "℃", f: function (b) { return b[0] - 40; } },
+    "2F": { n: "油箱液位", u: "%", f: function (b) { return b[0] * 100 / 255; } }
+  };
+  var STREAM = ["0C", "0D", "05", "04", "42", "11"];
+
+  function readPid(pid, cb) {
+    Q.push("01" + pid, ">", 4000, function (r) {
+      var f = parseMode01(r.raw);
+      if (f && PIDS[pid]) cb(PIDS[pid].f(f.bytes));
+      else cb(null);
+    });
+  }
+
+  function streamOnce(cb) {
+    var out = {};
+    var i = 0;
+    (function step() {
+      if (i >= STREAM.length) { cb(out); return; }
+      var pid = STREAM[i++];
+      readPid(pid, function (v) { out[pid] = v; step(); });
+    })();
+  }
+
+  window.obdStartStream = function () {
+    if (OBD2.dataTimer) return;
+    OBD2.dataTimer = setInterval(function () {
+      streamOnce(function (v) { renderStream(v); });
+    }, 1000);
+    obd2Log("数据流刷新中（每秒）…");
+  };
+  window.obdStopStream = function () {
+    if (OBD2.dataTimer) clearInterval(OBD2.dataTimer);
+    OBD2.dataTimer = null;
+  };
+
+  function renderStream(v) {
+    var map = { "0C": "obdRpm", "0D": "obdSpd", "05": "obdTemp", "04": "obdLoad", "42": "obdVolt", "11": "obdThrottle" };
+    for (var pid in map) {
+      var el = $(map[pid]);
+      if (el && v[pid] != null) {
+        el.textContent = pid === "0C" || pid === "10" ? Math.round(v[pid]) : v[pid].toFixed(1).replace(/\.0$/, "");
+      }
+    }
+    var bar = $("obdRpmBar");
+    if (bar && v["0C"] != null) bar.style.width = Math.min(100, v["0C"] / 60) + "%";
+  }
+
+  /* ================= VIN ================= */
+  function readVin(cb) {
+    Q.push("0902", ">", 6000, function (r) {
+      var f = tokenize(r.raw);
+      var hex = "";
+      for (var i = 0; i < f.length - 1; i++) {
+        if (f[i] === "49" && f[i + 1] === "02") {
+          for (var j = i + 2; j < f.length; j++) {
+            var b = parseInt(f[j], 16);
+            if (isNaN(b) || b === 0xAA || b === 0x55) continue;
+            hex += String.fromCharCode(b);
+          }
+          break;
+        }
+      }
+      var vin = hex.replace(/[^A-HJ-NPR-Z0-9]/gi, "").slice(0, 17);
+      if (vin.length >= 11) { OBD2.vin = vin; if (cb) cb(vin); }
+      else if (cb) cb(null);
+    });
+  }
+
+  /* ================= 就绪状态 ================= */
+  function readReady(cb) {
+    Q.push("0101", ">", 4000, function (r) {
+      var f = parseMode01(r.raw);
+      if (!f) { if (cb) cb(null); return; }
+      OBD2.ready = f.bytes;
+      if (cb) cb(f.bytes);
+    });
+  }
+  function readyText(b) {
+    if (!b) return "未知";
+    if (!(b[0] & 0x0F)) return "该车未上报就绪监测（柴油/部分车型正常）";
+    var names = ["失火监测", "燃油系统", "零部件监测", "厂家监测"];
+    var txt = [];
+    for (var i = 0; i < 4; i++) {
+      /* 第1字节 bit=1 表示该监测可用；第2字节 bit=1 表示【未就绪】（OBD 标准语义） */
+      var avail = (b[0] >> i) & 1, notReady = (b[1] >> i) & 1;
+      if (avail) txt.push(names[i] + (notReady ? "✗未就绪" : "✓"));
+    }
+    return txt.join(" · ") || "未知";
+  }
+
+  /* ================= 故障码（只读 Mode 03，走命令队列） ================= */
+  /* 本地兜底解码（与 v3 的 obdDecodeDtc 逻辑一致，带奇数长度保护） */
+  function decodeDtcLocal(bs) {
+    var out = [];
+    var n = bs.length - (bs.length % 2);
+    for (var i = 0; i < n; i += 2) {
+      if (bs[i] === 0 && bs[i + 1] === 0) continue;
+      var b0 = bs[i], b1 = bs[i + 1];
+      var pre = { 0: "P", 1: "C", 2: "B", 3: "U" }[b0 >> 6];
+      out.push(pre + ((b0 >> 4) & 3) + (b0 & 15).toString(16) + ((b1 >> 4) & 15).toString(16) + (b1 & 15).toString(16));
+    }
+    return out;
+  }
+  window.obd2ReadDtcs = function () {
+    if (!OBD2.connected && !OBD2.sim) { toast("请先连接 OBD 或开启模拟演示"); return; }
+    var box = $("obdDtcBox");
+    if (box) box.innerHTML = '<div style="color:#cbb;font-size:13px">读取中…</div>';
+    Q.push("03", ">", 5000, function (r) {
+      var f = tokenize(r.raw);
+      var dtcs = [];
+      for (var i = 0; i < f.length; i++) {
+        if (f[i] === "43") {
+          var bytes = f.slice(i + 1).map(function (x) { return parseInt(x, 16); }).filter(function (x) { return !isNaN(x); });
+          /* 部分 ELM327 固件/车辆实现在 43 后带 DTC 数量字节
+             （如 "43 01 03 01" = 1 个码 P0301）。启发式：数据字节数为奇数 → 首字节是 count，跳过 */
+          if (bytes.length % 2 === 1) bytes = bytes.slice(1);
+          dtcs = window.obdDecodeDtc ? window.obdDecodeDtc(bytes) : decodeDtcLocal(bytes);
+          break;
+        }
+      }
+      OBD2.dtcs = dtcs;
+      if (window.obdRenderDtcs) window.obdRenderDtcs(dtcs);
+      obd2Log("故障码读取完成：" + (dtcs.length ? dtcs.join(", ") : "无故障码"));
+    });
+  };
+
+  /* ================= 冻结帧（Mode 02，标准只读） ================= */
+  /* 故障码发生那一刻的环境快照：转速/车速/水温/负荷——修车师傅和检测站都看这个，
+     艾迪拓等专业设备的宣传项。标准 OBD2 模式，纯读无写。 */
+  var FREEZE_PIDS = [
+    { pid: "0C", name: "转速", unit: "rpm", fn: function (a, b) { return (a * 256 + b) / 4; } },
+    { pid: "0D", name: "车速", unit: "km/h", fn: function (a) { return a; } },
+    { pid: "05", name: "水温", unit: "℃", fn: function (a) { return a - 40; } },
+    { pid: "04", name: "负荷", unit: "%", fn: function (a) { return a * 100 / 255; } },
+    { pid: "11", name: "节气门", unit: "%", fn: function (a) { return a * 100 / 255; } },
+    { pid: "42", name: "电瓶电压", unit: "V", fn: function (a, b) { return (a * 256 + b) / 1000; } }
+  ];
+  window.obd2ReadFreezeFrame = function () {
+    if (!OBD2.connected && !OBD2.sim) { toast("请先连接 OBD 或开启模拟演示"); return; }
+    var box = $("obdDtcBox");
+    if (box) box.innerHTML = '<div style="color:#cbb;font-size:13px">读取冻结帧…</div>';
+    /* 精选 6 项直接逐个请求（ELM327 标准格式：02 + PID + 帧号00）。
+       不依赖 020000 位图——实测部分适配器/车辆的位图会漏报（假车就漏了 PID04），
+       6 条命令约 0.7 秒，全试更稳健；无数据的项返回 NO DATA 自动跳过 */
+    var got = [];
+    var idx = 0;
+    (function step() {
+      if (idx >= FREEZE_PIDS.length) { renderFreeze(got); return; }
+      var p = FREEZE_PIDS[idx++];
+      Q.push("02" + p.pid + "00", ">", 4000, function (r) {
+        var ff = tokenize(r.raw);
+        for (var i = 0; i < ff.length - 1; i++) {
+          if (ff[i] === "42" && ff[i + 1] === p.pid) {
+            /* 响应 = 42 + PID + 帧号00 + 数据；数据从 i+3 起。
+               单字节 PID（车速/水温/负荷/节气门）只回 1 字节，双字节（转速/电压）回 2 字节 */
+            var bytes = ff.slice(i + 3).map(function (x) { return parseInt(x, 16); }).filter(function (x) { return !isNaN(x); });
+            if (bytes.length >= 1) {
+              var val = p.fn(bytes[0], bytes[1]);
+              if (!isNaN(val)) {
+                got.push({ name: p.name, v: val.toFixed(p.pid === "42" ? 2 : 0), unit: p.unit });
+              }
+            }
+            break;
+          }
+        }
+        step();
+      });
+    })();
+  };
+  function renderFreeze(got) {
+    var box = $("obdDtcBox");
+    if (!box) return;
+    if (!got.length) {
+      box.innerHTML = '<div style="color:#888;font-size:13px">未读到冻结帧——当前无存储故障码，或该车型不支持（正常现象）</div>';
+    } else {
+      box.innerHTML = '<div class="obd-card-t" style="margin-bottom:8px">🧊 故障发生时环境快照（冻结帧）</div>' +
+        got.map(function (g) {
+          return '<div class="obd-kv"><span>' + esc(g.name) + '</span><b>' + esc(g.v) + " " + esc(g.unit) + "</b></div>";
+        }).join("") +
+        '<div style="margin-top:6px;font-size:11px;color:#9a8f84">冻结帧 = 故障码触发那一刻的车况。现场比对：水温冷车却报高温类故障、负荷异常等都可能是人为插拔传感器制造出来的。</div>';
+    }
+    obd2Log("冻结帧读取完成：" + (got.length ? got.map(function (g) { return g.name + "=" + g.v; }).join(" / ") : "无数据"));
+  }
+
+  /* ================= 里程引擎（表显读取） ================= */
+  /* 标准 OBD 无总里程 PID，需厂商私有 UDS DID。
+     内置常见品牌候选 DID（标 * 的为社区常用、待实测校准），全部支持自定义输入 */
+  var DID_CANDIDATES = [
+    { brand: "大众/奥迪/斯柯达", did: "F190", note: "VIN（验证通路）" },
+    { brand: "大众/奥迪/斯柯达", did: "F1A0", note: "*里程候选（待校准）" },
+    { brand: "大众/奥迪/斯柯达", did: "F1A3", note: "*里程候选（待校准）" },
+    { brand: "丰田/雷克萨斯", did: "F11C", note: "*里程候选（待校准）" },
+    { brand: "本田/讴歌", did: "F140", note: "*里程候选（待校准）" },
+    { brand: "日产/英菲尼迪", did: "F102", note: "*里程候选（待校准）" },
+    { brand: "现代/起亚", did: "F190", note: "VIN（验证通路）" },
+    { brand: "通用(别克/雪佛兰)", did: "F190", note: "VIN（验证通路）" },
+    { brand: "福特/林肯", did: "F190", note: "VIN（验证通路）" }
+  ];
+  /* ECU 快照逐个尝试的里程 DID（按常见度排序，命中即停） */
+  var MILEAGE_DIDS = ["F1A0", "F1A3", "F11C", "F140", "F102"];
+
+  function udsReadDid(did, cb) {
+    Q.push("22" + did, ">", 4000, function (r) {
+      var f = tokenize(r.raw);
+      for (var i = 0; i < f.length - 1; i++) {
+        if (f[i] === "62") {
+          /* 响应 = 62 + DID(2词元) + 数据；数据从 i+3 起 */
+          var data = f.slice(i + 3);
+          var hex = data.join("");
+          if (hex && !/^(NODATA|UNABLE)/i.test(hex)) { if (cb) cb(hex); return; }
+        }
+      }
+      if (cb) cb(null);
+    });
+  }
+
+  window.obdReadMileage = function (customDid) {
+    if (!OBD2.connected && !OBD2.sim) { toast("请先连接 OBD 或开启模拟演示"); return; }
+    setMileageCard("读取中…");
+    /* 暂停数据流，避免与里程查询争抢总线 */
+    window.obdStopStream();
+    var results = [];
+    /* 先读两个标准 PID 作为辅助参考 */
+    readPid("21", function (milKm) {
+      readPid("31", function (clrKm) {
+        results.push({ k: "MIL灯亮后距离（Mode01）", v: milKm == null ? "不支持" : milKm + " km" });
+        results.push({ k: "清码后距离（Mode01）", v: clrKm == null ? "不支持" : clrKm + " km" });
+        /* 再逐个试私有 DID */
+        var list = customDid
+          ? [{ brand: "自定义", did: customDid, note: "手动输入" }]
+          : DID_CANDIDATES.filter(function (d) { return d.did !== "F190"; });
+        var i = 0;
+        (function step() {
+          if (i >= list.length) { finish(results); return; }
+          var d = list[i++];
+          udsReadDid(d.did, function (hex) {
+            if (hex) {
+              var km = guessKm(hex);
+              results.push({ k: d.brand + " DID " + d.did, v: km != null ? "约 " + km + " km（原始 " + hex + "）" : "有响应：" + hex, hit: km != null });
+            }
+            step();
+          });
+        })();
+      });
+    });
+    function finish(res) {
+      renderMileageCard(res);
+      analyzeMileage(res);
+      window.obdStartStream();   // 查询完成，恢复数据流
+    }
+  };
+
+  /* 从输入框读自定义 DID */
+  window.obdReadMileageDid = function () {
+    var el = $("obdDidInput");
+    var did = el ? el.value.replace(/[^0-9A-Fa-f]/g, "").toUpperCase() : "";
+    if (did.length < 4) { toast("请输入 4 位 DID（如 F1A0）"); return; }
+    window.obdReadMileage(did);
+  };
+
+  /* 私有 DID 原始值 → 公里数猜测：常见为 4 字节大端，0.1km/bit 或 1km/bit */
+  function guessKm(hex) {
+    if (hex.length === 8) {
+      var v = parseInt(hex, 16);
+      if (isNaN(v)) return null;
+      if (v > 200 && v < 40000000) return Math.round(v / 10);   // 0.1km/bit 最常见
+      return null;
+    }
+    if (hex.length === 4) {
+      var v2 = parseInt(hex, 16);
+      if (v2 > 200 && v2 < 1000000) return v2;
+      return null;
+    }
+    return null;
+  }
+
+  function setMileageCard(s) {
+    var el = $("obdMileageBody");
+    if (el) el.innerHTML = '<div style="color:#888">' + s + "</div>";
+  }
+  function renderMileageCard(res) {
+    var el = $("obdMileageBody");
+    if (!el) return;
+    var h = "";
+    for (var i = 0; i < res.length; i++) {
+      var r = res[i];
+      h += '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed rgba(255,255,255,.12);font-size:13px;color:#cbb">' +
+        "<span>" + esc(r.k) + '</span><b style="color:' + (r.hit ? "#7be08a" : "#fff") + '">' + esc(r.v) + "</b></div>";
+    }
+    el.innerHTML = h;
+  }
+
+  /* ================= 多 ECU 里程快照（调表初筛，含变速箱 TCM） ================= */
+  /* 调表通常只改仪表/发动机 ECU，变速箱 TCM、ABS、BCM 里存的里程常会露馅 */
+  var ECU_LIST = [
+    { addr: "7E0", name: "发动机 ECM" },
+    { addr: "7E1", name: "变速箱 TCM" },
+    { addr: "7B0", name: "ABS/ESP" },
+    { addr: "7A0", name: "车身 BCM" }
+  ];
+
+  window.obdEcuSnapshot = function () {
+    if (!OBD2.connected && !OBD2.sim) { toast("请先连接 OBD 或开启模拟演示"); return; }
+    OBD2.ecuSnaps = [];
+    /* 暂停数据流，集中巡检各 ECU */
+    window.obdStopStream();
+    obd2Log("暂停数据流，开始多 ECU 巡检…");
+    var el = $("obdEcuBody");
+    if (el) el.innerHTML = '<div style="color:#888">逐个询问 ECU 中…</div>';
+    var i = 0;
+    (function step() {
+      if (i >= ECU_LIST.length) { renderEcuSnaps(); return; }
+      var ecu = ECU_LIST[i++];
+      /* ELM327：ATSH 设发送头精确寻址单个 ECU */
+      Q.push("ATSH " + ecu.addr, ">", 2000, function () {
+        /* 先用 F190（VIN）验证 ECU 在线，再逐个试里程 DID */
+        udsReadDid("F190", function (vinHex) {
+          var snap = { name: ecu.name, addr: ecu.addr, ok: !!vinHex, km: null, did: null, raw: null };
+          if (!snap.ok) { OBD2.ecuSnaps.push(snap); step(); return; }
+          var j = 0;
+          (function tryDid() {
+            if (j >= MILEAGE_DIDS.length) { OBD2.ecuSnaps.push(snap); step(); return; }
+            var did = MILEAGE_DIDS[j++];
+            udsReadDid(did, function (hex) {
+              if (hex) {
+                var km = guessKm(hex);
+                if (km != null) { snap.km = km; snap.did = did; snap.raw = hex; }
+              }
+              tryDid();
+            });
+          })();
+        });
+      });
+    })();
+  };
+
+  function renderEcuSnaps() {
+    var el = $("obdEcuBody");
+    if (!el) return;
+    var h = "";
+    var kms = [];
+    for (var i = 0; i < OBD2.ecuSnaps.length; i++) {
+      var s = OBD2.ecuSnaps[i];
+      if (s.km != null) kms.push(s.km);
+      var val = s.km != null
+        ? '<b style="color:#7be08a">' + esc(s.km) + " km（DID " + esc(s.did) + "）</b>"
+        : (s.ok ? '<b style="color:#cbb">在线·未读到里程</b>' : '<b style="color:#9a8f84">无响应</b>');
+      h += '<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed rgba(255,255,255,.12);font-size:13px;color:#cbb">' +
+        "<span>" + esc(s.name) + "（" + esc(s.addr) + "）</span>" + val + "</div>";
+    }
+    /* 交叉验证结论：调表通常只改一处，多 ECU 里程矛盾即涉嫌 */
+    var concl = "";
+    if (kms.length >= 2) {
+      var mx = Math.max.apply(null, kms), mn = Math.min.apply(null, kms);
+      var diff = mx - mn, pct = mn > 0 ? diff / mn : 1;
+      if (pct > 0.02 && diff > 500) {
+        concl = '<div style="margin-top:8px;font-size:12.5px;color:#ff8a7a;line-height:1.7">⚠ 各 ECU 里程互相矛盾（相差 ' + diff +
+          " km）——疑似调表，重点核查！建议结合维保记录、内饰磨损、轮胎/刹车片年份综合判断。</div>";
+      } else {
+        concl = '<div style="margin-top:8px;font-size:12.5px;color:#7be08a;line-height:1.7">✓ 各 ECU 里程一致（最大相差 ' + diff +
+          " km），交叉验证通过，表显里程可信度较高。</div>";
+      }
+    } else if (kms.length === 1) {
+      concl = '<div style="margin-top:8px;font-size:12.5px;color:#ffd66b;line-height:1.7">仅 1 个 ECU 读到里程，无法交叉验证——以维保记录+实车磨损为准。</div>';
+    } else {
+      concl = '<div style="margin-top:8px;font-size:12.5px;color:#9a8f84;line-height:1.7">无 ECU 响应里程 DID——此车型协议未覆盖，可用「自定义 DID」手动尝试，或以维保记录+实车磨损为准。</div>';
+    }
+    h += '<div style="margin-top:8px;font-size:12px;color:#9a8f84">注意：各车型 ECU 地址/DID 不同，在线≠存里程；读出多个 ECU 里程并比对才有意义。</div>' + concl;
+    el.innerHTML = h;
+    /* 巡检结束：恢复功能寻址 + 重启数据流 */
+    Q.push("ATSH 7DF", ">", 2000, function () {});
+    window.obdStartStream();
+    obd2Log("多 ECU 巡检完成，恢复数据流");
+  }
+
+  /* ================= 痕迹分析（调表初筛结论） ================= */
+  function analyzeMileage(res) {
+    var el = $("obdMileageVerdict");
+    if (!el) return;
+    var hits = [];
+    var clearKm = null, milKm = null;
+    for (var i = 0; i < res.length; i++) {
+      if (res[i].hit) hits.push(res[i]);
+      var m = res[i].v.match(/(\d+)\s*km/);
+      if (res[i].k.indexOf("清码后") >= 0 && m) clearKm = +m[1];
+      if (res[i].k.indexOf("MIL") >= 0 && m) milKm = +m[1];
+    }
+    var tips = [];
+    var lvl = "warn";
+    if (hits.length) {
+      tips.push("已读到 " + hits.length + " 项里程数据");
+      lvl = "ok";
+    } else {
+      tips.push("此车型未能读到表显里程（私有协议未覆盖），以维保记录+实车磨损为准");
+    }
+    if (clearKm != null && clearKm < 50) tips.push("清码后距离仅 " + clearKm + " km——近期刚清过故障码或断过电，需留意");
+    if (OBD2.ready) {
+      var t = readyText(OBD2.ready);
+      if (t.indexOf("未就绪") >= 0) tips.push("有监测项未就绪——同样是刚清码/断电痕迹，结合里程看");
+    }
+    /* 结合多 ECU 快照结论 */
+    var ecuKms = [];
+    for (var k = 0; k < OBD2.ecuSnaps.length; k++) if (OBD2.ecuSnaps[k].km != null) ecuKms.push(OBD2.ecuSnaps[k].km);
+    if (ecuKms.length >= 2) {
+      var mx = Math.max.apply(null, ecuKms), mn = Math.min.apply(null, ecuKms);
+      if (mx - mn > 500 && (mx - mn) / mn > 0.02) tips.push("多 ECU 里程相差 " + (mx - mn) + " km，疑似调表");
+    }
+    el.innerHTML = '<div class="sim-verdict ' + lvl + '">' + tips.join("<br>") + "</div>";
+  }
+
+  /* ================= 模拟模式（无硬件演示，数据为假） ================= */
+  /* 假数据一律按真实 ELM327 格式返回：无空格连续 hex、VIN 走 ISO-TP 多帧，
+     ATDPN 带 A 前缀——与第三方 obd2-simulator 假车的真实行为一致 */
+  var simState = { addr: "7DF", drift: 0 };
+  var SIM_VIN = "LSVAM4AGS4MG31839";
+  /* 演示活性：每次读数据流时在当前工况附近小幅漂移（随机游走），
+     让演示时仪表是"活的"——怠速 800±60rpm、车速 50±6、水温 90±2℃、
+     负荷 23±4%、电瓶 13.8±0.15V、节气门 27±5%，全部压在真实车况区间 */
+  function simDrift() {
+    simState.drift = (simState.drift + 1) % 7;
+    var w = [0, 1, -1, 2, -2, 3, -3][simState.drift];
+    return w;
+  }
+  function simStreamHex(pid) {
+    var d = simDrift();
+    var v;
+    if (pid === "0C") v = 3200 + d * 24;            // 编码值 ÷4 = 800±18 rpm
+    else if (pid === "0D") v = 50 + d;              // km/h 50±3
+    else if (pid === "05") v = 130 + d;             // 编码值-40 = 90±3 ℃
+    else if (pid === "04") v = 60 + d * 2;          // ×100/255 = 23.5±2.4 %
+    else if (pid === "42") v = 13800 + d * 60;      // mV：13.8±0.18 V（真实行车电压）
+    else if (pid === "11") v = 69 + d * 2;          // ×100/255 = 27±1.6 %
+    else if (pid === "10") v = 156 + d;             // MAF 156±3 g/s
+    else if (pid === "1F") v = 300 + d * 4;         // 运行时长
+    else if (pid === "21") v = 140 + d;             // MIL 灯后距离
+    else if (pid === "31") v = 10;                  // 清码后距离
+    else if (pid === "46") v = 30 + d;              // 环境温度
+    else if (pid === "5C") v = 110 + d;             // 机油温度
+    else if (pid === "2F") v = 128 + d * 2;         // 油量
+    return v.toString(16).toUpperCase().padStart(4, "0");
+  }
+  function simIsoTp(prefixHex, ascii) {
+    /* 组装 ISO-TP 多帧：首帧 PCI + 0:.. 1:.. 2:..（数据 6/7/7 字节） */
+    var data = prefixHex;
+    for (var i = 0; i < ascii.length; i++) data += ascii.charCodeAt(i).toString(16).toUpperCase().padStart(2, "0");
+    var total = data.length / 2;
+    var pci = "1" + total.toString(16).toUpperCase().padStart(2, "0");
+    var frames = [pci];
+    var pos = 0, seq = 0;
+    var first = true;
+    while (pos < data.length) {
+      var take = first ? 12 : 14;   // 首帧后数据 6 字节、续帧 7 字节
+      frames.push(seq + ":" + data.substr(pos, take));
+      pos += take; seq = (seq + 1) % 16; first = false;
+    }
+    return frames.join("\r") + "\r\n>";
+  }
+  function simRespond(cmd, cb) {
+    setTimeout(function () {
+      var r = "OK\r\n>";
+      var c = cmd.replace(/\s+/g, "").toUpperCase();
+      if (c === "ATZ") r = "ATZ\rELM327 v2.2\r\n>";
+      else if (c === "ATE0" || c === "ATL0" || c === "ATH0" || c === "ATSP0") r = "OK\r\n>";
+      else if (c.indexOf("ATSH") === 0) { simState.addr = c.slice(4) || "7DF"; r = "OK\r\n>"; }
+      else if (c === "ATDPN") r = "A6\r\n>";                         // A6 = 自动探测到协议 6（CAN 11/500）
+      else if (c === "0100") r = "4100BFFFD817\r\n>";
+      else if (c === "0101") r = "41010707E504\r\n>";                // 就绪：3项可用均未就绪（模拟刚清过码）
+      else if (c === "0902") r = simIsoTp("490201", SIM_VIN) + "\r\n>";  // VIN 走 ISO-TP 多帧
+      else if (c.slice(0, 2) === "01") {
+        var pid = c.slice(2, 4);
+        /* 演示活性：流式 PID 走 simStreamHex 漂移；其余 PID 固定罐头值 */
+        var STREAM_PIDS = { "0C": 1, "0D": 1, "05": 1, "04": 1, "42": 1, "11": 1, "10": 1, "1F": 1, "21": 1, "31": 1, "46": 1, "5C": 1, "2F": 1 };
+        var fake = STREAM_PIDS[pid]
+          ? "41" + pid + simStreamHex(pid)
+          : ({ "0C": "410C0CF5", "0D": "410D32", "05": "41055A", "04": "41043C",
+               "42": "41420BB8", "11": "411145", "10": "4110009C", "1F": "411F012C",
+               "21": "4121008C", "31": "4131000A", "46": "41461E", "5C": "415C6E", "2F": "412F80" })[pid];
+        r = fake ? fake + "\r\n>" : "NO DATA\r\n>";
+      } else if (c.slice(0, 2) === "22") {
+        var did = c.slice(2);
+        var vinHex = "62F190";
+        for (var i = 0; i < SIM_VIN.length; i++) vinHex += SIM_VIN.charCodeAt(i).toString(16).toUpperCase().padStart(2, "0");
+        if (did === "F190") r = vinHex + "\r\n>";                    // 各 ECU 都在线
+        else if (did === "F1A0" && (simState.addr === "7DF" || simState.addr === "7E0" || simState.addr === "7E1")) r = "62F1A0000F4240\r\n>";  // 10万km：功能寻址/ECM/变速箱存
+        else r = "7F2231\r\n>";
+      }       else if (c.slice(0, 2) === "03") r = "430401\r\n>";     // 1 个故障码 P0401
+      else if (c.slice(0, 2) === "02") {
+        /* 冻结帧（ELM327 标准：请求 02+PID+帧号00；响应 42+PID+帧号00+数据）。
+           020000 位图支持 0C/0D/05/04/11（PID n → bit 32-n：0x18188000）；值取故障时刻（高怠速、车静止） */
+        var fpid = c.slice(2, 4);
+        var fakeFf = {
+          "00": "42000018188000",
+          "0C": "420C000C80", "0D": "420D0000", "05": "4205005A",
+          "04": "4204003C", "11": "42110045"
+        }[fpid];
+        r = fakeFf ? fakeFf + "\r\n>" : "NO DATA\r\n>";
+      }
+      else r = "OK\r\n>";
+      cb(r);
+    }, 120);
+  }
+
+  window.obdSimStart = function () {
+    OBD2.sim = true; OBD2.connected = true;
+    status("模拟演示（假数据）", true);
+    obd2Log("已进入模拟模式——流程与真车一致，数据为演示值");
+    elmInit(function () {
+      OBD2.proto = OBD2.protoName;
+      readVin(function (vin) {
+        if (vin) { $("obdVin").textContent = vin; }
+        readReady(function (b) {
+          if (b) $("obdReady").textContent = readyText(b);
+          $("obdProto").textContent = OBD2.protoName || "ISO 15765-4 CAN (11/500)";
+        });
+      });
+    });
+    obdStartStream();
+  };
+
+  /* ================= 连接生命周期（供 v3.js 蓝牙链路调用） ================= */
+  window.obd2OnConnect = function () {
+    OBD2.sim = false;
+    status("初始化 ELM327…", false);
+    elmInit(function () {
+      OBD2.connected = true;
+      status("已连接 · 深度诊断就绪", true);
+      obd2Log("只读模式生效：仅读取，不写入车辆 ECU");
+      readVin(function (vin) { if (vin) $("obdVin").textContent = vin; });
+      readReady(function (b) { if (b) $("obdReady").textContent = readyText(b); });
+      $("obdProto").textContent = OBD2.protoName || "—";
+      obdStartStream();
+    });
+  };
+  window.obd2OnDisconnect = function () {
+    OBD2.connected = false; OBD2.sim = false;
+    Q.clear(); window.obdStopStream();
+    status("已断开", false);
+    obd2Log("设备已断开");
+  };
+  window.obd2Close = function () { window.obdStopStream(); };
+
+  /* ================= 入口 ================= */
+  window.openObd2 = function () {
+    $("ovObd").classList.add("on");
+    if (!OBD2.connected) status("未连接", false);
+  };
+
+  /* 暴露给 v3.js 的蓝牙数据入口 */
+  window.obd2OnData = OBD2.onData;
+})();
+
+</script>
+<script>
+/* bluetooth-serial.js */
+/* ============================================================
+ * 二手车专家 · 经典蓝牙串口桥（bluetooth-serial.js）
+ * 仅安卓 APP 内可用（Capacitor 原生插件 BluetoothSerial）：
+ *   SPP 协议直连经典蓝牙 ELM327 接头（25 元级便宜接头就是这类）
+ * 网页版/无原生环境时 available() = false，OBD 面板自动走 BLE 链路。
+ * 只读安全：所有车辆指令仍统一过 obd2.js 的 obd2WriteGuard，本层只透传。
+ * ============================================================ */
+(function () {
+  "use strict";
+
+  function plugin() {
+    return (window.Capacitor && Capacitor.Plugins && Capacitor.Plugins.BluetoothSerial) || null;
+  }
+
+  var BS = {
+    /* 是否可用（仅安卓 APP 内为 true） */
+    available: function () {
+      return !!(window.Capacitor && Capacitor.isNativePlatform && Capacitor.isNativePlatform() && plugin());
+    },
+    isEnabled: function () { return plugin().isEnabled(); },
+    listPairedDevices: function () { return plugin().listPairedDevices(); },
+    connect: function (address) { return plugin().connect({ address: address }); },
+    disconnect: function () { return plugin().disconnect(); },
+    write: function (str) { return plugin().write({ data: str }); },
+    /* 注册数据回调：cb(chunk, disconnected) */
+    onData: function (cb) {
+      plugin().addListener("dataReceived", function (e) {
+        cb(e.data || "", !!e.disconnected);
+      });
+    }
+  };
+
+  window.BTSerial = BS;
+})();
+
+</script>
+<script>
+/* v4.js */
+/* ============================================================
+ * 二手车专家 V4 同行圈（v4.js）
+ * - 本地发布求购/车源，存本机
+ * - 分享卡片：一键复制/系统分享（微信传播是主路径）
+ * - 联机实验版：手写极简 MQTT 客户端，连免费公共 broker
+ *   （broker.emqx.io / WSS 8084），订阅同城主题，失败自动降级
+ * ============================================================ */
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ================= 极简 MQTT 3.1.1 客户端（QoS 0） ================= */
+  function MqttMini(url, onStatus, onMessage) {
+    this.url = url; this.ws = null; this.connected = false;
+    this.onStatus = onStatus; this.onMessage = onMessage;
+    this.pid = 1; this.keep = null; this.buf = new Uint8Array(0);
+  }
+  MqttMini.prototype._str = function (s) {
+    var b = new TextEncoder().encode(s);
+    return [b.length >> 8, b.length & 255].concat(Array.from(b));
+  };
+  MqttMini.prototype._rem = function (n) {
+    var out = [];
+    do { var b = n % 128; n = Math.floor(n / 128); if (n > 0) b |= 128; out.push(b); } while (n > 0);
+    return out;
+  };
+  MqttMini.prototype.connect = function (clientId) {
+    var self = this;
+    return new Promise(function (res, rej) {
+      try { self.ws = new WebSocket(self.url, "mqtt"); } catch (e) { rej(e); return; }
+      self.ws.binaryType = "arraybuffer";
+      var to = setTimeout(function () { rej(new Error("连接超时")); }, 8000);
+      self.ws.onopen = function () {
+        var vh = self._str("MQTT").concat([4, 0x02, 0, 60]); // level4 clean keepalive60
+        var body = self._str(clientId);
+        var pkt = [0x10].concat(self._rem(vh.length + body.length), vh, body);
+        self.ws.send(new Uint8Array(pkt));
+      };
+      self.ws.onmessage = function (ev) { self._onData(ev); };
+      self.ws.onerror = function () { clearTimeout(to); rej(new Error("连接失败（公共 broker 可能被网络屏蔽）")); };
+      self.ws.onclose = function () {
+        clearTimeout(to); self.connected = false;
+        if (self.keep) { clearInterval(self.keep); self.keep = null; }
+        self.onStatus && self.onStatus(false);
+      };
+      self._res = function () { clearTimeout(to); res(); };
+    });
+  };
+  MqttMini.prototype._onData = function (ev) {
+    var chunk = new Uint8Array(ev.data);
+    var nb = new Uint8Array(this.buf.length + chunk.length);
+    nb.set(this.buf); nb.set(chunk, this.buf.length);
+    this.buf = nb;
+    while (this.buf.length >= 2) {
+      var type = this.buf[0] >> 4;
+      var mul = 1, rl = 0, i = 1;
+      do { rl += (this.buf[i] & 127) * mul; mul *= 128; i++; } while ((this.buf[i - 1] & 128) && i < this.buf.length);
+      if (this.buf.length < i + rl) break;
+      var body = this.buf.slice(i, i + rl);
+      this.buf = this.buf.slice(i + rl);
+      if (type === 2 && !this.connected) { // CONNACK
+        this.connected = true;
+        this.onStatus && this.onStatus(true);
+        var self = this;
+        this.keep = setInterval(function () { self.ws.send(new Uint8Array([0xC0, 0x00])); }, 30000);
+        if (this._res) this._res();
+      } else if (type === 3) { // PUBLISH
+        var tl = (body[0] << 8) | body[1];
+        var topic = new TextDecoder().decode(body.slice(2, 2 + tl));
+        var payload = new TextDecoder().decode(body.slice(2 + tl));
+        this.onMessage && this.onMessage(topic, payload);
+      }
+    }
+  };
+  MqttMini.prototype.publish = function (topic, msg) {
+    if (!this.connected) return false;
+    var t = this._str(topic), m = new TextEncoder().encode(msg);
+    var pkt = [0x30].concat(this._rem(t.length + m.length), t, Array.from(m));
+    this.ws.send(new Uint8Array(pkt));
+    return true;
+  };
+  MqttMini.prototype.subscribe = function (topic) {
+    if (!this.connected) return false;
+    var t = this._str(topic);
+    var vh = [this.pid >> 8, this.pid & 255].concat(t, [0]); // QoS0
+    this.pid++;
+    var pkt = [0x82].concat(this._rem(vh.length), vh);
+    this.ws.send(new Uint8Array(pkt));
+    return true;
+  };
+  MqttMini.prototype.close = function () {
+    if (this.keep) clearInterval(this.keep);
+    if (this.ws) { try { this.ws.close(); } catch (e) { } }
+    this.connected = false;
+  };
+
+  /* ================= 同行圈状态 ================= */
+  var mq = null, mqOn = false;
+  var BROKER = "wss://broker.emqx.io:8084/mqtt";
+  var TOPIC_PREFIX = "yzs/circle/v1";
+  /* 本页唯一身份：用于 MQTT clientId 与「自己发的不回收」过滤。
+     注意：不能用固定字符串（如"我"）——否则真实用户之间收到对方帖子会被误丢弃 */
+  var selfId = "yzs_" + Math.random().toString(36).slice(2, 6) + Math.random().toString(36).slice(2, 6);
+
+  function posts() { try { return JSON.parse(localStorage.getItem("yzs_circle_posts") || "[]"); } catch (e) { return []; } }
+  function savePosts(p) { localStorage.setItem("yzs_circle_posts", JSON.stringify(p)); }
+  function recv() { try { return JSON.parse(localStorage.getItem("yzs_circle_recv") || "[]"); } catch (e) { return []; } }
+  function saveRecv(r) { localStorage.setItem("yzs_circle_recv", JSON.stringify(r.slice(0, 60))); }
+
+  function myCity() {
+    var c = (typeof car === "function") ? car() : null;
+    return (c && c.city) || $("ciCity").value.trim() || "郑州";
+  }
+
+  function postText(p) {
+    var head = p.type === "seek" ? "【求购】" : "【车源】";
+    var t = head + p.year + p.model + "，表显 " + p.mileage + " 万公里，过户 " + p.transfers + " 次。" +
+      (p.type === "seek" ? "心理价位 " + p.price + " 万以内，" : "明盘 " + p.price + " 万，") +
+      (p.paint ? p.paint + "。" : "") + (p.note ? p.note : "") + p.city + "看车。" +
+      (p.contact ? "联系：" + p.contact : "");
+    return t;
+  }
+
+  function renderCircle() {
+    /* 我的发布 */
+    var box = $("ciMine");
+    if (box) {
+      var ps = posts();
+      box.innerHTML = ps.length ? "" : '<div style="text-align:center;color:#a89e91;font-size:13px;padding:24px 0">还没发过<br>填上面的表单，发一条试试</div>';
+      ps.forEach(function (p) {
+        var d = document.createElement("div");
+        d.className = "ci-item";
+        d.innerHTML = '<div class="ci-tag ' + (p.type === "seek" ? "seek" : "sell") + '">' + (p.type === "seek" ? "求购" : "车源") + "</div>" +
+          '<div class="ci-b"><b>' + esc(p.year) + esc(p.model) + " · ¥" + esc(p.price) + "万</b><span>" + esc(p.mileage) + " 万公里 · 过户 " + esc(p.transfers) + " 次 · " + esc(p.city) + "</span></div>" +
+          '<div class="ci-a"><button class="cp">复制</button><button class="del">删</button></div>';
+        d.querySelector(".cp").onclick = function () { copyTxt(this, postText(p)); };
+        d.querySelector(".del").onclick = function () { savePosts(posts().filter(function (x) { return x.id !== p.id; })); renderCircle(); };
+        box.appendChild(d);
+      });
+    }
+    /* 联机收到 */
+    var rbox = $("ciRecv");
+    if (rbox) {
+      var rs = recv();
+      rbox.innerHTML = rs.length ? "" : '<div style="text-align:center;color:#a89e91;font-size:13px;padding:24px 0">' + (mqOn ? "已联机，等同城同行发帖…<br>（公共 broker 上人不多，先发几条让圈里有内容）" : "联机开关未打开<br>打开后自动接收同城同行的求购/车源") + "</div>";
+      rs.forEach(function (p) {
+        var d = document.createElement("div");
+        d.className = "ci-item";
+        d.innerHTML = '<div class="ci-tag ' + (p.type === "seek" ? "seek" : "sell") + '">' + (p.type === "seek" ? "求购" : "车源") + "</div>" +
+          '<div class="ci-b"><b>' + esc(p.year) + esc(p.model) + " · ¥" + esc(p.price) + "万</b><span>" + esc(p.mileage) + " 万公里 · 过户 " + esc(p.transfers) + " 次 · " + esc(p.city) + " · 来自 同城同行</span></div>" +
+          '<div class="ci-a"><button class="cp">复制</button></div>';
+        d.querySelector(".cp").onclick = function () { copyTxt(this, postText(p)); };
+        rbox.appendChild(d);
+      });
+    }
+  }
+
+  window.ciPublish = function () {
+    var p = {
+      id: selfId + "_" + Date.now(), type: $("ciType").value,
+      year: $("ciYear").value.trim() || "20XX款",
+      model: $("ciModel").value.trim() || "车型",
+      mileage: $("ciMileage").value.trim() || "—",
+      transfers: $("ciTransfers").value.trim() || "—",
+      price: $("ciPrice").value.trim() || "—",
+      paint: $("ciPaint").value.trim(),
+      city: $("ciCity").value.trim() || "郑州",
+      contact: $("ciContact").value.trim(),
+      note: $("ciNote").value.trim(),
+      ts: new Date().toISOString(),
+      from: selfId
+    };
+    var ps = posts(); ps.unshift(p); savePosts(ps);
+    var txt = postText(p);
+    copyTxt({ textContent: "复制" }, txt);
+    toast("已复制发布内容，甩进微信群即可；已存档到「我的发布」");
+    /* 联机开着的，同步 publish */
+    if (mq && mq.connected) {
+      mq.publish(TOPIC_PREFIX + "/" + p.city, JSON.stringify(p));
+      toast("已同步到联合同行圈（" + p.city + "）");
+    }
+    renderCircle();
+  };
+
+  window.ciShare = function () {
+    var ps = posts();
+    if (!ps.length) { toast("先发布一条"); return; }
+    var t = "【二手车专家 · 同行圈】" + myCity() + "\n\n" + ps.slice(0, 5).map(postText).join("\n\n");
+    if (window.CapBridge && window.CapBridge.isNative()) {
+      window.CapBridge.shareText("同行圈 · " + myCity(), t);
+    } else { copyTxt({ textContent: "复制" }, t); toast("已复制，甩进微信群即可"); }
+  };
+
+  window.ciToggleMq = async function () {
+    var btn = $("ciMqBtn"), dot = $("ciMqDot"), txt = $("ciMqTxt");
+    if (mqOn && mq) {
+      mq.close(); mq = null; mqOn = false;
+      btn.textContent = "打开联机"; dot.className = "mq-dot";
+      txt.textContent = "联机关闭：仅本机";
+      toast("联机已关，内容只存本机");
+      return;
+    }
+    btn.textContent = "连接中…"; txt.textContent = "正在连接免费公共服务器…";
+    try {
+      mq = new MqttMini(BROKER, function (ok) {
+        dot.className = "mq-dot" + (ok ? " on" : "");
+        txt.textContent = ok ? "已联机：broker.emqx.io（免费公共）" : "已断开";
+        btn.textContent = ok ? "关闭联机" : "重试连接";
+        if (ok) mqOn = true;
+        renderCircle();
+      }, function (topic, payload) {
+        try {
+          var p = JSON.parse(payload);
+          if (p.from === selfId) return; /* 只过滤自己发的，别人的全收 */
+          var rs = recv();
+          if (rs.some(function (x) { return x.id === p.id; })) return;
+          rs.unshift(p); saveRecv(rs); renderCircle();
+        } catch (e) { }
+      });
+      await mq.connect(selfId + "_" + Math.random().toString(36).slice(2, 6));
+      mq.subscribe(TOPIC_PREFIX + "/" + myCity());
+      mqOn = true;
+      btn.textContent = "关闭联机"; dot.className = "mq-dot on";
+      txt.textContent = "已联机 · 订阅主题：" + TOPIC_PREFIX + "/" + myCity();
+      toast("联机成功，自动接收「" + myCity() + "」同行的帖子");
+    } catch (e) {
+      mqOn = false; mq = null;
+      btn.textContent = "重试连接"; dot.className = "mq-dot";
+      txt.textContent = "连接失败：" + (e.message || e) + "（公共服务器被屏蔽时，用微信分享照样传内容）";
+      toast("联机失败不影响本机使用");
+    }
+  };
+
+  /* ================= 初始化 ================= */
+  function init() {
+    if ($("ciPublish")) {
+      /* 用当前车档预填 */
+      var c = (typeof car === "function") ? car() : null;
+      if (c && $("ciModel") && !$("ciModel").value) {
+        $("ciYear").value = c.year; $("ciModel").value = c.model;
+        $("ciMileage").value = c.mileage; $("ciTransfers").value = c.transfers;
+        $("ciPrice").value = c.price; $("ciPaint").value = c.paint; $("ciCity").value = c.city;
+      }
+      renderCircle();
+    }
+    var tabs = $("ciTabs");
+    if (tabs) tabs.querySelectorAll("div").forEach(function (t) {
+      t.onclick = function () {
+        tabs.querySelectorAll("div").forEach(function (x) { x.classList.remove("on"); });
+        t.classList.add("on");
+        $("ciPaneMine").style.display = t.dataset.t === "mine" ? "" : "none";
+        $("ciPaneRecv").style.display = t.dataset.t === "recv" ? "" : "none";
+      };
+    });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+
+</script>
+<script>
+/* v5.js */
+/* ============================================================
+ * 二手车专家 V5 成品感模块（v5.js）
+ * 1. 新手引导（首次打开 3 屏导览）
+ * 2. 数据备份 / 导入（换机迁移，全部本机操作）
+ * 3. 版本更新提示（本地版本变化时展示更新日志）
+ * ============================================================ */
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var APP_VER = "1.2";
+
+  /* ================= 1. 新手引导 ================= */
+  var GUIDE = [
+    { ic: "🎙", t: "语音念车况，30 秒出全套内容", d: "对着手机念一段车况，自动整理成车档，一次生成 8 条朋友圈文案、3 版抖音口播和卖车海报。<br><br>先点「🎙 语音转写」试试，念：「2021年的凯美瑞，表显4万公里，全车原版原漆，无重大事故，要价13万5」" },
+    { ic: "🔍", t: "132 项验车清单，现场逐项过", d: "收车时选好车档，看一项点一项：正常 / 异常。异常自动要备注，检完一键生成检测小结和车况报告，发客户、发档口都显得专业。" },
+    { ic: "🧰", t: "随身工具 + 算账 + 查询导航", d: "手电、水印相机（带时间地点）、水平仪、秒表；收车成本计算器；12123 / 查博士 / 车300 一键跳转；VIN 车架号校验位核验，抄错一位立刻现形。" },
+    { ic: "🤝", t: "同行圈：求购车源本机发、联机收", d: "本机发布的求购/车源一键复制甩微信群；打开联机实验版，自动接收同城同行的帖子。<br><br>全部数据只存本机，不上传不收集。觉得好用，甩给同行。" }
+  ];
+  var guideIdx = 0;
+  function renderGuide() {
+    var g = GUIDE[guideIdx];
+    $("guideBody").innerHTML = '<div class="gd-ic">' + g.ic + "</div><h3>" + g.t + "</h3><p>" + g.d + "</p>" +
+      '<div class="gd-dots">' + GUIDE.map(function (_, i) { return '<i class="' + (i === guideIdx ? "on" : "") + '"></i>'; }).join("") + "</div>" +
+      '<div class="btn-row"><button class="btn btn-ghost" onclick="guideSkip()">跳过</button>' +
+      '<button class="btn btn-main" style="flex:2" onclick="guideNext()">' + (guideIdx === GUIDE.length - 1 ? "开始用 →" : "下一条 →") + "</button></div>";
+  }
+  window.guideNext = function () {
+    if (guideIdx < GUIDE.length - 1) { guideIdx++; renderGuide(); }
+    else window.guideSkip();
+  };
+  window.guideSkip = function () {
+    localStorage.setItem("yzs_guided", "1");
+    $("ovGuide").classList.remove("on");
+    checkUpdate();
+  };
+  window.openGuide = function () {
+    guideIdx = 0; renderGuide(); $("ovGuide").classList.add("on");
+  };
+
+  /* ================= 2. 更新提示 ================= */
+  var CHANGELOG = "V1.2 更新内容：<br>· 新增「同行圈」：求购/车源发布，本机+免费联机双模式<br>· 新增「OBD 蓝牙诊断」：实时转速/车速/水温，故障码读取+中文释义<br>· 新增「车况报告」：132 项验车清单直接导出打印<br>· 发车页新增「多平台文案」「应对话术库」<br>· 新增新手引导与数据备份";
+  function checkUpdate() {
+    var seen = localStorage.getItem("yzs_seen_ver") || "";
+    if (seen !== APP_VER) {
+      localStorage.setItem("yzs_seen_ver", APP_VER);
+      $("updateBody").innerHTML = CHANGELOG;
+      $("ovUpdate").classList.add("on");
+    }
+  }
+  window.closeUpdate = function () { $("ovUpdate").classList.remove("on"); };
+
+  /* ================= 3. 数据备份 / 导入 ================= */
+  var BACKUP_KEYS = ["yzs_garage", "yzs_circle_posts", "yzs_circle_recv", "yzs_guided", "yzs_seen_ver"];
+  function collectCheckKeys() {
+    var keys = [];
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (k && k.indexOf("yzs_check_") === 0) keys.push(k);
+    }
+    return keys;
+  }
+  window.exportData = function () {
+    var data = { app: "二手车专家", ver: APP_VER, ts: new Date().toISOString(), store: {} };
+    BACKUP_KEYS.concat(collectCheckKeys()).forEach(function (k) {
+      data.store[k] = localStorage.getItem(k);
+    });
+    var json = JSON.stringify(data);
+    if (window.CapBridge && window.CapBridge.isNative()) {
+      window.CapBridge.shareText("二手车专家数据备份", json).then(function (ok) {
+        if (!ok) { copyTxt({ textContent: "复制" }, json); toast("备份已复制，存到微信收藏即可"); }
+      });
+    } else {
+      copyTxt({ textContent: "复制" }, json);
+      toast("备份 JSON 已复制，存到微信「收藏」或备忘录，换机时导入");
+    }
+  };
+  window.importData = function () {
+    var json = prompt("粘贴之前导出的备份 JSON：", "");
+    if (!json || !json.trim()) return;
+    try {
+      var data = JSON.parse(json.trim());
+      if (!data || !data.store) throw new Error("格式不对");
+      var n = 0;
+      Object.keys(data.store).forEach(function (k) {
+        if (typeof data.store[k] === "string") { localStorage.setItem(k, data.store[k]); n++; }
+      });
+      toast("已恢复 " + n + " 项数据，重启应用生效");
+      setTimeout(function () { location.reload(); }, 1200);
+    } catch (e) {
+      toast("导入失败：" + (e.message || "不是有效备份") + "，请检查复制的完整内容");
+    }
+  };
+
+  /* ================= 初始化 ================= */
+  function init() {
+    if (!localStorage.getItem("yzs_guided")) {
+      guideIdx = 0; renderGuide(); $("ovGuide").classList.add("on");
+    } else {
+      checkUpdate();
+    }
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+
+</script>
+<script>
+/* sim.js */
+/* ============================================================
+ * 二手车专家 · Arduino 实验室（sim.js）
+ * 软硬一体工具箱：软件里先仿真跑通，买硬件照代码烧录落地
+ * V1 内置 4 个车商工具：漆膜仪 / 红外测温枪 / 电瓶检测仪 / 智能强光手电
+ * ============================================================ */
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ================= 工具库数据 ================= */
+  var SIM_TOOLS = [
+    {
+      id: "paint", name: "漆膜仪", icon: "🎨", cost: "约 60~90 元",
+      scene: "判断车漆是否补过，替代几千元商用漆膜仪",
+      desc: "涡流传感器贴近漆面测金属基体上的涂层厚度。原车漆出厂厚度有区间，补漆/钣金胶会明显超厚——收车时测 6 个面，哪面动过手一目了然。",
+      inputs: [{ id: "thick", label: "漆面厚度", min: 0, max: 800, val: 120, unit: " μm" }],
+      blocks: ["涡流测厚模块", "Arduino Nano", "OLED 显示屏"],
+      run: function (v) {
+        var t = v.thick;
+        if (t < 40) return { lcd: "漆厚 " + t + " um\n请贴紧金属漆面", st: "warn", vtxt: "没测上，贴紧再测" };
+        if (t <= 160) return { lcd: "漆厚 " + t + " um\n【原漆区间】", st: "ok", vtxt: "原漆，正常区间（40~160μm）" };
+        if (t <= 260) return { lcd: "漆厚 " + t + " um\n【偏厚，疑补漆】", st: "warn", vtxt: "偏厚，可能补过漆或原厂厚漆，结合目视判断" };
+        return { lcd: "漆厚 " + t + " um\n【明显补漆】", st: "bad", vtxt: "明显补漆/钣金胶，砍价有理有据" };
+      },
+      code:
+        "/* 二手车专家 · 涡流漆膜仪（判定与软件仿真一致：<40没测上/40~160原漆/160~260疑补漆/>260明显补漆） */\n" +
+        "#include <Wire.h>\n" +
+        "#include <Adafruit_SSD1306.h>\n" +
+        "#include <SoftwareSerial.h>\n" +
+        "\n" +
+        "Adafruit_SSD1306 oled(128, 64, &Wire, -1);\n" +
+        "SoftwareSerial gauge(10, 11);      // D10=RX D11=TX，接测厚模块串口\n" +
+        "\n" +
+        "/* 测厚模块协议：持续输出 \"THICK:xxx\\r\\n\"（以模块手册为准） */\n" +
+        "int readSensor() {\n" +
+        "  while (gauge.available()) {\n" +
+        "    String line = gauge.readStringUntil('\\n');\n" +
+        "    line.trim();\n" +
+        "    if (line.startsWith(\"THICK:\")) {\n" +
+        "      int v = line.substring(6).toInt();\n" +
+        "      if (v > 0 && v < 2000) return v;\n" +
+        "    }\n" +
+        "  }\n" +
+        "  return -1;\n" +
+        "}\n" +
+        "\n" +
+        "void setup() {\n" +
+        "  Serial.begin(9600);              // USB 串口监视器看调试输出\n" +
+        "  gauge.begin(9600);\n" +
+        "  oled.begin(SSD1306_SWITCHCAPVCC, 0x3C);\n" +
+        "  oled.setTextColor(WHITE);\n" +
+        "  Serial.println(F(\"漆膜仪就绪：贴紧金属漆面测量\"));\n" +
+        "}\n" +
+        "\n" +
+        "void loop() {\n" +
+        "  int thick = readSensor();\n" +
+        "  oled.clearDisplay();\n" +
+        "  oled.setTextSize(2); oled.setCursor(0, 0);\n" +
+        "  if (thick < 0) {\n" +
+        "    oled.print(\"--- um\");\n" +
+        "    oled.setTextSize(1); oled.setCursor(0, 32);\n" +
+        "    oled.print(\"TIE JIN MIANJI\");\n" +
+        "  } else {\n" +
+        "    oled.print(thick); oled.print(\" um\");\n" +
+        "    oled.setTextSize(1); oled.setCursor(0, 32);\n" +
+        "    if (thick < 40)        oled.print(\"MEI CE SHANG\");\n" +
+        "    else if (thick <= 160) oled.print(\"YUANQI OK\");\n" +
+        "    else if (thick <= 260) oled.print(\"HOU? BUQI?\");\n" +
+        "    else                   oled.print(\"BUQI DANJIA\");\n" +
+        "  }\n" +
+        "  oled.display();\n" +
+        "  if (thick < 0) Serial.println(F(\"wait...\"));\n" +
+        "  else { Serial.print(thick); Serial.println(F(\" um\")); }\n" +
+        "  delay(300);\n" +
+        "}\n",
+      parts: [["Arduino Nano（或 UNO）", "25", "arduino nano 开发板"], ["涡流涂层测厚模块", "45", "涡流测厚模块 涂层测厚"], ["OLED 0.96寸 I2C 屏", "15", "0.96寸 OLED I2C"], ["杜邦线 + 小开关", "5", "杜邦线 母对母"]],
+      usage: "收车时测机盖/翼子板/车门/车顶 6 个面，同一面测 3 点取平均。哪面超厚重点看那面的缝隙、焊点、密封胶。"
+    },
+    {
+      id: "ir", name: "红外测温枪", icon: "🌡", cost: "约 30~50 元",
+      scene: "刹车盘温差、轴承温度、排气管工况，一枪出数",
+      desc: "MLX90614 非接触红外测温，对准刹车盘、轴承、排气管、机盖，按目标判定。收车时左右对比温差，机械故障早发现。",
+      inputs: [
+        { id: "temp", label: "目标温度", min: -20, max: 600, val: 95, unit: " ℃" },
+        { id: "target", label: "测量目标", type: "select", val: "brake", options: [["brake", "刹车盘"], ["bearing", "轮毂轴承"], ["exhaust", "排气管/三元"], ["hood", "机盖（水温）"]] }
+      ],
+      blocks: ["MLX90614 红外模块", "Arduino Nano", "OLED 显示屏"],
+      run: function (v) {
+        var t = v.temp;
+        var lcd = t + "C\n" + ({ brake: "刹车盘", bearing: "轴承", exhaust: "排气管", hood: "机盖" })[v.target];
+        if (v.target === "brake") {
+          if (t < 40) return { lcd: lcd, st: "ok", vtxt: "冷车低温，正常" };
+          if (t <= 90) return { lcd: lcd, st: "ok", vtxt: "刹车盘温度正常（左右温差应 <40℃）" };
+          if (t <= 130) return { lcd: lcd, st: "warn", vtxt: "偏热：单侧偏高查刹车分泵/手刹拖滞，左右温差 >60℃ 重点查" };
+          return { lcd: lcd, st: "bad", vtxt: "超温：刹车抱死/分泵不回位嫌疑，此车慎收" };
+        }
+        if (v.target === "bearing") {
+          if (t <= 50) return { lcd: lcd, st: "ok", vtxt: "轴承温度正常" };
+          if (t <= 80) return { lcd: lcd, st: "warn", vtxt: "偏热：轴承缺油/预紧力过大，跑一段再测对比" };
+          return { lcd: lcd, st: "bad", vtxt: "超温：轴承损坏嫌疑，换轴承约 200~500/轮" };
+        }
+        if (v.target === "exhaust") {
+          if (t < 80) return { lcd: lcd, st: "warn", vtxt: "温度偏低：燃烧不完全/点火故障嫌疑，结合故障码看" };
+          if (t <= 400) return { lcd: lcd, st: "ok", vtxt: "排气管/三元工作温度，正常" };
+          return { lcd: lcd, st: "bad", vtxt: "超温：混合气过浓/三元堵塞嫌疑" };
+        }
+        /* 机盖 */
+        if (t <= 75) return { lcd: lcd, st: "ok", vtxt: "机盖温度正常（水温系统健康）" };
+        if (t <= 95) return { lcd: lcd, st: "warn", vtxt: "偏热：散热一般，重点看水温表和风扇" };
+        return { lcd: lcd, st: "bad", vtxt: "过热：水箱/节温器/水泵嫌疑，查冷却系统" };
+      },
+      code:
+        "/* 二手车专家 · 红外测温枪（判定与软件仿真一致） */\n" +
+        "#include <Wire.h>\n" +
+        "#include <Adafruit_MLX90614.h>\n" +
+        "#include <Adafruit_SSD1306.h>\n" +
+        "\n" +
+        "Adafruit_MLX90614 mlx;\n" +
+        "Adafruit_SSD1306 oled(128, 64, &Wire, -1);\n" +
+        "const byte btnPin = 2;             // 短按循环切换测量目标\n" +
+        "\n" +
+        "/* 目标：0 刹车盘 1 轮毂轴承 2 排气管/三元 3 机盖(水温) */\n" +
+        "byte target = 0;\n" +
+        "const char* TNAME[] = { \"SHAOCHEPAN\", \"ZHOUCHENG\", \"PAIQIGUAN\", \"JINGAI\" };\n" +
+        "\n" +
+        "/* 判定与软件仿真同阈值：0 正常 1 偏热 2 超温 */\n" +
+        "byte verdict(byte tg, float t) {\n" +
+        "  if (tg == 0) {                    // 刹车盘\n" +
+        "    if (t < 40)  return 0;          // 冷车低温\n" +
+        "    if (t <= 90) return 0;\n" +
+        "    if (t <= 130) return 1;\n" +
+        "    return 2;\n" +
+        "  }\n" +
+        "  if (tg == 1) {                    // 轮毂轴承\n" +
+        "    if (t <= 50) return 0;\n" +
+        "    if (t <= 80) return 1;\n" +
+        "    return 2;\n" +
+        "  }\n" +
+        "  if (tg == 2) {                    // 排气管/三元\n" +
+        "    if (t < 80)  return 1;          // 燃烧不完全嫌疑\n" +
+        "    if (t <= 400) return 0;\n" +
+        "    return 2;\n" +
+        "  }\n" +
+        "  if (t <= 75) return 0;            // 机盖（水温）\n" +
+        "  if (t <= 95) return 1;\n" +
+        "  return 2;\n" +
+        "}\n" +
+        "\n" +
+        "void setup() {\n" +
+        "  Serial.begin(9600);\n" +
+        "  mlx.begin();\n" +
+        "  oled.begin(SSD1306_SWITCHCAPVCC, 0x3C);\n" +
+        "  pinMode(btnPin, INPUT_PULLUP);\n" +
+        "  Serial.println(F(\"红外测温枪就绪：按按钮切换目标\"));\n" +
+        "}\n" +
+        "\n" +
+        "void loop() {\n" +
+        "  if (!digitalRead(btnPin)) {\n" +
+        "    target = (target + 1) % 4;\n" +
+        "    Serial.print(F(\"target -> \")); Serial.println(TNAME[target]);\n" +
+        "    delay(200);\n" +
+        "  }\n" +
+        "  float t   = mlx.readObjectTempC();\n" +
+        "  float amb = mlx.readAmbientTempC();\n" +
+        "  byte v = verdict(target, t);\n" +
+        "  oled.clearDisplay();\n" +
+        "  oled.setTextSize(2); oled.setCursor(0, 0);\n" +
+        "  oled.print(t, 1); oled.print(\" C\");\n" +
+        "  oled.setTextSize(1); oled.setCursor(0, 34);\n" +
+        "  oled.print(TNAME[target]); oled.print(\" \");\n" +
+        "  oled.print(v == 0 ? \"OK\" : (v == 1 ? \"PIANRE\" : \"CHAOWEN\"));\n" +
+        "  oled.display();\n" +
+        "  Serial.print(TNAME[target]); Serial.print(\" \");\n" +
+        "  Serial.print(t, 1); Serial.print(\"C amb \"); Serial.print(amb, 1); Serial.print(\"C \");\n" +
+        "  Serial.println(v == 0 ? \"OK\" : (v == 1 ? \"PIANRE\" : \"CHAOWEN\"));\n" +
+        "  delay(250);\n" +
+        "}\n",
+      parts: [["Arduino Nano", "25", "arduino nano"], ["MLX90614 红外测温模块", "35", "MLX90614 模块"], ["OLED 0.96寸 I2C 屏", "15", "OLED I2C 0.96"], ["激光瞄准头（可选）", "5", "激光模块 650nm"]],
+      usage: "冷车状态测左右刹车盘、四个轮毂轴承温度，同侧左右温差超过 60℃ 或单轮明显偏热，查刹车分泵/轴承。排气管 200~400℃ 属正常燃烧工况。"
+    },
+    {
+      id: "batt", name: "电瓶检测仪", icon: "🔋", cost: "约 20~40 元",
+      scene: "收电瓶亏电车/老电瓶车，10 秒出结论",
+      desc: "直流内阻法：给电瓶加负载测压降，算内阻。内阻翻倍 = 电瓶寿命到头，别再按「能打着火」收车。",
+      inputs: [
+        { id: "volt", label: "端电压", min: 9, max: 15, val: 12.6, unit: " V", step: 0.1 },
+        { id: "ir", label: "内阻", min: 0, max: 120, val: 12, unit: " mΩ" }
+      ],
+      blocks: ["INA219 电流电压模块", "Arduino Nano", "OLED 显示屏"],
+      run: function (v) {
+        var lcd = v.volt.toFixed(1) + "V " + v.ir + "mΩ";
+        if (v.volt < 11.8) return { lcd: lcd, st: "bad", vtxt: "亏电（<11.8V），先充电再测，亏电车压价" };
+        if (v.ir <= 15 && v.volt >= 12.4) return { lcd: lcd, st: "ok", vtxt: "健康：电压足、内阻低，电瓶OK" };
+        if (v.ir <= 40) return { lcd: lcd, st: "warn", vtxt: "衰减：内阻偏高，还能撑半年到一年，压电瓶钱" };
+        return { lcd: lcd, st: "bad", vtxt: "到寿：内阻超 40mΩ，建议换电瓶（约 400~600），收车价里扣" };
+      },
+      code:
+        "/* 二手车专家 · 电瓶内阻检测仪（判定与软件仿真一致：≤15健康/15~40衰减/>40该换） */\n" +
+        "#include <Wire.h>\n" +
+        "#include <Adafruit_INA219.h>\n" +
+        "#include <Adafruit_SSD1306.h>\n" +
+        "\n" +
+        "Adafruit_INA219 ina219;\n" +
+        "Adafruit_SSD1306 oled(128, 64, &Wire, -1);\n" +
+        "const byte loadPin = 9;             // 负载 MOS 栅极\n" +
+        "\n" +
+        "/* 内阻判定：0 健康 1 衰减 2 该换 */\n" +
+        "byte verdict(float ir) {\n" +
+        "  if (ir <= 15) return 0;\n" +
+        "  if (ir <= 40) return 1;\n" +
+        "  return 2;\n" +
+        "}\n" +
+        "\n" +
+        "void setup() {\n" +
+        "  Serial.begin(9600);\n" +
+        "  oled.begin(SSD1306_SWITCHCAPVCC, 0x3C);\n" +
+        "  pinMode(loadPin, OUTPUT);\n" +
+        "  if (!ina219.begin()) {\n" +
+        "    Serial.println(F(\"INA219 NOT FOUND! 检查接线\"));\n" +
+        "    oled.clearDisplay(); oled.setTextSize(1); oled.setCursor(0, 0);\n" +
+        "    oled.print(\"INA219 NOT FOUND\"); oled.display();\n" +
+        "    while (1) delay(100);           // 找不到模块就停下报错，不出垃圾数据\n" +
+        "  }\n" +
+        "  Serial.println(F(\"电瓶检测仪就绪：探针接电瓶母线\"));\n" +
+        "}\n" +
+        "\n" +
+        "void loop() {\n" +
+        "  float v0 = ina219.getBusVoltage_V();          // 空载电压\n" +
+        "  digitalWrite(loadPin, HIGH); delay(300);      // 加负载\n" +
+        "  float v1 = ina219.getBusVoltage_V();\n" +
+        "  float i  = ina219.getCurrent_mA() / 1000.0;   // A\n" +
+        "  digitalWrite(loadPin, LOW);\n" +
+        "  float ir = (i > 0.01) ? (v0 - v1) / i * 1000 : 999;  // mΩ\n" +
+        "  byte v = verdict(ir);\n" +
+        "  oled.clearDisplay();\n" +
+        "  oled.setTextSize(2); oled.setCursor(0, 0);\n" +
+        "  oled.print(v0, 1); oled.print(\"V\");\n" +
+        "  oled.setTextSize(1); oled.setCursor(0, 34);\n" +
+        "  oled.print(\"IR:\"); oled.print(ir, 1); oled.print(\"mO \");\n" +
+        "  oled.print(v == 0 ? \"OK\" : (v == 1 ? \"SHUAIJIAN\" : \"TUISHOU\"));\n" +
+        "  oled.display();\n" +
+        "  Serial.print(v0, 2); Serial.print(\"V IR:\"); Serial.print(ir, 1); Serial.print(\"mO \");\n" +
+        "  Serial.println(v == 0 ? \"OK\" : (v == 1 ? \"SHUAIJIAN\" : \"TUISHOU\"));\n" +
+        "  delay(1000);\n" +
+        "}\n",
+      parts: [["Arduino Nano", "25", "arduino nano"], ["INA219 电流电压模块", "18", "INA219 模块"], ["MOS 管 + 负载电阻", "5", "IRF540 MOS"], ["OLED 0.96寸 I2C 屏", "15", "OLED I2C 0.96"], ["接线柱/鳄鱼夹", "3", "鳄鱼夹线"]],
+      usage: "夹电瓶正负极（注意极性），10 秒出内阻。收车时内阻超 40mΩ 直接在成交价里扣一组电瓶钱；亏电的先充 2 小时再测。"
+    },
+    {
+      id: "torch", name: "智能强光手电", icon: "🔦", cost: "约 40~70 元",
+      scene: "比手机手电亮 10 倍，调光/爆闪/SOS 一机搞定",
+      desc: "LED 灯珠 + 反光杯 + Arduino PWM 调光。看底盘、看发动机舱、看焊点，手机那点光不够看。",
+      inputs: [{ id: "pwm", label: "PWM 占空比", min: 0, max: 100, val: 60, unit: " %" }],
+      blocks: ["LED 灯珠模组", "Arduino Nano", "MOS 调光电路"],
+      run: function (v) {
+        var p = Math.round(v.pwm);
+        return { lcd: "亮度 " + p + "%\n" + (p === 0 ? "已关闭" : p > 80 ? "最强光" : p > 40 ? "工作光" : "微光"), st: "ok", vtxt: p > 80 ? "最强光：看底盘深处/发动机舱" : p > 40 ? "工作光：日常验车" : "微光：省电待机" };
+      },
+      code:
+        "/* 二手车专家 · 智能强光手电（调光/爆闪/SOS） */\n" +
+        "const byte ledPin = 9;      // PWM 接 MOS 栅极\n" +
+        "const byte btnA = 2;        // 模式切换：常亮/爆闪/SOS\n" +
+        "const byte btnB = 3;        // 调光：64→128→192→255 循环\n" +
+        "int level = 128;            // 当前亮度 0~255\n" +
+        "int mode = 0;               // 0 常亮 1 爆闪 2 SOS\n" +
+        "\n" +
+        "void report() {\n" +
+        "  Serial.print(F(\"mode=\")); Serial.print(mode);\n" +
+        "  Serial.print(F(\" level=\")); Serial.println(level);\n" +
+        "}\n" +
+        "\n" +
+        "void setup() {\n" +
+        "  pinMode(ledPin, OUTPUT);\n" +
+        "  pinMode(btnA, INPUT_PULLUP);\n" +
+        "  pinMode(btnB, INPUT_PULLUP);\n" +
+        "  Serial.begin(9600);\n" +
+        "  Serial.println(F(\"强光手电就绪：A 切模式 / B 调光\"));\n" +
+        "  report();\n" +
+        "}\n" +
+        "\n" +
+        "void loop() {\n" +
+        "  if (!digitalRead(btnA)) { mode = (mode + 1) % 3; report(); delay(200); }\n" +
+        "  if (!digitalRead(btnB)) {\n" +
+        "    /* 64→128→192→255→64（192 直接到 255，避免 +64 变 256 超范围） */\n" +
+        "    if (level >= 255)      level = 64;\n" +
+        "    else if (level >= 192) level = 255;\n" +
+        "    else                   level += 64;\n" +
+        "    report(); delay(200);\n" +
+        "  }\n" +
+        "  if (mode == 0) { analogWrite(ledPin, level); }\n" +
+        "  else if (mode == 1) {\n" +
+        "    analogWrite(ledPin, 255); delay(80); analogWrite(ledPin, 0); delay(80);\n" +
+        "  } else { /* SOS：三短三长三短 */\n" +
+        "    for (int i = 0; i < 3; i++) { analogWrite(ledPin, 255); delay(150); analogWrite(ledPin, 0); delay(150); }\n" +
+        "    delay(200);\n" +
+        "    for (int i = 0; i < 3; i++) { analogWrite(ledPin, 255); delay(450); analogWrite(ledPin, 0); delay(450); }\n" +
+        "    delay(200);\n" +
+        "    for (int i = 0; i < 3; i++) { analogWrite(ledPin, 255); delay(150); analogWrite(ledPin, 0); delay(150); }\n" +
+        "    delay(600);\n" +
+        "  }\n" +
+        "}\n",
+      parts: [["Arduino Nano", "25", "arduino nano"], ["10W LED 灯珠 + 反光杯", "20", "10W LED 灯珠 反光杯"], ["MOS 管（IRF540）", "3", "IRF540"], ["18650 电池盒 + 升压板", "15", "18650 电池盒 升压模块"], ["轻触开关 ×2", "2", "轻触开关 6x6"]],
+      usage: "看底盘划痕、看发动机舱渗油点、看焊点密封胶。调光省电，爆闪夜间警示，SOS 应急。比手机手电亮一个量级。"
+    }
+  ];
+  window.SIM_TOOLS = SIM_TOOLS; // 挂 window 便于调试/自检
+  /* 简易 roundRect 兼容（老 WebView 无原生 API） */
+  if (typeof CanvasRenderingContext2D !== "undefined" && !CanvasRenderingContext2D.prototype.roundRect) {
+    CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+      r = Math.min(r, w / 2, h / 2);
+      this.moveTo(x + r, y);
+      this.arcTo(x + w, y, x + w, y + h, r);
+      this.arcTo(x + w, y + h, x, y + h, r);
+      this.arcTo(x, y + h, x, y, r);
+      this.arcTo(x, y, x + w, y, r);
+      this.closePath();
+      return this;
+    };
+  }
+
+  /* ================= 渲染：工具库 ================= */
+  function renderSimList() {
+    var box = $("simList");
+    if (!box) return;
+    box.innerHTML = "";
+    SIM_TOOLS.forEach(function (t) {
+      var d = document.createElement("div");
+      d.className = "sim-tool";
+      d.innerHTML = '<div class="st-ic">' + t.icon + '</div><div class="st-b"><b>' + t.name + "</b><span>" + t.scene + "</span><i>硬件成本 " + t.cost + "</i></div>";
+      d.onclick = function () { openSimTool(t.id); };
+      box.appendChild(d);
+    });
+    var more = document.createElement("div");
+    more.className = "sim-more";
+    more.innerHTML = "更多工具持续设计：电子水平仪 ｜ 紫外荧光仪 ｜ OBD 抬头显示 ｜ 发动机听诊器<br>硬件模块到货即上线仿真";
+    box.appendChild(more);
+  }
+
+  /* ================= 打开工具详情 ================= */
+  var curTool = null, curMode = 0;
+  window.openSimTool = function (id) {
+    var t = SIM_TOOLS.filter(function (x) { return x.id === id; })[0];
+    if (!t) return;
+    curTool = t; curMode = 0;
+    $("simTitle").textContent = t.icon + " " + t.name;
+    $("simCost").textContent = t.cost;
+    /* 仿真面板 */
+    var inp = "";
+    t.inputs.forEach(function (i) {
+      if (i.type === "select") {
+        inp += '<div class="sim-slider"><label>' + i.label + '</label><select id="si_' + i.id + '" style="width:100%;margin-top:6px;border:1px solid #e2ddd6;border-radius:8px;padding:8px 10px;font-size:13px;background:#faf8f5">' +
+          i.options.map(function (o) { return '<option value="' + o[0] + '"' + (o[0] === i.val ? " selected" : "") + ">" + o[1] + "</option>"; }).join("") + "</select></div>";
+      } else {
+        inp += '<div class="sim-slider"><label>' + i.label + '（<b id="sv_' + i.id + '">' + i.val + "</b>" + i.unit + '）</label>' +
+          '<input type="range" id="si_' + i.id + '" min="' + i.min + '" max="' + i.max + '" step="' + (i.step || 1) + '" value="' + i.val + '"></div>';
+      }
+    });
+    $("simInputs").innerHTML = inp;
+    t.inputs.forEach(function (i) {
+      var el = $("si_" + i.id);
+      if (el) el.oninput = function () {
+        var sv = $("sv_" + i.id);
+        if (sv) sv.textContent = el.value;
+        simRun();
+      };
+    });
+    /* 原理图 */
+    drawSimCircuit(t);
+    /* 代码 */
+    $("simCode").textContent = t.code;
+    /* 购物清单 */
+    $("simParts").innerHTML = t.parts.map(function (p) {
+      return '<tr><td>' + p[0] + '</td><td style="text-align:right;color:#b03a2e;font-weight:700">¥' + p[1] + '</td><td style="font-size:11px;color:#a89e91">' + p[2] + '</td></tr>';
+    }).join("");
+    /* 用法 */
+    $("simUsage").textContent = t.usage;
+    $("simDesc").textContent = t.desc;
+    /* 视图切换：列表 → 详情 */
+    $("simListWrap").style.display = "none";
+    $("simDetail").style.display = "block";
+    $("simLed").style.display = t.id === "torch" ? "block" : "none";
+    simRun();
+    $("ovSim").classList.add("on");
+  };
+  window.closeSim = function () {
+    $("ovSim").classList.remove("on");
+    $("simListWrap").style.display = "";
+    $("simDetail").style.display = "none";
+  };
+  window.closeSimDetail = function () {
+    $("simListWrap").style.display = "";
+    $("simDetail").style.display = "none";
+  };
+
+  /* 仿真运行：读滑块 → 出 LCD + 结论 */
+  window.simRun = function () {
+    if (!curTool) return;
+    var v = {};
+    curTool.inputs.forEach(function (i) {
+      var el = $("si_" + i.id);
+      v[i.id] = !el ? i.val : (i.type === "select" ? el.value : parseFloat(el.value));
+    });
+    var r = curTool.run(v);
+    $("simLcd").textContent = r.lcd;
+    var vd = $("simVerdict");
+    vd.className = "sim-verdict " + r.st;
+    var icon = r.st === "ok" ? "✓" : r.st === "warn" ? "⚠" : "✗";
+    vd.textContent = icon + " " + r.vtxt;
+    /* 手电工具的 LED 可视化 */
+    if (curTool.id === "torch") {
+      var pwm = v.pwm / 100;
+      var led = $("simLed");
+      if (led) {
+        led.style.opacity = (0.08 + pwm * 0.92).toFixed(2);
+        led.style.boxShadow = pwm > 0.5 ? "0 0 44px 12px rgba(255,240,200," + (pwm * 0.9).toFixed(2) + ")" : "0 0 12px 3px rgba(255,240,200," + (pwm * 0.5).toFixed(2) + ")";
+      }
+    }
+  };
+  /* 爆闪演示（手电工具） */
+  window.simStrobe = function () {
+    if (!curTool || curTool.id !== "torch") return;
+    var led = $("simLed"), n = 0;
+    var tm = setInterval(function () {
+      led.style.opacity = n % 2 ? 0.08 : 1;
+      led.style.boxShadow = n % 2 ? "none" : "0 0 44px 12px rgba(255,240,200,.9)";
+      if (++n >= 8) { clearInterval(tm); simRun(); }
+    }, 90);
+  };
+
+  /* ================= 原理图（Canvas） ================= */
+  function drawSimCircuit(t) {
+    var cv = $("simCanvas");
+    if (!cv) return;
+    var x = cv.getContext("2d"), W = cv.width, H = cv.height;
+    x.clearRect(0, 0, W, H);
+    x.fillStyle = "#faf8f5"; x.fillRect(0, 0, W, H);
+    function block(bx, by, bw, bh, title, sub, color) {
+      x.fillStyle = "#fff"; x.strokeStyle = color; x.lineWidth = 2;
+      x.beginPath(); x.roundRect(bx, by, bw, bh, 8); x.fill(); x.stroke();
+      x.fillStyle = "#333"; x.font = "700 13px sans-serif"; x.textAlign = "center";
+      x.fillText(title, bx + bw / 2, by + 24);
+      x.fillStyle = "#8a7f72"; x.font = "10px sans-serif";
+      (sub || []).forEach(function (s, i) { x.fillText(s, bx + bw / 2, by + 42 + i * 14); });
+    }
+    function wire(x1, y1, x2, y2, label) {
+      x.strokeStyle = "#b03a2e"; x.lineWidth = 2;
+      x.beginPath(); x.moveTo(x1, y1); x.lineTo(x2, y2); x.stroke();
+      x.fillStyle = "#b03a2e"; x.font = "9px sans-serif"; x.textAlign = "center";
+      x.fillText(label || "", (x1 + x2) / 2, (y1 + y2) / 2 - 4);
+    }
+    block(16, 34, 96, 66, t.blocks[0], ["传感器输入"], "#1a56c4");
+    block(132, 26, 96, 82, t.blocks[1], ["GND  VCC", "信号 → PWM/ADC"], "#1e8e3e");
+    block(248, 34, 96, 66, t.blocks[2], ["读数/结论显示"], "#b07d00");
+    wire(112, 67, 132, 67, "信号");
+    wire(228, 67, 248, 67, "I2C");
+    x.fillStyle = "#8a7f72"; x.font = "10px sans-serif"; x.textAlign = "left";
+    x.fillText(t.name + " · 接线示意（VCC/信号/GND 对应模块丝印）", 16, H - 10);
+  }
+
+  /* ================= 复制代码/清单 ================= */
+  window.copySimCode = function () {
+    if (!curTool) return;
+    copyTxt({ textContent: "复制" }, curTool.code);
+    toast("Arduino 代码已复制，粘贴到 Arduino IDE 烧录");
+  };
+  window.copySimParts = function () {
+    if (!curTool) return;
+    var t = "【" + curTool.name + " · 购物清单】硬件成本 " + curTool.cost + "\n" +
+      curTool.parts.map(function (p) { return "· " + p[0] + " ¥" + p[1]; }).join("\n") +
+      "\n\n按清单在淘宝/拼多多搜关键词下单，模块到货照软件里的代码烧录即可。";
+    copyTxt({ textContent: "复制" }, t);
+    toast("清单已复制，去淘宝搜关键词下单");
+  };
+
+  /* ================= 初始化 ================= */
+  function init() {
+    if ($("simList")) renderSimList();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+
+</script>
+</body>
+</html>
