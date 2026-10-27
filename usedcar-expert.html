@@ -24,7 +24,7 @@ main{flex:1;padding:14px 14px 80px}
 .tabbar div .ic{font-size:20px;display:block;margin-bottom:2px}
 .tabbar div.on{color:#b03a2e;font-weight:700}
 .card{background:#fff;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.card h3{font-size:15px;color:#b03a2e;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.card h3{font-size:15px;color:#b03a2e;margin-bottom:12px;display:flex;align-items:center}
 .card h3::before{content:"";width:4px;height:16px;background:#b03a2e;border-radius:2px}
 .card h3 small{font-weight:400;color:#a89e91;font-size:11px;margin-left:auto}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -36,7 +36,7 @@ textarea{resize:none;height:60px}
 .btn{border:none;border-radius:10px;padding:11px 16px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
 .btn-main{background:linear-gradient(135deg,#b03a2e,#8c1f18);color:#fff;width:100%}
 .btn-ghost{background:#fff;color:#b03a2e;border:1px solid #b03a2e}
-.btn-row{display:flex;gap:10px;margin-top:12px}.btn-row .btn{flex:1}
+.btn-row{display:flex;margin-top:12px}.btn-row .btn{flex:1}
 .btn-gold{background:linear-gradient(135deg,#e8b93e,#d4a017);color:#5a3a00}
 .tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .tool{background:#fff;border-radius:14px;padding:18px 10px;text-align:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1.5px solid transparent}
@@ -44,7 +44,7 @@ textarea{resize:none;height:60px}
 .tool .ic{font-size:30px;display:block;margin-bottom:6px}
 .tool .nm{font-size:14px;font-weight:700;color:#333}
 .tool .ds{font-size:10px;color:#a89e91;margin-top:3px}
-.overlay{position:fixed;inset:0;background:rgba(20,10,5,.96);z-index:100;display:none;flex-direction:column;color:#fff}
+.overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(20,10,5,.96);z-index:100;display:none;flex-direction:column;color:#fff}
 .overlay.on{display:flex}
 .ov-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.15)}
 .ov-head .t{font-size:16px;font-weight:700}
@@ -53,9 +53,9 @@ textarea{resize:none;height:60px}
 .ov-tip{font-size:12px;color:#cbb;margin-top:14px;line-height:1.8}
 .bigbtn{background:#b03a2e;color:#fff;border:none;border-radius:14px;padding:16px 34px;font-size:17px;font-weight:700;cursor:pointer;margin:8px}
 .bigbtn.off{background:#555}
-.screenlight{position:fixed;inset:0;background:#fff;z-index:99;display:none}
+.screenlight{position:fixed;top:0;left:0;right:0;bottom:0;background:#fff;z-index:99;display:none}
 .screenlight.on{display:block}
-.purplelight{position:fixed;inset:0;background:#2a0a4a;z-index:99;display:none}
+.purplelight{position:fixed;top:0;left:0;right:0;bottom:0;background:#2a0a4a;z-index:99;display:none}
 .purplelight.on{display:block}
 .purplelight .pl-tip{position:absolute;bottom:40px;left:20px;right:20px;text-align:center;color:#c9a8ff;font-size:13px;line-height:1.9}
 #wmVideo{width:100%;max-height:62vh;background:#000;border-radius:10px}
@@ -71,7 +71,7 @@ textarea{resize:none;height:60px}
 .carcard .t{font-size:17px;font-weight:800}
 .carcard .p{font-size:24px;font-weight:800;color:#ffd66b;margin:6px 0 10px}
 .carcard .p small{font-size:12px;color:#ffd66b;font-weight:400}
-.carcard .row{display:flex;flex-wrap:wrap;gap:6px;font-size:12px}
+.carcard .row{display:flex;flex-wrap:wrap;font-size:12px}
 .carcard .row i{font-style:normal;background:rgba(255,255,255,.14);padding:4px 9px;border-radius:6px}
 .carcard .flaw{margin-top:10px;font-size:12px;background:rgba(255,214,107,.15);border-left:3px solid #ffd66b;padding:8px 10px;border-radius:0 8px 8px 0;color:#ffe9b0}
 .tabs{display:flex;background:#fff;border-radius:12px;padding:4px;margin-bottom:12px;flex-wrap:wrap}
@@ -81,7 +81,7 @@ textarea{resize:none;height:60px}
 .copy-item{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px}
 .copy-item .tag{display:inline-block;font-size:11px;background:#f5e6e0;color:#b03a2e;padding:3px 9px;border-radius:6px;font-weight:600;margin-bottom:8px}
 .copy-item .txt{font-size:14px;line-height:1.75;color:#333;white-space:pre-wrap}
-.copy-item .acts{display:flex;gap:8px;margin-top:10px}
+.copy-item .acts{display:flex;margin-top:10px}
 .copy-item .acts button{flex:1;font-size:12px;padding:7px;border-radius:8px;border:1px solid #e2ddd6;background:#faf8f5;color:#666;cursor:pointer}
 .copy-item .acts button.hot{border-color:#b03a2e;color:#b03a2e;background:#fff;font-weight:600}
 .script-part{margin-bottom:8px}
@@ -98,10 +98,10 @@ textarea{resize:none;height:60px}
 .calc-out .line.total{font-size:17px;font-weight:800;border:none;padding-top:12px}
 .calc-out .line.total b{font-size:22px}
 .contract-tpl{background:#faf8f5;border:1px solid #e5ded5;border-radius:10px;padding:14px;font-size:13px;line-height:2;color:#444;white-space:pre-wrap;max-height:46vh;overflow:auto}
-.garage-item{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.garage-item{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
 .garage-item .gi-t{font-size:15px;font-weight:700;color:#333}
 .garage-item .gi-s{font-size:12px;color:#a89e91;margin-top:3px}
-.garage-item .gi-a{display:flex;gap:8px;flex-shrink:0}
+.garage-item .gi-a{display:flex;flex-shrink:0}
 .garage-item .gi-a button{border:1px solid #e2ddd6;background:#faf8f5;border-radius:8px;padding:7px 12px;font-size:12px;cursor:pointer;color:#666}
 .garage-item .gi-a button.load{border-color:#b03a2e;color:#b03a2e;font-weight:600}
 .me-line{display:flex;justify-content:space-between;font-size:13px;padding:10px 0;border-bottom:1px solid #f0ebe4;color:#444}
@@ -110,17 +110,17 @@ textarea{resize:none;height:60px}
 .footer-brand{background:#3a2a26;color:#cbb;text-align:center;padding:18px 14px;font-size:12px;line-height:2}
 .footer-brand b{color:#ffd66b;font-size:15px;display:block}
 #printArea{display:none}
-@media print{body *{visibility:hidden}#printArea,#printArea *{visibility:visible}#printArea{display:block;position:absolute;inset:0;padding:40px;font-size:14px;line-height:2.2;color:#000;background:#fff}}
+@media print{body *{visibility:hidden}#printArea,#printArea *{visibility:visible}#printArea{display:block;position:absolute;top:0;left:0;right:0;bottom:0;padding:40px;font-size:14px;line-height:2.2;color:#000;background:#fff}}
 
 /* ===== V2 增强：验车清单 / 查询导航 ===== */
 .chk-mod h3 small{color:#b07d00}
 .chk-pgb{height:8px;background:#f0e6df;border-radius:4px;overflow:hidden}
 .chk-pgb i{display:block;height:100%;background:linear-gradient(90deg,#e8b93e,#b03a2e);border-radius:4px;transition:width .3s}
 .chk-pgt{font-size:12px;color:#8a7f72;margin-top:6px}
-.chk-row{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #f3ede6}
+.chk-row{display:flex;align-items:center;padding:9px 0;border-bottom:1px solid #f3ede6}
 .chk-row:last-child{border:none}
 .chk-name{flex:1;font-size:13.5px;color:#333;line-height:1.5}
-.chk-btns{display:flex;gap:5px;flex-shrink:0}
+.chk-btns{display:flex;flex-shrink:0}
 .chk-btns .cb{border:1px solid #e2ddd6;background:#faf8f5;border-radius:7px;padding:5px 10px;font-size:12px;color:#999;cursor:pointer}
 .chk-btns .cb.ok.on{background:#e6f4ea;border-color:#1e8e3e;color:#1e8e3e;font-weight:700}
 .chk-btns .cb.bad.on{background:#fdecea;border-color:#d93025;color:#d93025;font-weight:700}
@@ -133,7 +133,7 @@ textarea{resize:none;height:60px}
 .chk-baditem{font-size:13px;color:#444;line-height:1.7;padding:7px 10px;background:#fdf3f2;border-left:3px solid #d93025;border-radius:0 8px 8px 0;margin-bottom:6px}
 .chk-baditem i{display:block;font-style:normal;font-size:12px;color:#a06060;margin-top:2px}
 .chk-nobad{font-size:13px;color:#1e8e3e;background:#f0f9f1;border-radius:10px;padding:12px;text-align:center}
-.query-site{display:flex;gap:12px;align-items:center;background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;border:1.5px solid transparent;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.query-site{display:flex;align-items:center;background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;border:1.5px solid transparent;box-shadow:0 2px 8px rgba(0,0,0,.05)}
 .query-site:active{border-color:#b03a2e}
 .qs-ic{font-size:26px;flex-shrink:0}
 .qs-b b{font-size:14.5px;color:#333;display:block}
@@ -159,7 +159,7 @@ textarea{resize:none;height:60px}
 .obd-ro b{color:#ff8a7a}
 .obd-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px 14px;margin-top:14px;width:100%;text-align:left;box-sizing:border-box}
 .obd-card-t{font-size:13px;font-weight:700;color:#ffd66b;margin-bottom:6px}
-.obd-kv{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px dashed rgba(255,255,255,.12);font-size:12.5px;color:#cbb;gap:8px}
+.obd-kv{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px dashed rgba(255,255,255,.12);font-size:12.5px;color:#cbb}
 .obd-kv:last-child{border-bottom:none}
 .obd-kv b{color:#fff;font-size:12.5px;text-align:right;word-break:break-all;font-weight:600}
 #obdLog{font-size:11px;color:#9a8f84;margin-top:10px;line-height:1.7;min-height:40px}
@@ -180,17 +180,17 @@ textarea{resize:none;height:60px}
 .script-item .acts{margin-top:10px}
 .script-item .acts button{border:1px solid #b03a2e;color:#b03a2e;background:#fff;border-radius:8px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer}
 /* ===== V4：同行圈 ===== */
-.ci-item{display:flex;gap:10px;align-items:center;background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.ci-item{display:flex;align-items:center;background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
 .ci-tag{flex-shrink:0;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px}
 .ci-tag.seek{background:#e8f0fe;color:#1a56c4}
 .ci-tag.sell{background:#fdeee4;color:#c25e1a}
 .ci-b{flex:1;min-width:0}
 .ci-b b{font-size:14px;color:#333;display:block}
 .ci-b span{font-size:11.5px;color:#8a7f72;display:block;margin-top:2px}
-.ci-a{display:flex;gap:6px;flex-shrink:0}
+.ci-a{display:flex;flex-shrink:0}
 .ci-a button{border:1px solid #e2ddd6;background:#faf8f5;border-radius:8px;padding:6px 10px;font-size:11.5px;color:#666;cursor:pointer}
 .ci-a button.cp{border-color:#b03a2e;color:#b03a2e;font-weight:600}
-.mq-bar{display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.mq-bar{display:flex;align-items:center;background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:12px}
 .mq-dot{width:9px;height:9px;border-radius:50%;background:#c9c2b8;flex-shrink:0}
 .mq-dot.on{background:#7be08a;box-shadow:0 0 6px #7be08a}
 .mq-bar .mq-t{flex:1;font-size:11.5px;color:#8a7f72;line-height:1.5}
@@ -199,13 +199,13 @@ textarea{resize:none;height:60px}
 .gd-ic{font-size:52px;text-align:center;margin-bottom:10px}
 #guideBody h3{text-align:center;font-size:18px;color:#b03a2e;margin-bottom:10px}
 #guideBody p{font-size:13.5px;color:#555;line-height:2;text-align:left}
-.gd-dots{display:flex;justify-content:center;gap:6px;margin:16px 0}
+.gd-dots{display:flex;justify-content:center;margin:16px 0}
 .gd-dots i{width:7px;height:7px;border-radius:50%;background:#e2ddd6}
 .gd-dots i.on{background:#b03a2e;width:18px;border-radius:4px}
 #updateBody{font-size:13.5px;color:#555;line-height:2.1;text-align:left}
 .ov-card{background:#fff;border-radius:16px;padding:20px;max-width:340px;width:88%;max-height:82vh;overflow:auto}
 .ov-card .oc-h{font-size:17px;font-weight:800;color:#b03a2e;text-align:center;margin-bottom:14px}
-.ov-mask{position:fixed;inset:0;background:rgba(20,10,5,.6);z-index:110;display:none;align-items:center;justify-content:center;padding:20px}
+.ov-mask{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(20,10,5,.6);z-index:110;display:none;align-items:center;justify-content:center;padding:20px}
 .ov-mask.on{display:flex}
 /* ===== Arduino 实验室 ===== */
 .sim-lab-entry{background:linear-gradient(135deg,#1e2a38,#2c3e50);border-radius:14px;padding:16px;margin-bottom:14px;color:#fff;cursor:pointer;border:1.5px solid transparent}
@@ -213,7 +213,7 @@ textarea{resize:none;height:60px}
 .sim-lab-entry .le-t{font-size:16px;font-weight:800}
 .sim-lab-entry .le-t span{color:#ffd66b}
 .sim-lab-entry .le-s{font-size:11.5px;color:#aac;margin-top:5px;line-height:1.7}
-.sim-tool{display:flex;gap:12px;align-items:center;background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;border:1.5px solid transparent;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.sim-tool{display:flex;align-items:center;background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;border:1.5px solid transparent;box-shadow:0 2px 8px rgba(0,0,0,.05)}
 .sim-tool:active{border-color:#b03a2e}
 .st-ic{font-size:30px;flex-shrink:0}
 .st-b{flex:1;min-width:0}
@@ -237,6 +237,21 @@ textarea{resize:none;height:60px}
 .sim-parts{width:100%;border-collapse:collapse;font-size:12.5px}
 .sim-parts td{border-bottom:1px solid #f0ebe4;padding:9px 6px;color:#444}
 .sim-sec{font-size:13px;font-weight:700;color:#b03a2e;margin:14px 0 8px}
+
+/* ===== WebView<84 兼容：flex gap 用 margin 兜底（ Chromium 83 不支持 flex gap ） ===== */
+.card h3>*+*{margin-left:6px}
+.btn-row>*+*{margin-left:10px}
+.carcard .row>*+*{margin-left:6px}
+.copy-item .acts>*+*{margin-left:8px}
+.garage-item .gi-a>*+*{margin-left:8px}
+.chk-row>*+*{margin-left:8px}
+.chk-btns>*+*{margin-left:5px}
+.query-site>*+*{margin-left:12px}
+.ci-item>*+*{margin-left:10px}
+.ci-a>*+*{margin-left:6px}
+.mq-bar>*+*{margin-left:10px}
+.gd-dots>*+*{margin-left:6px}
+.sim-tool>*+*{margin-left:12px}
 </style>
 </head>
 <body>
@@ -385,7 +400,7 @@ textarea{resize:none;height:60px}
     <section class="page" id="page-tools">
       <div class="card"><h3>随身工具 <small>现场刚需 · 零配件</small></h3>
         <div class="tools-grid">
-          <div class="tool" onclick="openTorch()"><span class="ic">🔦</span><div class="nm">强光手电</div><div class="ds">常亮 / 爆闪 / SOS</div></div>
+          <div class="tool" onclick="openTorch()"><span class="ic">🔦</span><div class="nm">强光手电</div><div class="ds">常亮 / 爆闪</div></div>
           <div class="tool" onclick="openScreenLight()"><span class="ic">💡</span><div class="nm">屏幕补光</div><div class="ds">照仪表台不刺眼</div></div>
           <div class="tool" onclick="openPurple()"><span class="ic">🟣</span><div class="nm">紫光应急</div><div class="ds">泡水痕迹初筛</div></div>
           <div class="tool" onclick="openCamera()"><span class="ic">📷</span><div class="nm">水印相机</div><div class="ds">时间地点车型水印</div></div>
@@ -451,12 +466,13 @@ textarea{resize:none;height:60px}
       <div class="card"><h3>关于二手车专家</h3>
         <div style="text-align:center;padding:10px 0 16px">
           <div style="font-size:26px;font-weight:800;color:#b03a2e">二手车<span style="color:#d4a017">专家</span></div>
-          <div style="font-size:12px;color:#a89e91;margin-top:6px">V1.8 · 内容 + 验车 + OBD 深度诊断 + 同行圈 + 语音录车况 + 查询导航</div>
+          <div style="font-size:12px;color:#a89e91;margin-top:6px">V1.9.1 · 内容 + 验车 + OBD 深度诊断 + 同行圈 + 语音录车况 + 查询导航 + 发布避审 + 相机/蓝牙权限修复</div>
         </div>
         <div class="me-line"><span>出品方</span><b>郑州知行软件</b></div>
         <div class="me-line"><span>主理人</span><b>余晓春 · 郑州</b></div>
         <div class="me-line"><span>费用</span><b>基础功能永久免费</b></div>
         <div class="me-line"><span>数据</span><b>全部存本机，不收集不上传</b></div>
+        <div class="me-line"><span>授权状态</span><b id="licStatusLine"><a href="javascript:openLicense()" style="color:#b03a2e">点此激活</a></b></div>
         <div class="me-line"><span>数据备份</span><b><a href="javascript:exportData()" style="color:#b03a2e">导出</a> ｜ <a href="javascript:importData()" style="color:#b03a2e">导入</a></b></div>
         <div class="me-line" style="border:none"><span>定位</span><b style="text-align:right">车300/查博士/剪映/CRM<br>一年几千块，这一个全包</b></div>
       </div>
@@ -469,8 +485,8 @@ textarea{resize:none;height:60px}
         </div>
         <div class="btn-row"><button class="btn btn-main" onclick="copyLink()">复制链接，发同行群</button></div>
       </div>
-      <div class="card"><h3>V1.8 已上线</h3>
-        <div style="font-size:13px;color:#666;line-height:2.2">· <b>132 项验车清单</b> + 检测小结 + 车况报告（打印/存 PDF）<br>· <b>OBD 只读深度诊断</b>：车辆识别 / 数据流 / 故障码 + 中文释义 / 冻结帧 / 多 ECU（含变速箱）里程交叉比对；兼容 ¥25 经典蓝牙接头（安卓 APP）与 BLE 接头（网页版）<br>· <b>同行圈</b>：求购/车源本机发布 + 免费联机接收<br>· <b>多平台文案</b> + 应对话术库（砍价/私信/评论）<br>· 查询导航 + VIN 校验位核验 + 收车成本计算 + 合同模板<br>· <b>只读安全红线</b>：全程只查不改，绝不清码不动车<br>· <b>语音录车况</b>（V1.7 修复）：点「🎙 语音转写」直接念，松口自动识别填入，无需打字；念的过程中文字实时上屏<br>· <b>模拟演示真实化</b>（V1.8）：演示数据随秒级漂移（怠速/车速/水温/电瓶 13.8V 等真实区间），仪表是活的，不再一串死数</div>
+      <div class="card"><h3>V1.9.1 已上线</h3>
+        <div style="font-size:13px;color:#666;line-height:2.2">· <b>修复相机/蓝牙权限（重要）</b>：安卓安装包原先漏声明相机权限，强光手电、水印相机在手机上直接不可用（还误提示「机型不支持」）；本次补齐，并装上经典蓝牙串口插件<br>· <b>OBD 诊断链路修复</b>：蓝牙读码原先在安装包里根本走不通（缺原生插件、缺设备选择弹层、桥接层接口对不上），现已接通——配对一次 ELM327 接头即可读故障码/数据流/VIN/多 ECU 里程；接头没到货也能点「模拟演示」先跑通全流程<br>· <b>发布避审升级</b>：抖音/快手口播与多平台文案清除「评论区扣1 / 私信你 / 私信我」等导流话术（此类话术会被平台判「减少作品推荐」），统一换成「关注我」纯价值结尾<br>· <b>违禁词自检升级</b>：新增平台避审词表（导流/收车类 14 个模式），检测范围覆盖朋友圈、抖音口播与多平台文案，广告法极限词与平台避审词分区报告<br>· <b>132 项验车清单</b> + 检测小结 + 车况报告（打印/存 PDF）<br>· <b>同行圈</b>：求购/车源本机发布 + 免费联机接收<br>· <b>多平台文案</b> + 应对话术库（砍价/私信/评论）<br>· 查询导航 + VIN 校验位核验 + 收车成本计算 + 合同模板<br>· <b>只读安全红线</b>：全程只查不改，绝不清码不动车<br>· <b>语音录车况</b>（V1.7 修复）：点「🎙 语音转写」直接念，松口自动识别填入，无需打字；念的过程中文字实时上屏<br>· <b>模拟演示真实化</b>（V1.8）：演示数据随秒级漂移（怠速/车速/水温/电瓶 13.8V 等真实区间），仪表是活的，不再一串死数</div>
       </div>
       <div class="card"><h3>开发路线图</h3>
         <div style="font-size:13px;color:#666;line-height:2.2">· <b>估值参考</b>：车龄 × 里程 × 新车指导价折旧估算（三档：建议价 / 封顶价 / 不收线），以实时行情为准<br>· <b>记录查询指引</b>：维保 / 出险 / 过户次数一键直达（不代查、不收查询费）<br>· 自建服务端版同行圈（数据自主可控）<br>· 更多话术库内容（按月更新）</div>
@@ -639,6 +655,28 @@ textarea{resize:none;height:60px}
     <div class="ov-tip">本软件只读不写，读出数据仅供参考，最终车况以实车检测+维保记录为准。</div>
   </div>
 </div>
+<!-- 覆盖层：经典蓝牙 OBD 接头选择（BUG-010 修复：原浮层 markup 整块缺失，
+     JS 引用 $("ovBtPick")/ $("btPickBody") 会 null 崩溃，插件装上新链路必踩） -->
+<!-- 覆盖层：激活授权 -->
+<div class="overlay" id="ovLicense">
+  <div class="ov-head"><span class="t">🔑 激活授权</span><span class="x" onclick="closeLicense()">✕</span></div>
+  <div class="ov-body" style="justify-content:flex-start;overflow:auto">
+    <div class="ov-tip" id="licTip" style="text-align:left">输入激活码后即可使用全部功能。基础查询和随身工具无需激活，可一直免费使用。</div>
+    <input id="licInput" type="text" placeholder="例如 ZX-2027-0116-AB3D-9F2C1E"
+           autocomplete="off" autocapitalize="characters" spellcheck="false"
+           style="width:100%;margin-top:12px;padding:12px;font-size:15px;letter-spacing:1px;
+                  border:1px solid #ddd;border-radius:8px;text-align:center;text-transform:uppercase">
+    <button class="btn btn-gold" style="width:100%;margin-top:12px" onclick="doActivate()">激活</button>
+    <div id="licInfo" style="font-size:12px;color:#888;margin-top:12px;line-height:1.8;display:none"></div>
+  </div>
+</div>
+<div class="overlay" id="ovBtPick">
+  <div class="ov-head"><span class="t">🔌 选择 OBD 接头</span><span class="x" onclick="closeBtPick()">✕</span></div>
+  <div class="ov-body" id="btPickBody" style="justify-content:flex-start;overflow:auto">
+    <div class="ov-tip" style="text-align:left">点下面按钮读取已配对的蓝牙设备。<br>接头名称一般是 OBDII / ELM327 / V-Link 开头；没配对过请先去系统【设置 → 蓝牙】配对（PIN 一般是 1234 或 0000），再回来刷新。</div>
+    <button class="btn btn-gold" style="width:100%;margin-top:12px" onclick="obdSerialPick()">刷新列表</button>
+  </div>
+</div>
 <!-- 覆盖层：车况报告 -->
 <div class="overlay" id="ovReport">
   <div class="ov-head"><span class="t">📋 车况检测报告</span><span class="x" onclick="closeReport()">✕</span></div>
@@ -713,8 +751,100 @@ function renderCarCard(){var c=car();$("carCard").innerHTML='<div class="t">'+es
 /* ========== 提示词引擎（全网话术库提炼） ========== */
 var momentTags=["首发 · 明盘","第3天 · 催单","第5天 · 场景","第7天 · 换角度","第10天 · 对比","第14天 · 降价预告","周末 · 到店","深夜 · 随缘"];
 var momentTagsB=["收车日记","交个朋友","手续齐全","同城自提","同行调车","一口价","实车视频","明早更新"];
+function adjW(v,d){var n=parseFloat(v);return isNaN(n)?"—":(n+d).toFixed(1)}
+/* ========== 激活码授权系统（全局作用域，必须先于各功能函数加载） ========== */
+var LICENSE = {
+  STORE_KEY: "yzs_license_v1",
+  PREFIX: "ZX",
+  PERMANENT: "99991231",   /* 日期位为 99991231 = 买断永久码 */
+  GATED: ["contract", "moments", "douyin", "multi", "poster", "watermark"]
+};
+/* 密钥不落明文：分片存储 + 固定偏移变换，运行时动态还原。
+   原因：本 HTML 会部署到公网，若密钥以明文出现在文件里，任何人都能搜出来自签激活码。
+   说明：这属于"提高逆向门槛"，不是密码学强度防护；若要真正防伪造，需改为服务端校验。 */
+LICENSE.getSecret = function () {
+  var seg = [124, 122, 79, 119, 117, 103, 102, 79, 84, 82, 84, 88, 79, 117, 103, 101, 116, 103, 118, 79, 109, 103, 123, 79, 89, 104, 85, 99];
+  var out = "", i;
+  for (i = 0; i < seg.length; i++) out += String.fromCharCode(seg[i] - 34);
+  return out;
+};
+/* 必须用 Math.imul：a 为 32 位无符号数，普通乘法 a*b 会超过 2^53 丢失精度，导致与 Python 端算出不同结果 */
+function _lcImul(a, b) { return (Math.imul(a, b) >>> 0); }
+function _lcHash6(s) {
+  var h1 = 2166136261, h2 = 486187739;
+  for (var i = 0; i < s.length; i++) {
+    var c = s.charCodeAt(i);
+    h1 = _lcImul(h1 ^ c, 16777619);
+    h2 = _lcImul(h2 + c * (i + 7), 2654435761);
+  }
+  var v = (h1 ^ h2) >>> 0;
+  var hex = v.toString(16).toUpperCase();
+  while (hex.length < 8) hex = "0" + hex;
+  return hex.slice(-6);
+}
+LICENSE.verify = function (code) {
+  var raw = String(code || "").toUpperCase().replace(/[^0-9A-Z]/g, "");
+  if (!raw) return { ok: false, msg: "请输入激活码" };
+  if (raw.length !== 20) return { ok: false, msg: "激活码长度不对（应为 20 位）" };
+  if (raw.slice(0, 2) !== this.PREFIX) return { ok: false, msg: "激活码格式不对" };
+  var expStr = raw.slice(2, 10), seq = raw.slice(10, 14), chk = raw.slice(14, 20);
+  if (_lcHash6(expStr + seq + this.getSecret()) !== chk) return { ok: false, msg: "激活码无效，请核对后重试" };
+  /* 买断永久码：日期位 99991231 → 永不过期，UI 显示「永久」 */
+  if (expStr === this.PERMANENT) return { ok: true, permanent: true, expireAt: null };
+  var y = parseInt(expStr.slice(0, 4), 10), m = parseInt(expStr.slice(4, 6), 10), d = parseInt(expStr.slice(6, 8), 10);
+  if (!(y > 2000 && m >= 1 && m <= 12 && d >= 1 && d <= 31)) return { ok: false, msg: "激活码日期异常" };
+  var exp = new Date(y, m - 1, d, 23, 59, 59);
+  if (isNaN(exp.getTime())) return { ok: false, msg: "激活码日期无法识别" };
+  return { ok: true, permanent: false, expireAt: exp };
+};
+LICENSE.get = function () {
+  try {
+    var o = JSON.parse(localStorage.getItem(this.STORE_KEY) || "null");
+    if (!o) return null;
+    if (o.permanent) return { code: o.code || "", activatedAt: o.activatedAt || "", permanent: true, expireAt: null };
+    if (!o.expireAt) return null;
+    return { code: o.code || "", activatedAt: o.activatedAt || "", permanent: false, expireAt: new Date(o.expireAt) };
+  } catch (e) { return null; }
+};
+LICENSE.activate = function (code) {
+  var r = this.verify(code);
+  if (!r.ok) return r;
+  var rec = {
+    code: String(code || "").toUpperCase().replace(/[^0-9A-Z]/g, ""),
+    permanent: !!r.permanent,
+    activatedAt: new Date().toISOString(),
+    expireAt: r.permanent ? null : r.expireAt.toISOString()
+  };
+  try { localStorage.setItem(this.STORE_KEY, JSON.stringify(rec)); } catch (e) {}
+  return { ok: true, permanent: !!r.permanent, expireAt: r.permanent ? null : r.expireAt, msg: "激活成功" };
+};
+LICENSE.clear = function () { try { localStorage.removeItem(this.STORE_KEY); } catch (e) {} };
+LICENSE.status = function () {
+  var o = this.get();
+  if (!o) return { active: false, permanent: false, daysLeft: 0, expireAt: null, msg: "未激活" };
+  /* 买断永久码：永不过期 */
+  if (o.permanent) return { active: true, permanent: true, daysLeft: Infinity, expireAt: null, msg: "已激活（永久）" };
+  var ms = o.expireAt.getTime() - new Date().getTime();
+  if (isNaN(ms) || ms <= 0) return { active: false, permanent: false, daysLeft: 0, expireAt: o.expireAt, msg: "激活码已过期" };
+  return { active: true, permanent: false, daysLeft: Math.ceil(ms / 86400000), expireAt: o.expireAt, msg: "已激活" };
+};
+LICENSE.gate = function (feature) {
+  if (this.GATED.indexOf(feature) < 0) return true;
+  var st = this.status();
+  if (st.active) return true;
+  if (typeof window.openLicense === "function") window.openLicense(st.msg);
+  else { try { alert(st.msg + "，请联系郑州知行软件获取激活码"); } catch (e) {} }
+  return false;
+};
+try { window.LICENSE = LICENSE; window._lcHash6 = _lcHash6; window._lcImul = _lcImul; } catch (e) {}
+/* 激活状态刷新（延后到 DOM 就绪，函数声明已提升） */
+try {
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function(){ setTimeout(refreshLicStatus, 30); });
+  else setTimeout(refreshLicStatus, 30);
+} catch (e) {}
+
 function genMoments(c){
- var hi=(parseFloat(c.price)+1).toFixed(1),lo=(parseFloat(c.price)-0.6).toFixed(1);
+ var hi=adjW(c.price,1),lo=adjW(c.price,-0.6);
  var A=[
  "新收一台"+c.year+c.model+"，表显"+c.mileage+"万公里，过户"+c.transfers+"次。"+c.accident+"。要价"+c.price+"万，明盘发，同行什么价心里都有数，别互相耽误。"+flawS(c)+"车在"+c.city+"，随时来看。",
  c.model+"还在。问的人不少，真心想定的没几个。"+flawShort(c)+"，其他没得说，光点赞不行动的，车可不等人。",
@@ -730,22 +860,22 @@ function genMoments(c){
  "做二手车第N年，就认一个理：车况说清楚，价格不墨迹。"+c.year+c.model+"，"+c.price+"万，"+flawS(c)+"合适就聊，不合适交个朋友。",
  c.year+c.model+"，手续齐全，"+c.transfers+"手，过户干净。"+c.paint+"。"+c.price+"万，"+c.city+"随时过户，不拖泥带水。",
  c.city+"同城看车："+c.model+"，表显"+c.mileage+"万，"+c.price+"万。"+flawShort(c)+"，其他没瞒的。车在店里，提前打招呼就行。",
- "同行调车："+c.year+c.model+"，"+c.price+"万出，"+(parseFloat(c.price)-0.4).toFixed(1)+"万以上可谈，车况资料齐全，外地发物流。",
+ "同行调车："+c.year+c.model+"，"+c.price+"万出，"+adjW(c.price,-0.4)+"万以上可谈，车况资料齐全，外地发物流。",
  c.year+c.model+"，"+c.price+"万，不议价不是霸道，是车况值这个数："+c.paint+"，"+c.accident+"。诚心要的来，砍价的请看下一台。",
- "实车视频已拍好："+c.model+"，外观/内饰/机舱/里程表都有，要看的私信我发你。"+c.price+"万，"+c.city+"，看完再聊价，不耽误彼此。",
+ "实车视频已拍好："+c.model+"，外观/内饰/机舱/里程表都有，细节都在视频里。"+c.price+"万，"+c.city+"，看完再聊价，不耽误彼此。",
  "明早更新一批车源，先预告这台："+c.year+c.model+"，"+c.mileage+"万公里，"+c.price+"万。"+flawS(c)+"设个关注，不错过。"
  ];
  return variant%2===0?A:B;
 }
 function genDouyin(c){
- var hi=(parseFloat(c.price)+1).toFixed(1);
+ var hi=adjW(c.price,1);
  var S1=[
  {name:"A · 干货型",parts:[
   ["前3秒钩子",c.year+"的"+c.model+"，表显才"+c.mileage+"万，但我今天要先说它一个毛病。"],
   ["定人群","预算"+c.price+"万左右、想买合资B级车的，这台合适；追求极品车况的，你别看。"],
   ["车况事实",c.mileage+"万公里，过户"+c.transfers+"次，"+c.paint+"。"+c.accident+"。"],
   ["价格逻辑","同年份市场价"+hi+"万上下，我报"+c.price+"万，便宜的部分就是"+flawShort(c)+"。"],
-  ["结尾行动","车在"+c.city+"，想看实车的，评论区扣1，私信你。"]]},
+  ["结尾行动","车在"+c.city+"，关注我，每天一条二手车干货。"]]},
  {name:"B · 专业型",parts:[
   ["前3秒钩子","收"+c.model+"，我只看三个地方，看完再谈价。"],
   ["第一看漆","全车漆面数值过一遍："+c.paint+"，哪面动过手，数不说谎。"],
@@ -770,27 +900,46 @@ function genDouyin(c){
   ["差在车况",c.paint+"，"+c.accident+"，一样都不瞒。"],
   ["差在心态","我做的是回头客，不是一锤子买卖。"+flawS(c)],
   ["适合谁","预算务实、车况透明就行的，这台就是为你准备的。"],
-  ["结尾行动",""+c.city+"看车，私信「对比」两个字，发你详细资料。"]]},
+  ["结尾行动",""+c.city+"看车，关注我，看车对比不踩坑。"]]},
  {name:"C · 催单型",parts:[
   ["前3秒钩子",c.model+"，"+c.mileage+"万公里，"+c.price+"万，今天必须推一次。"],
   ["为什么急","问的人多，下定的就一个，好车不等人。"],
   ["车况兜底",c.paint+"，"+c.accident+"，资料齐全可过户。"],
   ["价格兜底",c.price+"万，今天定，明天调价前最后一天。"],
-  ["结尾行动",""+c.city+"，私信「1」，发位置。"]]}];
+  ["结尾行动",""+c.city+"，关注我，好车不等人。"]]}];
  return Math.floor(variant/2)%2===0?S1:S2;
 }
 /* ========== 违禁词（广告法第九条 + 真实处罚案例） ========== */
 var BANNED=["最低价","全网最低","全市最低","全国最低","最便宜","最","最佳","最具","最爱","最优","最好","最大","最高","最低","最先","最后","最新","第一","全网第一","销量第一","排名第一","唯一","独一无二","NO.1","TOP1","首选","独家","首发","国家级","世界领先","领导者","之王","王者","冠军","史无前例","前无古人","永久","万能","无敌","纯天然","100%","零风险","保证","假一赔","秒杀","限时抢","绝无仅有"];
+/* ========== 平台避审词（抖音/快手实测「减少作品推荐」模式，2026-10 用户账号实测汇总） ========== */
+var PLATFORM_BANNED=["评论区扣","私信我","私信你","帮你估价","高价收","上门收","我上门","现金收","当场结","当场打款","加价收","上门看车","带设备上门","一条龙代办"];
 function renderBanned(c){
  var all=genMoments(c).join("\n")+"\n"+genDouyin(c).map(function(s){return s.parts.map(function(p){return p[1]}).join("")}).join("\n");
+ try{if(typeof PLATFORMS!=="undefined"&&PLATFORMS)all+="\n"+PLATFORMS.map(function(p){return p.fn(c)}).join("\n")}catch(e){}
  var hits=[];BANNED.forEach(function(w){if(all.indexOf(w)>-1&&w!=="最")hits.push(w)});
  if(all.indexOf("最")>-1){var ctx=all.match(/.{0,4}最.{0,6}/);hits.push("最（"+esc(ctx[0])+"…）")}
- $("bannedBox").innerHTML=hits.length
- ? '<div class="bad">⚠ 检出 '+hits.length+' 处高风险词，发布前改掉：</div><ul>'+hits.map(function(w){return '<li><em>'+w+'</em> — 换成可验证的事实（里程/漆面/记录/价格理由）</li>';}).join("")+'</ul><div class="law">依据《广告法》第九条：禁用「国家级/最高级/最佳」等绝对化用语，违者责令停止发布 + 罚款 20 万起、最高 100 万。真实案例：烟台某二手车商 2026 年因「全市最低价」被罚；瓜子曾因「遥遥领先」被罚 1250 万。</div>'
- : '<div class="ok">✓ 未检出违禁词 / 极限词，可发布</div><div style="font-size:12px;color:#888;margin-top:8px">二手车是广告法重点监管行业。本工具每次生成自动过检，把「最低价」换成「同年份市场价 X 万，我这台便宜的部分是 Y」这类事实描述。</div><div class="law">依据《广告法》第九条：禁用绝对化用语，罚款 20 万起、最高 100 万。</div>';
+ var ph=[];PLATFORM_BANNED.forEach(function(w){if(all.indexOf(w)>-1)ph.push(w)});
+ var html="";
+ if(hits.length){
+  html+='<div class="bad">⚠ 检出 '+hits.length+' 处广告法高风险词，发布前改掉：</div><ul>'+hits.map(function(w){return '<li><em>'+w+'</em> — 换成可验证的事实（里程/漆面/记录/价格理由）</li>';}).join('')+'</ul><div class="law">依据《广告法》第九条：禁用「国家级/最高级/最佳」等绝对化语言，违者责令停止发布 + 罚款 20 万起、最高 100 万。真实案例：烟台某二手车商 2026 年因「全市最低价」被罚；瓜子曾因「遭遮领先」被罚 1250 万。</div>';
+ }
+ if(ph.length){
+  html+='<div class="bad">⚠ 检出 '+ph.length+' 处平台避审词，抖音/快手会判「减少作品推荐」：</div><ul>'+ph.map(function(w){return '<li><em>'+w+'</em> — 导流话术统一换成纯价值结尾：「关注我，每天一条二手车干货」；转化走私信自动回复，不在公屏话术里引导</li>';}).join('')+'</ul><div class="law">平台规则（非广告法）：「评论区扣 / 私信我 / 私信你 / 帮你估价」等公屏导流话术，以及收车类的「高价收 / 上门收 / 现金收 / 当场结」等，均会被限流。2026-10 本账号实测多条中招，发布前务必过检。</div>';
+ }
+ if(!hits.length&&!ph.length){
+  html='<div class="ok">✓ 未检出违禁词 / 极限词 / 平台避审词，可发布</div><div style="font-size:12px;color:#888;margin-top:8px">二手车是广告法重点监管行业。本工具每次生成自动过检：极限词换成事实描述（「同年份市场价 X 万，我这台便宜的部分是 Y」），导流话术换成「关注我」纯价值结尾，检测范围覆盖朋友圈、抖音口播与多平台文案。</div><div class="law">依据《广告法》第九条：禁用绝对化语言，罚款 20 万起、最高 100 万。</div>';
+ }
+ $("bannedBox").innerHTML=html;
 }
 function renderAll(){
  renderCarCard();
+ // 产出类功能闸门：未激活/过期时，文案区显示"请激活"占位（车辆卡片与基础工具照常）
+ if(!licOK()){
+  var _m=$("momentsList"),_d=$("douyinList");
+  if(_m)_m.innerHTML=LIC_GATE_HTML;
+  if(_d)_d.innerHTML=LIC_GATE_HTML;
+  return;
+ }
  var c=car(),list=genMoments(c),box=$("momentsList");box.innerHTML="";
  list.forEach(function(t,i){
   var d=document.createElement("div");d.className="copy-item";
@@ -896,7 +1045,24 @@ $("regenBtn").onclick=$("regenBtn2").onclick=function(){variant++;renderAll();to
 ["f_year","f_model","f_mileage","f_transfers","f_paint","f_accident","f_price","f_city","f_flaw"].forEach(function(id){$(id).oninput=renderAll});
 $("photoBtn").onclick=function(){$("photoInput").click()};
 $("photoInput").onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){var img=new Image();img.onload=function(){uploadedImg=img;drawPoster(car());toast("照片已上海报")};img.src=ev.target.result};r.readAsDataURL(f)};
-$("dlBtn").onclick=function(){var a=document.createElement("a");a.download="二手车专家-卖车海报.png";a.href=$("posterCanvas").toDataURL("image/png");a.click();toast("海报已保存，去相册查看")};
+/* BUG-013 同源修复：WebView 里 <a download> 静默失效，海报下载改 Cache+分享面板 */
+function saveCanvasNative(cv,fname,okMsg){
+ var FS=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.Filesystem;
+ var SH=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.Share;
+ if(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform()&&FS){
+  FS.writeFile({path:fname,data:cv.toDataURL("image/png").split(",")[1],directory:"CACHE",recursive:true})
+   .then(function(r){
+    toast("已生成，正在打开分享…");
+    if(SH)return SH.share({title:fname,text:"二手车专家",files:[r.uri],dialogTitle:"保存到相册或发给客户"});
+   })
+   .catch(function(e){toast("保存失败："+(e&&e.message||e))});
+  return true;
+ }
+ return false;
+}
+$("dlBtn").onclick=function(){
+ if(saveCanvasNative($("posterCanvas"),"二手车专家-卖车海报.png"))return;
+ var a=document.createElement("a");a.download="二手车专家-卖车海报.png";a.href=$("posterCanvas").toDataURL("image/png");a.click();toast("海报已保存，去相册查看")};
 /* ========== 导航 ========== */
 $("tabbar").querySelectorAll("div").forEach(function(t){t.onclick=function(){$("tabbar").querySelectorAll("div").forEach(function(x){x.classList.remove("on")});document.querySelectorAll(".page").forEach(function(x){x.classList.remove("on")});t.classList.add("on");$("page-"+t.dataset.page).classList.add("on");window.scrollTo(0,0)}});
 $("genTabs").querySelectorAll("div").forEach(function(t){t.onclick=function(){$("genTabs").querySelectorAll("div").forEach(function(x){x.classList.remove("on")});document.querySelectorAll("#page-fache .pane").forEach(function(x){x.classList.remove("on")});t.classList.add("on");$("pane-"+t.dataset.tab).classList.add("on")}});
@@ -941,19 +1107,92 @@ function calc(){
 ["c_price","c_transfer","c_fix","c_road","c_deposit","c_retail"].forEach(function(id){$(id).oninput=calc});
 /* ========== 合同 ========== */
 function ctText(){
- var c=car(),today=new Date(),ds=today.getFullYear()+" 年 "+(today.getMonth()+1)+" 月 "+today.getDate()+" 日";
+ var c=car(),today=new Date(),ds=today.getFullYear()+" 年 "+(today.getMonth()+1)+" 月 "+today.getDate()+" 日",priceN=parseFloat(c.price),ctYuan=isNaN(priceN)?"＿＿＿＿":Math.round(priceN*10000)+"";
  var head="甲方（卖方）：＿＿＿＿＿＿＿＿　　身份证号：＿＿＿＿＿＿＿＿＿＿＿＿\n乙方（买方）：余晓春（郑州知行软件 · 二手车专家）\n签订日期："+ds+"\n签订地点："+c.city+"\n\n";
  if($("ctTabs").querySelector(".on").dataset.ct==="buy"){
-  return head+"《二手车收车合同》\n一、车辆信息\n品牌车型："+c.year+c.model+"\n车架号（VIN）：＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿\n表显里程："+c.mileage+" 万公里\n过户次数："+c.transfers+" 次\n二、成交价格\n人民币 "+c.price+" 万元（￥"+c.price+"0000 元）。签订本合同时乙方已支付购车款，甲方同时交付车辆及相关手续（行驶证、登记证书、购车发票/二手车发票、交强险保单等）。\n三、车况约定\n甲方承诺："+c.accident+"；"+c.paint+"。已知瑕疵："+(c.flaw||"无")+"。\n四、过户约定\n双方于 ____ 年 __ 月 __ 日前共同办理过户手续，过户费由 ____ 方承担。甲方应保证车辆无抵押、无查封、无盗抢、无经济纠纷，如有隐瞒，甲方承担全部责任并赔偿乙方损失。\n五、违约责任\n任何一方违约，向守约方支付车价 10% 的违约金；造成损失的，据实赔偿。\n六、其他\n本合同一式两份，双方各执一份，自签字之日起生效。\n\n甲方签字：＿＿＿＿＿＿　　乙方签字：＿＿＿＿＿＿"
+  return head+"《二手车收车合同》\n一、车辆信息\n品牌车型："+c.year+c.model+"\n车架号（VIN）：＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿\n表显里程："+c.mileage+" 万公里\n过户次数："+c.transfers+" 次\n二、成交价格\n人民币 "+c.price+" 万元（￥"+ctYuan+" 元）。签订本合同时乙方已支付购车款，甲方同时交付车辆及相关手续（行驶证、登记证书、购车发票/二手车发票、交强险保单等）。\n三、车况约定\n甲方承诺："+c.accident+"；"+c.paint+"。已知瑕疵："+(c.flaw||"无")+"。\n四、过户约定\n双方于 ____ 年 __ 月 __ 日前共同办理过户手续，过户费由 ____ 方承担。甲方应保证车辆无抵押、无查封、无盗抢、无经济纠纷，如有隐瞒，甲方承担全部责任并赔偿乙方损失。\n五、违约责任\n任何一方违约，向守约方支付车价 10% 的违约金；造成损失的，据实赔偿。\n六、其他\n本合同一式两份，双方各执一份，自签字之日起生效。\n\n甲方签字：＿＿＿＿＿＿　　乙方签字：＿＿＿＿＿＿"
  }
  return head+"《购车定金协议》\n一、标的车辆\n品牌车型："+c.year+c.model+"\n车架号（VIN）：＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿\n表显里程："+c.mileage+" 万公里\n二、定金\n乙方于 "+ds+" 向甲方支付购车定金人民币 ＿＿＿＿ 元（大写：＿＿＿＿）。\n三、车况与价格约定\n车辆成交总价 "+c.price+" 万元。"+c.accident+"；"+c.paint+"。已知瑕疵："+(c.flaw||"无")+"。\n四、有效期\n双方约定于 ____ 年 __ 月 __ 日前完成交易并过户。逾期甲方不售的，双倍返还定金；逾期乙方不买的，定金不退。\n五、其他\n本协议为定金性质，正式交易时另签《二手车收车合同》。\n\n甲方签字：＿＿＿＿＿＿　　乙方签字：＿＿＿＿＿＿"
 }
-function renderCt(){$("ctTpl").textContent=ctText()}
+/* 未激活/过期时，产出类功能位显示"请激活"占位（基础查询与随身工具不受影响） */
+var LIC_GATE_HTML='<div style="padding:22px 14px;text-align:center;color:#b03a2e;font-size:13px;line-height:1.9;background:#fdf6f5;border:1px dashed #e0b4b4;border-radius:10px">🔑 此功能需要激活码<br><span style="color:#888;font-size:12px">基础查询、验车清单、随身工具无需激活，可一直免费使用</span><br><a href="javascript:openLicense()" style="display:inline-block;margin-top:10px;padding:8px 18px;background:#b03a2e;color:#fff;border-radius:8px;text-decoration:none;font-size:13px">点此激活</a></div>';
+function licOK(){return !window.LICENSE||LICENSE.status().active}
+function renderCt(){
+ var el=$("ctTpl");if(!el)return;
+ if(!licOK()){el.innerHTML=LIC_GATE_HTML;return}
+ el.textContent=ctText();
+}
 $("ctTabs").querySelectorAll("div").forEach(function(t){t.onclick=function(){$("ctTabs").querySelectorAll("div").forEach(function(x){x.classList.remove("on")});t.classList.add("on");renderCt()}});
-function copyContract(){copyTxt({textContent:"复制合同全文"},ctText());toast("合同已复制，粘贴到微信或WPS")}
-function printContract(){$("printArea").textContent=ctText();window.print()}
+function copyContract(){
+ if(!licOK()){if(window.openLicense)openLicense("合同复制需要有效激活码");return}
+ copyTxt({textContent:"复制合同全文"},ctText());toast("合同已复制，粘贴到微信或WPS")
+}
+function printContract(){
+ if(!licOK()){if(window.openLicense)openLicense("合同打印需要有效激活码");return}
+ $("printArea").textContent=ctText();window.print()
+}
+/* ========== 激活授权 UI ========== */
+function openLicense(msg){
+ var ov=$("ovLicense");if(!ov)return;
+ var st=(window.LICENSE&&LICENSE.status)?LICENSE.status():{active:false,daysLeft:0,expireAt:null,msg:"未激活"};
+ var tip=$("licTip"),info=$("licInfo");
+ if(msg&&!st.active){tip.innerHTML="⚠️ "+msg+"<br><br>基础查询和随身工具可继续免费使用；合同、文案、海报等产出类功能需要有效激活码。";tip.style.color="#b03a2e";}
+ else{tip.innerHTML="输入激活码后即可使用全部功能。基础查询和随身工具无需激活，可一直免费使用。";tip.style.color="";}
+ if(st.active){
+  info.style.display="block";
+  info.style.color="#2e7d32";
+  if(st.permanent){
+   info.innerHTML="✓ <b>买断授权 · 永久有效</b><br>感谢支持，全部功能无限期可用";
+  }else{
+   info.innerHTML="✓ 已激活｜剩余 <b>"+st.daysLeft+"</b> 天<br>到期："+st.expireAt.getFullYear()+" 年 "+(st.expireAt.getMonth()+1)+" 月 "+st.expireAt.getDate()+" 日";
+  }
+ }else if(st.expireAt){
+  info.style.display="block";info.style.color="#b03a2e";
+  info.innerHTML="激活码已于 "+st.expireAt.getFullYear()+" 年 "+(st.expireAt.getMonth()+1)+" 月 "+st.expireAt.getDate()+" 日 到期<br>请联系郑州知行软件获取新激活码";
+ }else{info.style.display="none";}
+ if($("licInput"))$("licInput").value="";
+ ov.classList.add("on");
+}
+function closeLicense(){var ov=$("ovLicense");if(ov)ov.classList.remove("on")}
+function doActivate(){
+ var v=($("licInput")||{}).value||"";
+ var r=LICENSE.activate(v);
+ if(!r.ok){toast(r.msg);var t=$("licTip");if(t){t.innerHTML="❌ "+r.msg;t.style.color="#b03a2e"}}
+ else{
+  toast("激活成功，可用 "+LICENSE.status().daysLeft+" 天");
+  refreshLicStatus();
+  setTimeout(function(){closeLicense()},600);
+ }
+}
+function refreshLicStatus(){
+ var el=$("licStatusLine");if(!el)return;
+ var st=LICENSE.status();
+ if(st.active){
+  var leftTxt = st.permanent ? "永久" : ("剩 "+st.daysLeft+" 天");
+  el.innerHTML='<b style="color:#2e7d32">已激活</b> · '+leftTxt+'<br><a href="javascript:openLicense()" style="color:#b03a2e;font-size:12px">查看详情</a>';
+ }else{
+  el.innerHTML='<b style="color:#b03a2e">'+(st.expireAt?"已过期":"未激活")+'</b><br><a href="javascript:openLicense()" style="color:#b03a2e;font-size:12px">点此激活</a>';
+ }
+}
+try{window.openLicense=openLicense;window.closeLicense=closeLicense;
+    window.doActivate=doActivate;window.refreshLicStatus=refreshLicStatus}catch(e){}
+
 /* ========== 工具：手电 ========== */
 var torchTrack=null,torchOn=false,strobeTimer=null;
+/* 原生 Torch 插件（@capawesome/capacitor-torch，CameraManager.setTorchMode）：
+   安卓 WebView 的 MediaStreamTrack 根本不暴露 torch 能力（实测 getCapabilities() 无 torch、
+   applyConstraints({advanced:[{torch}]}) 直接 NotSupportedError，BUG-012），
+   网页链路在 APP 内点不亮闪光灯——必须原生优先，网页只兜底桌面浏览器。 */
+function nativeTorch(){
+  return (window.Capacitor && Capacitor.Plugins && Capacitor.Plugins.Torch) || null;
+}
+function torchNativeAvailable(){
+  return !!(window.Capacitor && Capacitor.isNativePlatform && Capacitor.isNativePlatform() && nativeTorch());
+}
+function torchBtnSync(){
+  $("torchBtn").textContent=torchOn?"关闭手电":"开启手电";
+  $("torchBtn").className="bigbtn"+(torchOn?" off":"");
+}
 function openTorch(){$("ovTorch").classList.add("on")}
 function closeTorch(){stopTorch();$("ovTorch").classList.remove("on")}
 async function ensureCam(){
@@ -961,22 +1200,57 @@ async function ensureCam(){
  try{var s=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});torchTrack=s.getVideoTracks()[0];return torchTrack}catch(e){return null}
 }
 async function toggleTorch(){
+ /* ① 原生插件（安卓 APP）：CameraManager.setTorchMode，不开摄像头、不占相机 */
+ if(torchNativeAvailable()){
+  try{
+   var p=nativeTorch();
+   var st=await p.isEnabled();
+   torchOn=!st.enabled;
+   if(torchOn)await p.enable();else await p.disable();
+   torchBtnSync();
+   $("torchTip").textContent=torchOn?"手电已点亮，照车架号/底盘编号用":"调用手机闪光灯；不支持闪光的机型请用「屏幕补光」";
+   return;
+  }catch(e){/* 原生失败落网页链路 */}
+ }
+ /* ② 网页链路（桌面浏览器） */
  var t=await ensureCam();
- if(!t){$("torchTip").textContent="当前浏览器/机型不支持闪光灯，请用「屏幕补光」";return}
+ if(!t){$("torchTip").textContent="相机不可用（权限被拒或机型不支持），请用「屏幕补光」";return}
  try{
   torchOn=!torchOn;
   await t.applyConstraints({advanced:[{torch:torchOn}]});
-  $("torchBtn").textContent=torchOn?"关闭手电":"开启手电";
-  $("torchBtn").className="bigbtn"+(torchOn?" off":"");
+  torchBtnSync();
  }catch(e){$("torchTip").textContent="闪光灯调用失败，请用「屏幕补光」"}
 }
 async function toggleStrobe(){
- if(strobeTimer){clearInterval(strobeTimer);strobeTimer=null;$("strobeBtn").textContent="爆闪模式";$("strobeBtn").className="bigbtn off";return}
- var t=await ensureCam();if(!t){$("torchTip").textContent="不支持闪光灯";return}
+ if(strobeTimer){
+  clearInterval(strobeTimer);strobeTimer=null;
+  $("strobeBtn").textContent="爆闪模式";$("strobeBtn").className="bigbtn off";
+  if(torchNativeAvailable()){try{await nativeTorch().disable()}catch(e){}}
+  return;
+ }
+ var native=torchNativeAvailable();
+ var t=native?null:await ensureCam();
+ if(!native&&!t){$("torchTip").textContent="不支持闪光灯";return}
  $("strobeBtn").textContent="停止爆闪";$("strobeBtn").className="bigbtn";
- var on=false;strobeTimer=setInterval(function(){on=!on;t.applyConstraints({advanced:[{torch:on}]}).catch(function(){clearInterval(strobeTimer);strobeTimer=null})},120);
+ var on=false;
+ strobeTimer=setInterval(function(){
+  on=!on;
+  if(native){
+   var p=nativeTorch();
+   (on?p.enable():p.disable()).catch(function(){clearInterval(strobeTimer);strobeTimer=null});
+  }else{
+   t.applyConstraints({advanced:[{torch:on}]}).catch(function(){clearInterval(strobeTimer);strobeTimer=null});
+  }
+ },120);
 }
-function stopTorch(){if(strobeTimer){clearInterval(strobeTimer);strobeTimer=null}if(torchTrack){torchTrack.applyConstraints({advanced:[{torch:false}]}).catch(function(){});torchTrack.stop();torchTrack=null;torchOn=false}}
+async function stopTorch(){
+ if(strobeTimer){clearInterval(strobeTimer);strobeTimer=null}
+ if(torchNativeAvailable()){
+  try{await nativeTorch().disable()}catch(e){}
+  torchOn=false;return;
+ }
+ if(torchTrack){torchTrack.applyConstraints({advanced:[{torch:false}]}).catch(function(){});torchTrack.stop();torchTrack=null;torchOn=false}
+}
 function openScreenLight(){$("screenLight").classList.add("on")}
 function openPurple(){$("purpleLight").classList.add("on")}
 /* ========== 工具：水印相机 ========== */
@@ -986,7 +1260,7 @@ async function openCamera(){
  try{camStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:camFacing},audio:false})}catch(e){toast("相机打开失败："+(e.name||""));return}
  $("wmVideo").srcObject=camStream;
  if(!wmTimer)wmTimer=setInterval(function(){var d=new Date();$("wmTime").textContent=d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)+" "+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)+":"+("0"+d.getSeconds()).slice(-2)},500);
- if(navigator.geolocation){navigator.geolocation.getCurrentPosition(function(p){$("wmLoc").textContent=p.coords.latitude.toFixed(5)+", "+p.coords.longitude.toFixed(5)},function(){$("wmLoc").textContent="定位失败（检查权限）"},{timeout:8000})}
+ if(navigator.geolocation){navigator.geolocation.getCurrentPosition(function(p){$("wmLoc").textContent=p.coords.latitude.toFixed(5)+", "+p.coords.longitude.toFixed(5)},function(){$("wmLoc").textContent="定位失败（未开定位或信号弱，水印仍可用）"},{timeout:8000})}
  else $("wmLoc").textContent="浏览器不支持定位";
 }
 async function switchCam(){
@@ -996,6 +1270,7 @@ async function switchCam(){
 }
 function closeCamera(){if(camStream)camStream.getTracks().forEach(function(t){t.stop()});camStream=null;$("ovCam").classList.remove("on")}
 function snap(){
+ if(!licOK()){if(window.openLicense)openLicense("拍照存证需要有效激活码");return}
  var v=$("wmVideo");if(!v.videoWidth){toast("相机未就绪");return}
  var cv=document.createElement("canvas");cv.width=v.videoWidth;cv.height=v.videoHeight;
  var x=cv.getContext("2d");x.drawImage(v,0,0);
@@ -1007,7 +1282,14 @@ function snap(){
  x.fillText($("wmTime").textContent+"　"+$("wmLoc").textContent,24,cv.height-bh+bh*0.62);
  var custom=$("wmText").value.trim();
  if(custom){x.fillStyle="#ffd66b";x.font="bold "+Math.round(bh*0.22)+"px sans-serif";x.fillText(custom,24,cv.height-bh+bh*0.88)}
- var a=document.createElement("a");a.download="水印存证-"+Date.now()+".png";a.href=cv.toDataURL("image/png");a.click();
+ var dataUrl=cv.toDataURL("image/png");
+ var fname="水印存证-"+Date.now()+".png";
+ /* BUG-013 修复（2026-10-17 真机测试）：WebView 里 <a download> 静默失效，
+    toast 还谎报已存证。原生路径写应用 Cache 目录（零存储权限、全版本通用，
+    FileProvider 已覆盖 cache-path）+ Share 调分享面板，
+    用户从分享面板存相册或直接发微信；网页版仍走 <a download>。 */
+ if(saveCanvasNative(cv,fname))return;
+ var a=document.createElement("a");a.download=fname;a.href=dataUrl;a.click();
  toast("已存证，保存到相册");
 }
 /* ========== 工具：水平仪 ========== */
@@ -1470,6 +1752,7 @@ renderAll();renderGarage();calc();renderCt();
   /* 海报保存：APK 下唤起系统分享（可直接发微信） */
   var v1Dl = $("dlBtn") ? $("dlBtn").onclick : null;
   $("dlBtn").onclick = function () {
+    if(!licOK()){if(window.openLicense)openLicense("海报保存需要有效激活码");return}
     var CB = window.CapBridge;
     if (CB && CB.isNative()) {
       var data = $("posterCanvas").toDataURL("image/png");
@@ -1505,7 +1788,7 @@ renderAll();renderGarage();calc();renderCt();
     if (CB && CB.isNative() && locEl) {
       locEl.textContent = "定位中…";
       var p = await CB.getPos();
-      locEl.textContent = p ? p.lat.toFixed(5) + ", " + p.lng.toFixed(5) : "定位失败（检查权限）";
+      locEl.textContent = p ? p.lat.toFixed(5) + ", " + p.lng.toFixed(5) : "定位失败（未开定位或信号弱，水印仍可用）";
     }
   };
 
@@ -1605,7 +1888,7 @@ renderAll();renderGarage();calc();renderCt();
       if (bs[i] === 0 && bs[i + 1] === 0) continue;
       var b0 = bs[i], b1 = bs[i + 1];
       var pre = { 0: "P", 1: "C", 2: "B", 3: "U" }[b0 >> 6];
-      out.push(pre + ((b0 >> 4) & 3) + (b0 & 15).toString(16) + ((b1 >> 4) & 15).toString(16) + (b1 & 15).toString(16));
+      out.push((pre + ((b0 >> 4) & 3) + (b0 & 15).toString(16) + ((b1 >> 4) & 15).toString(16) + (b1 & 15).toString(16)).toUpperCase());
     }
     return out;
   }
@@ -1667,6 +1950,7 @@ renderAll();renderGarage();calc();renderCt();
     if (window.BTSerial && BTSerial.available()) {
       renderBtPickChoice();
       $("ovBtPick").classList.add("on");
+      if (window.obdSerialPick) obdSerialPick();   /* 打开即自动读已配对设备 */
     } else {
       obdConnectBLE();
     }
@@ -1700,6 +1984,9 @@ renderAll();renderGarage();calc();renderCt();
 
   window.obdSerialPick = async function () {
     try {
+      /* API31+ 的 BLUETOOTH_CONNECT 是运行时权限：插件内部弹系统框，被拒则止步 */
+      var p = await BTSerial.ensurePermission();
+      if (p && p.granted === false) { toast("蓝牙权限被拒，请在系统设置里允许后重试"); return; }
       var en = await BTSerial.isEnabled();
       if (!en.enabled) { toast("请先打开手机蓝牙"); return; }
       obdLog("正在读取已配对设备…");
@@ -1713,16 +2000,20 @@ renderAll();renderGarage();calc();renderCt();
   window.obdSerialConnect = async function (addr, name) {
     try {
       obdSetStatus("正在连接 " + name + " …", false);
-      var r = await BTSerial.connect(addr);
+      /* 插件 connect({address}) resolve 无返回值；地址存 OBD.serialAddr 供发送/断开/通知用 */
+      await BTSerial.connect(addr);
       OBD.link = "serial";
-      OBD.dev = { name: r.name || name };
+      OBD.serialAddr = addr;
+      OBD.dev = { name: name };
+      /* ELM327 按 "\r" 一行一帧推送；先起通知再绑监听，数据不丢 */
+      await BTSerial.startNotifications(addr, "\r");
       BTSerial.onData(function (txt, disc) {
         if (disc) { obdDisconnected(); return; }
         obdOnData(txt);
       });
       OBD.connected = true;
       $("ovBtPick").classList.remove("on");
-      obdSetStatus("已连接 " + (r.name || name) + "（经典蓝牙）", true);
+      obdSetStatus("已连接 " + name + "（经典蓝牙）", true);
       obdLog("经典蓝牙已连接，启动深度诊断引擎（只读模式）…");
       if (window.obd2OnConnect) window.obd2OnConnect();
     } catch (e) {
@@ -1733,8 +2024,8 @@ renderAll();renderGarage();calc();renderCt();
 
   /* 统一发送入口：两条链路的数据都汇入 obdOnData → obd2 队列 */
   OBD.rawSend = function (cmd) {
-    if (OBD.link === "serial" && window.BTSerial) {
-      BTSerial.write(cmd + "\r").catch(function () {});
+    if (OBD.link === "serial" && window.BTSerial && OBD.serialAddr) {
+      BTSerial.write(OBD.serialAddr, cmd + "\r").catch(function () {});
     } else if (OBD.wch) {
       OBD.wch.writeValue(new TextEncoder().encode(cmd + "\r")).catch(function () {});
     }
@@ -1810,9 +2101,10 @@ renderAll();renderGarage();calc();renderCt();
   function obdDisconnected() {
     OBD.connected = false; OBD.wch = null;
     if (OBD.link === "serial" && window.BTSerial) {
-      try { BTSerial.disconnect(); } catch (e) {}
+      try { BTSerial.disconnect(OBD.serialAddr); } catch (e) {}
     }
     OBD.link = null;
+    OBD.serialAddr = null;
     obdStopPoll();
     if (window.obd2OnDisconnect) window.obd2OnDisconnect();
     obdSetStatus("已断开", false); obdLog("设备断开");
@@ -1845,7 +2137,7 @@ renderAll();renderGarage();calc();renderCt();
     var list = dtcs || OBD.dtcs;
     if (!list.length) { box.innerHTML = '<div style="color:#7be08a;font-size:13px">✓ 无故障码（或未读到）</div>'; return; }
     box.innerHTML = list.map(function (c) {
-      var d = DTC_LIB[c] || "通用故障码，建议到修理厂用专业设备细读";
+      var d = DTC_LIB[String(c).toUpperCase()] || "通用故障码，建议到修理厂用专业设备细读";
       return '<div class="obd-dtc"><b>' + esc(c) + "</b><span>" + esc(d) + "</span></div>";
     }).join("");
   };
@@ -1864,6 +2156,7 @@ renderAll();renderGarage();calc();renderCt();
 
   /* ================= 2. 车况报告（验车清单导出） ================= */
   window.openReport = function () {
+    if(!licOK()){if(window.openLicense)openLicense("车况报告需要有效激活码");return}
     var d = {};
     try { d = JSON.parse(localStorage.getItem("yzs_check_" + (window.__checkCarId || "tmp")) || "{}"); } catch (e) { }
     var c = (typeof car === "function") ? car() : null;
@@ -1902,6 +2195,7 @@ renderAll();renderGarage();calc();renderCt();
     window.print();
   };
   window.copyReport = function () {
+    if(!licOK()){if(window.openLicense)openLicense("报告复制需要有效激活码");return}
     var t = $("reportBody").innerText;
     copyTxt({ textContent: "复制" }, t);
     toast("报告已复制");
@@ -1913,18 +2207,25 @@ renderAll();renderGarage();calc();renderCt();
       return c.year + c.model + "，表显" + c.mileage + "万公里，过户" + c.transfers + "次。" + c.paint + "。" + c.accident + "。\n要价" + c.price + "万，明盘不议价，车况透明实车为准。" + (c.flaw ? "小瑕疵：" + c.flaw + "，价格里扣过了。" : "") + "\n" + c.city + "同城自提，外地可发物流，手续齐全当天过户。";
     } },
     { name: "快手/视频号", tip: "短平快、三句话一个信息点、带钩子", fn: function (c) {
-      return c.year + c.model + "！表显" + c.mileage + "万，" + c.price + "万明盘。" + flawShort(c) + "，" + c.paint + "。" + c.accident + "。" + c.city + "看车，评论区扣1发位置。";
+      return c.year + c.model + "！表显" + c.mileage + "万，" + c.price + "万明盘。" + flawShort(c) + "，" + c.paint + "。" + c.accident + "。" + c.city + "看车，关注我，看车不绕弯路。";
     } },
     { name: "同行调车群", tip: "专业参数全上、留利空间、物流方案", fn: function (c) {
       return "【同行调车】" + c.year + c.model + "，表显" + c.mileage + "万，过户" + c.transfers + "次，" + c.paint + "，" + c.accident + "。" + (parseFloat(c.price) - 0.3).toFixed(1) + "万以上可谈，" + c.price + "万明盘出。资料齐全，可过户可物流，" + c.city + "自提。";
     } },
     { name: "瓜子/人人车 比价文案", tip: "对标大平台话术，突出透明和差价理由", fn: function (c) {
-      return "同款大平台挂" + (parseFloat(c.price) + 1.2).toFixed(1) + "万，服务费再收一笔。我这是" + c.price + "万明盘：" + c.paint + "，" + c.accident + "，" + (c.flaw ? "唯一瑕疵" + c.flaw : "车况透明") + "。省下的服务费够两年保险，钱花在车况上不花在平台上。";
+      return "同款大平台挂" + (parseFloat(c.price) + 1.2).toFixed(1) + "万，服务费再收一笔。我这是" + c.price + "万明盘：" + c.paint + "，" + c.accident + "，" + (c.flaw ? "瑕疵就一处：" + c.flaw : "车况透明") + "。省下的服务费够两年保险，钱花在车况上不花在平台上。";
     } }
   ];
+  /* 暴露到全局：主脚本的 renderBanned（违禁词自检）需要把多平台文案纳入检测范围 */
+  window.PLATFORMS = PLATFORMS;
   function renderPlatforms() {
     var box = $("platformList");
     if (!box) return;
+    // 产出类功能闸门
+    if (!licOK()) {
+      box.innerHTML = LIC_GATE_HTML;
+      return;
+    }
     var c = (typeof car === "function") ? car() : null;
     box.innerHTML = "";
     PLATFORMS.forEach(function (p) {
@@ -1998,6 +2299,8 @@ renderAll();renderGarage();calc();renderCt();
     }
     if ($("platformList")) renderPlatforms();
     if ($("scriptsList")) renderScripts();
+    /* PLATFORMS 在本块定义，重跑一次违禁词自检，把多平台文案纳入检测范围 */
+    if ($("bannedBox") && typeof renderBanned === "function" && typeof car === "function") { try { renderBanned(car()); } catch (e) {} }
     /* 车档变化时刷新多平台文案 */
     if (typeof window.__v3Refresh === "undefined") {
       window.__v3Refresh = setInterval(function () { if ($("platformList") && $("pane-platform") && $("pane-platform").classList.contains("on")) renderPlatforms(); }, 3000);
@@ -2321,7 +2624,7 @@ renderAll();renderGarage();calc();renderCt();
       if (bs[i] === 0 && bs[i + 1] === 0) continue;
       var b0 = bs[i], b1 = bs[i + 1];
       var pre = { 0: "P", 1: "C", 2: "B", 3: "U" }[b0 >> 6];
-      out.push(pre + ((b0 >> 4) & 3) + (b0 & 15).toString(16) + ((b1 >> 4) & 15).toString(16) + (b1 & 15).toString(16));
+      out.push((pre + ((b0 >> 4) & 3) + (b0 & 15).toString(16) + ((b1 >> 4) & 15).toString(16) + (b1 & 15).toString(16)).toUpperCase());
     }
     return out;
   }
@@ -2778,10 +3081,18 @@ renderAll();renderGarage();calc();renderCt();
 /* bluetooth-serial.js */
 /* ============================================================
  * 二手车专家 · 经典蓝牙串口桥（bluetooth-serial.js）
- * 仅安卓 APP 内可用（Capacitor 原生插件 BluetoothSerial）：
+ * 仅安卓 APP 内可用（Capacitor 原生插件 @ascentio-it/capacitor-bluetooth-serial）：
  *   SPP 协议直连经典蓝牙 ELM327 接头（25 元级便宜接头就是这类）
  * 网页版/无原生环境时 available() = false，OBD 面板自动走 BLE 链路。
  * 只读安全：所有车辆指令仍统一过 obd2.js 的 obd2WriteGuard，本层只透传。
+ *
+ * ⚠ 插件 API 适配记录（2026-10-17 真机测试发现 BUG-010 后重写）：
+ *   原桥接层照着臆想的 API 写（listPairedDevices/dataReceived/write({data})），
+ *    npm 上没有任何插件是这套签名，导致 OBD 在 APP 内永远走不到真实链路。
+ *   现按 @ascentio-it/capacitor-bluetooth-serial@8.0.1 实测签名对齐：
+ *   getPairedDevices / connect({address}) / disconnect({address}) /
+ *   write({address,value}) / startNotifications({address,delimiter}) + onRead 事件 /
+ *   checkBluetoothPermissions（API31+ 的 BLUETOOTH_CONNECT 是运行时权限，必须显式要）。
  * ============================================================ */
 (function () {
   "use strict";
@@ -2795,16 +3106,22 @@ renderAll();renderGarage();calc();renderCt();
     available: function () {
       return !!(window.Capacitor && Capacitor.isNativePlatform && Capacitor.isNativePlatform() && plugin());
     },
+    /* API31+ 先要 BLUETOOTH_CONNECT 运行时权限（插件内部弹系统框，返回 {granted}） */
+    ensurePermission: function () { return plugin().checkBluetoothPermissions(); },
     isEnabled: function () { return plugin().isEnabled(); },
-    listPairedDevices: function () { return plugin().listPairedDevices(); },
+    listPairedDevices: function () { return plugin().getPairedDevices(); },
     connect: function (address) { return plugin().connect({ address: address }); },
-    disconnect: function () { return plugin().disconnect(); },
-    write: function (str) { return plugin().write({ data: str }); },
-    /* 注册数据回调：cb(chunk, disconnected) */
+    disconnect: function (address) {
+      return plugin().disconnect(address ? { address: address } : {});
+    },
+    write: function (address, str) { return plugin().write({ address: address, value: str }); },
+    /* 按分隔符分帧推送：ELM327 用 "\r" 一行一帧 */
+    startNotifications: function (address, delimiter) {
+      return plugin().startNotifications({ address: address, delimiter: delimiter || "\r" });
+    },
+    /* 注册数据回调：cb(chunk)；onRead 事件 payload 为 {value} */
     onData: function (cb) {
-      plugin().addListener("dataReceived", function (e) {
-        cb(e.data || "", !!e.disconnected);
-      });
+      plugin().addListener("onRead", function (e) { cb(e && e.value != null ? e.value : "", false); });
     }
   };
 
@@ -3085,7 +3402,7 @@ renderAll();renderGarage();calc();renderCt();
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
-  var APP_VER = "1.2";
+  var APP_VER = "1.9.2";
 
   /* ================= 1. 新手引导 ================= */
   var GUIDE = [
@@ -3116,7 +3433,7 @@ renderAll();renderGarage();calc();renderCt();
   };
 
   /* ================= 2. 更新提示 ================= */
-  var CHANGELOG = "V1.2 更新内容：<br>· 新增「同行圈」：求购/车源发布，本机+免费联机双模式<br>· 新增「OBD 蓝牙诊断」：实时转速/车速/水温，故障码读取+中文释义<br>· 新增「车况报告」：132 项验车清单直接导出打印<br>· 发车页新增「多平台文案」「应对话术库」<br>· 新增新手引导与数据备份";
+  var CHANGELOG = "V1.9.2 更新内容：<br>· <b>激活码授权（新）</b>：新增「我的 → 激活」入口，输入激活码即可使用；未激活时基础查询和随身工具照常用，合同/文案/海报/存证等产出类功能会被拦一下并提示续期——这样以后想收费，您不给码就卡住了<br>· <b>安装包正式签名（重要）</b>：之前的包用的是调试签名，别人覆盖安装会被系统拒绝（得先卸载），也上不了应用市场；这次换成您自己的正式签名密钥，以后发新版能直接覆盖升级<br>· 沿用 V1.9.1：相机/蓝牙权限补齐、原生手电、水印相机存图修复、OBD 蓝牙链路接通<br>· 沿用 V1.9：平台避审话术清除、违禁词自检分区、旧系统 WebView（Chromium 83）遮罩显示修复";
   function checkUpdate() {
     var seen = localStorage.getItem("yzs_seen_ver") || "";
     if (seen !== APP_VER) {
