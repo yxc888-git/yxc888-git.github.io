@@ -131,6 +131,45 @@
   var prodBtns = panel.querySelectorAll('.zxb-prod button');
   var busy = false;
 
+  /* ===== 客服对话上报（2026-10-18 加）：对话/留资写官网 KV，老板在总控台看得到 ===== */
+  var CHAT_API = 'https://api.zhixingruanjian.com.cn/api/chat';
+  var sessionLog = [];       // 本会话消息 [{r:'me'|'bot', t:'...'}]
+  var reported = false;      // 本会话是否已上报过摘要（电话触发的即时上报不计入）
+  var reportedPhone = false; // 电话线索是否已即时上报
+  function postChat(payload) {
+    try {
+      var body = JSON.stringify(payload);
+      if (navigator.sendBeacon) {
+        var blob = new Blob([body], { type: 'application/json' });
+        if (navigator.sendBeacon(CHAT_API, blob)) return;
+      }
+      fetch(CHAT_API, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: body,
+        keepalive: true,
+        mode: 'cors'
+      }).catch(function () { /* 静默 */ });
+    } catch (e) { /* 上报失败静默，不影响客服体验 */ }
+  }
+  function reportChat(force) {
+    if (reported && !force) return;
+    if (sessionLog.length < 4 && !force) return;
+    reported = true;
+    postChat({ type: 'chat', page: location.pathname || '', messages: sessionLog.slice(-12) });
+  }
+  function reportPhone(text) {
+    if (reportedPhone) return;
+    var m = String(text).match(/(^|[^0-9])(1[3-9]\d{9})([^0-9]|$)/);
+    if (!m) return;
+    reportedPhone = true;
+    postChat({
+      type: 'chat', page: location.pathname || '',
+      need: '客户留下电话：' + m[2],
+      messages: sessionLog.slice(-6)
+    });
+  }
+
   function add(text, who) {
     var w = document.createElement('div');
     w.className = 'zxb-msg ' + who;
@@ -140,6 +179,12 @@
     w.appendChild(b);
     log.appendChild(w);
     log.scrollTop = log.scrollHeight;
+    if (who === 'me') {
+      sessionLog.push({ r: 'me', t: String(text).slice(0, 300) });
+      reportPhone(String(text));
+    } else if (text !== '…') {
+      sessionLog.push({ r: 'bot', t: String(text).slice(0, 300) });
+    }
     return b;
   }
 
@@ -156,6 +201,12 @@
       b.onclick = function () { ask(q); };
       box.appendChild(b);
     });
+    var lb = document.createElement('button');
+    lb.type = 'button';
+    lb.textContent = '留个电话，老板亲自回';
+    lb.style.cssText = 'color:#185fa5;border-color:#185fa5;font-weight:600';
+    lb.onclick = function () { leadForm(); };
+    box.appendChild(lb);
     log.appendChild(box);
     log.scrollTop = log.scrollHeight;
   }
@@ -182,7 +233,61 @@
       busy = false; btn.disabled = false;
       log.scrollTop = log.scrollHeight;
       inp.focus();
+      sessionLog.push({ r: 'bot', t: String(a).slice(0, 300) });
+      /* 对话满 4 轮（8 条）自动上报一次摘要，之后离开页面再补一次 */
+      if (sessionLog.length >= 8) reportChat(false);
     });
+  }
+
+  /* 留资入口：客户不想打字，留个电话让老板亲自回 */
+  function leadForm() {
+    if (panel.querySelector('.zxb-lead')) return;
+    var box = document.createElement('div');
+    box.className = 'zxb-lead';
+    var title = document.createElement('div');
+    title.textContent = '留个电话，老板亲自回你';
+    title.style.cssText = 'font-size:12.5px;color:#8a929c;margin:2px 0 8px';
+    var f1 = document.createElement('input');
+    f1.type = 'text'; f1.placeholder = '怎么称呼（选填）'; f1.maxLength = 20;
+    var f2 = document.createElement('input');
+    f2.type = 'tel'; f2.placeholder = '手机号（必填）'; f2.maxLength = 11;
+    var f3 = document.createElement('input');
+    f3.type = 'text'; f3.placeholder = '想了解什么（选填）'; f3.maxLength = 60;
+    [f1, f2, f3].forEach(function (f) {
+      f.style.cssText = 'width:100%;font-size:16px;padding:9px 11px;border:1px solid #e3e6ea;border-radius:8px;margin-bottom:8px;font-family:inherit;box-sizing:border-box';
+    });
+    var submit = document.createElement('button');
+    submit.type = 'button'; submit.textContent = '提交';
+    submit.style.cssText = 'width:100%;font:inherit;font-size:14px;font-weight:600;padding:10px;border:0;border-radius:8px;background:#185fa5;color:#fff;cursor:pointer';
+    var tip = document.createElement('div');
+    tip.style.cssText = 'font-size:12px;color:#8a929c;margin-top:6px;min-height:16px';
+    submit.onclick = function () {
+      var phone = (f2.value || '').trim();
+      if (!/^1[3-9]\d{9}$/.test(phone)) { tip.style.color = '#dc2626'; tip.textContent = '手机号格式不对，再检查下'; return; }
+      submit.disabled = true; submit.textContent = '提交中…';
+      fetch(CHAT_API, {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          type: 'lead', name: (f1.value || '').trim(), phone: phone,
+          need: (f3.value || '').trim(), page: location.pathname || ''
+        })
+      }).then(function (r) { return r.json(); }).then(function (j) {
+        if (j && j.ok) {
+          tip.style.color = '#16a34a'; tip.textContent = '收到了，稍后回你';
+          sessionLog.push({ r: 'me', t: '留资：' + phone + ' ' + (f3.value || '') });
+          setTimeout(function () { box.remove(); }, 1800);
+        } else {
+          throw new Error('fail');
+        }
+      }).catch(function () {
+        tip.style.color = '#dc2626'; tip.textContent = '没提交成功，直接加微信 15639928315';
+        submit.disabled = false; submit.textContent = '再试一次';
+      });
+    };
+    box.appendChild(title); box.appendChild(f1); box.appendChild(f2); box.appendChild(f3);
+    box.appendChild(submit); box.appendChild(tip);
+    log.appendChild(box);
+    log.scrollTop = log.scrollHeight;
   }
 
   var greeted = false;
@@ -242,4 +347,12 @@
     if (window.ZhixingBot) boot();
     else window.addEventListener('load', function () { setTimeout(boot, 200); });
   }
+
+  /* 离开页面时补报一次会话摘要（手机端切后台/返回键常不触发 beforeunload，两个都挂） */
+  try {
+    window.addEventListener('beforeunload', function () { reportChat(true); });
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') reportChat(true);
+    });
+  } catch (e) {}
 })();
