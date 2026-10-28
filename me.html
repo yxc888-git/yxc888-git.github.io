@@ -23,179 +23,307 @@
 }
 </script>
 <style>
-body{font-family:"Microsoft YaHei",-apple-system,sans-serif;max-width:820px;margin:0 auto;
-     padding:18px 18px 40px;line-height:1.85;color:#2c3e50;background:#fffdf8}
-a{color:#c0392b}
-h1{font-size:25px;color:#c0392b;border-bottom:3px solid #ff7a3c;padding-bottom:10px;line-height:1.4}
-h2{font-size:19px;color:#d35400;margin:30px 0 10px}
-.crumb{font-size:14px;color:#888;margin-bottom:14px}
-.tip{background:#fff3e0;border-left:4px solid #ff7a3c;padding:12px 16px;border-radius:6px;margin:16px 0}
-.contact{background:#c0392b;color:#fff;text-align:center;padding:24px 18px;border-radius:12px;margin:26px 0}
-.contact .num{font-size:32px;font-weight:bold;letter-spacing:2px;color:#ffe082;display:block;margin:8px 0}
-.contact a{color:#ffe082;font-weight:bold}
-.btn{display:inline-block;background:#ffe082;color:#c0392b;font-weight:bold;font-size:17px;
-     padding:12px 30px;border-radius:30px;text-decoration:none;margin:8px 6px 0}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:15px}
-td,th{border:1px solid #e0c9a6;padding:10px;text-align:center}
-th{background:#ffedcc}
-.notice{background:#fff;border:2px solid #c0392b;border-radius:12px;padding:18px 20px;margin:20px 0;box-shadow:0 3px 12px rgba(192,57,43,.12)}
-.notice .n-title{font-size:19px;color:#fff;background:#c0392b;display:inline-block;padding:4px 14px;border-radius:6px;font-weight:bold;margin-bottom:10px}
-.notice .chip{display:inline-block;background:#ffedcc;color:#a04000;border:1px solid #ff7a3c;border-radius:20px;padding:4px 13px;margin:4px 4px 4px 0;font-size:14px;font-weight:bold}
-.cards{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}
-.card{flex:1;min-width:230px;background:#fff;border:2px solid #ff7a3c;border-radius:12px;
-      padding:16px;text-decoration:none;display:block}
-.card h3{margin:0 0 6px;font-size:17px;color:#c0392b}
-.card p{margin:0;font-size:14px;color:#666;line-height:1.7}
-.soft{background:#eef6fb;border-left:4px solid #185fa5;padding:14px 16px;border-radius:6px;margin:18px 0}
-.soft a{background:#185fa5;color:#fff;padding:10px 24px;border-radius:24px;text-decoration:none;
-        display:inline-block;font-weight:bold;margin-top:8px}
-ul{padding-left:22px}
-li{margin:5px 0}
-/* 二手车专家工具卡（2026-10-17 上本页） */
-.ucx-hero{background:linear-gradient(135deg,#c0392b,#ff7a3c);border-radius:14px;padding:26px 22px;color:#fff;text-align:center;margin:22px 0 14px;box-shadow:0 3px 14px rgba(192,57,43,.22)}
-.ucx-hero h3{margin:0 0 8px;font-size:21px}
-.ucx-hero p{margin:0;opacity:.94;font-size:14px;line-height:1.7}
-.ucx-btns{margin-top:18px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.ucx-btn{display:inline-block;padding:12px 26px;border-radius:999px;text-decoration:none;font-weight:bold;font-size:15px}
-.ucx-btn.primary{background:#ffe082;color:#8c2b1f}
-.ucx-btn.ghost{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.6)}
-.ucx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:0 0 6px}
-.ucx-card{background:#fff;border:1px solid #f3d9c8;border-radius:12px;padding:13px 15px}
-.ucx-card b{color:#c0392b;font-size:15px}
-.ucx-card p{margin:6px 0 0;font-size:13px;color:#666;line-height:1.65}
-.ucx-note{font-size:12px;color:#999;text-align:center;margin:8px 0 4px}
-@media (max-width:560px){ h1{font-size:21px} .contact .num{font-size:27px} }
+:root{
+  --bg0:#0a0d14; --card:rgba(255,255,255,.045); --card2:rgba(255,255,255,.07);
+  --line:rgba(255,255,255,.09); --txt:#e8edf6; --sub:#9aa7bd;
+  --blue:#4da3ff; --cyan:#22d3ee; --amber:#ffb84d; --green:#34d399; --red:#ff7a6b;
+  --grad:linear-gradient(135deg,#4da3ff 0%,#22d3ee 100%);
+  --grad-amber:linear-gradient(135deg,#ffb84d 0%,#ff8a3c 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",sans-serif;
+  background:var(--bg0);color:var(--txt);line-height:1.78;min-height:100vh;position:relative;overflow-x:hidden;
+}
+body::before{content:"";position:fixed;inset:0;z-index:-2;
+  background:radial-gradient(600px 400px at 85% -5%,rgba(77,163,255,.16),transparent 60%),
+             radial-gradient(700px 500px at -10% 25%,rgba(34,211,238,.10),transparent 60%),
+             radial-gradient(500px 400px at 90% 80%,rgba(255,184,77,.07),transparent 60%),var(--bg0)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(ellipse 90% 55% at 50% 0%,#000 30%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 55% at 50% 0%,#000 30%,transparent 75%)}
+.wrap{max-width:720px;margin:0 auto;padding:0 18px}
+a{color:var(--blue)}
+
+/* 顶栏 */
+.topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(10,13,20,.72);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:52px}
+.crumb{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--sub);text-decoration:none}
+.crumb:hover{color:var(--txt)}
+.crumb .dot{width:7px;height:7px;border-radius:50%;background:var(--grad);box-shadow:0 0 8px rgba(77,163,255,.9)}
+.live{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--green);
+  background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);padding:3px 10px;border-radius:20px}
+.live i{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+
+/* Hero */
+.hero{padding:42px 0 8px;text-align:center}
+.pill{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.06em;
+  color:var(--cyan);background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.3);
+  padding:5px 14px;border-radius:20px;margin-bottom:16px}
+h1{font-size:clamp(25px,6.2vw,38px);font-weight:800;line-height:1.3}
+h1 .g{background:var(--grad-amber);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1 .sub2{display:block;font-size:.6em;font-weight:600;color:var(--sub);margin-top:8px;letter-spacing:.1em}
+.lead{color:var(--sub);font-size:15px;max-width:540px;margin:14px auto 0}
+
+.searchtip{margin:24px 0 0;border:1px solid rgba(255,184,77,.35);border-radius:14px;
+  background:linear-gradient(135deg,rgba(255,184,77,.10),rgba(255,138,60,.05));
+  padding:13px 16px;font-size:13.5px;color:#ffd9a0;text-align:left}
+.searchtip b{color:var(--amber)}
+
+/* 主联系卡（渐变描边） */
+.contact{position:relative;margin:28px 0 6px;border-radius:22px;padding:2px;
+  background:linear-gradient(135deg,rgba(255,184,77,.7),rgba(77,163,255,.5),rgba(34,211,238,.6))}
+.contact .in{border-radius:20px;background:linear-gradient(160deg,#141a26,#0d1119);text-align:center;padding:26px 18px 24px}
+.contact .tag{font-size:12px;letter-spacing:.24em;color:var(--sub)}
+.contact .num{display:block;font-size:clamp(30px,8.5vw,42px);font-weight:800;letter-spacing:.04em;margin:10px 0 4px;
+  background:var(--grad-amber);-webkit-background-clip:text;background-clip:text;color:transparent}
+.contact .eq{font-size:13px;color:var(--sub)}
+.chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+.chip{font-size:12px;color:#c6cfdd;background:rgba(255,255,255,.05);border:1px solid var(--line);
+  padding:4px 12px;border-radius:20px}
+.btns{display:flex;gap:10px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;
+  border-radius:14px;font-size:15.5px;font-weight:700;text-decoration:none;letter-spacing:.02em;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn-call{background:var(--grad-amber);color:#241300;box-shadow:0 8px 26px rgba(255,150,60,.3)}
+.btn-ghost{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:rgba(77,163,255,.5)}
+
+/* 区块 */
+section{margin:34px 0}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.sec-head .no{font-size:12px;font-weight:800;color:var(--bg0);background:var(--grad);
+  width:24px;height:24px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-head h2{font-size:19px;font-weight:750;letter-spacing:.02em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:6px 16px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.row{display:flex;gap:13px;padding:14px 0;border-bottom:1px dashed var(--line)}
+.row:last-child{border-bottom:none}
+.row .ic{width:40px;height:40px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:19px;background:rgba(77,163,255,.10);border:1px solid rgba(77,163,255,.22)}
+.row b{display:block;font-size:14.5px;margin-bottom:2px}
+.row p{font-size:13px;color:var(--sub);line-height:1.65}
+.tip{margin-top:14px;font-size:13px;color:#ffd9a0;background:rgba(255,184,77,.08);
+  border:1px solid rgba(255,184,77,.25);border-radius:12px;padding:11px 14px;line-height:1.8}
+.tip.blue{color:#bfe0ff;background:rgba(77,163,255,.08);border-color:rgba(77,163,255,.3)}
+.tip.green{color:#b8f0d4;background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.3)}
+.tip b{color:inherit}
+
+/* 紧急收车公告 */
+.notice{border:1px solid rgba(255,122,107,.4);border-radius:18px;overflow:hidden;margin:30px 0;
+  background:linear-gradient(160deg,rgba(255,122,107,.08),rgba(255,184,77,.04))}
+.n-head{display:flex;align-items:center;gap:9px;padding:14px 18px;
+  background:linear-gradient(90deg,rgba(255,122,107,.16),transparent);border-bottom:1px solid rgba(255,122,107,.25)}
+.n-head b{font-size:16px;color:#ff9d90;letter-spacing:.03em}
+.notice .n-body{padding:14px 18px 16px}
+.notice p{font-size:13.5px;color:#c6cfdd}
+.notice .chips{justify-content:flex-start;margin-top:10px}
+.notice .chip{color:#ffd9a0;background:rgba(255,184,77,.09);border-color:rgba(255,184,77,.35)}
+.notice .hot{color:var(--amber);font-weight:700}
+
+/* 专家工具箱 */
+.ucx{position:relative;margin:32px 0 12px;border-radius:20px;padding:2px;
+  background:linear-gradient(135deg,rgba(77,163,255,.6),rgba(34,211,238,.5),rgba(255,184,77,.5))}
+.ucx .in{border-radius:18px;background:linear-gradient(160deg,#131a26,#0e131d);padding:24px 18px;text-align:center}
+.ucx h3{font-size:19px;color:var(--txt)}
+.ucx h3 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ucx p{font-size:13.5px;color:var(--sub);line-height:1.75;margin-top:8px}
+.ucx .btns{margin-top:16px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:11px;margin-top:14px;text-align:left}
+.g-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 15px}
+.g-card b{font-size:14px;color:var(--cyan)}
+.g-card p{font-size:12.5px;color:var(--sub);margin-top:5px;line-height:1.65}
+.ucx-note{font-size:12px;color:#5b6779;text-align:center;margin:10px 0 0}
+.ucx-note a{color:var(--blue)}
+
+/* FAQ */
+.faq{padding:4px 16px}
+.faq .q{padding:13px 0;border-bottom:1px dashed var(--line);font-size:14px;color:#c6cfdd;line-height:1.7}
+.faq .q:last-child{border-bottom:none}
+.faq .q b{color:var(--txt)}
+
+/* 软件块 */
+.soft{margin:34px 0;border:1px solid rgba(77,163,255,.35);border-radius:18px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(77,163,255,.08),rgba(34,211,238,.04))}
+.soft .s-head{padding:15px 18px;border-bottom:1px solid rgba(77,163,255,.2);
+  background:linear-gradient(90deg,rgba(77,163,255,.12),transparent)}
+.soft .s-head b{font-size:16px;color:#bfe0ff}
+.soft .s-body{padding:14px 18px 16px;font-size:13.5px;color:#c6cfdd;line-height:1.8}
+.soft .s-body .price{color:var(--cyan);font-weight:600}
+.soft .btn{margin-top:14px}
+
+footer{padding:26px 0 44px;text-align:center}
+footer .ver{display:inline-block;margin-top:10px;padding:3px 12px;border:1px solid rgba(52,211,153,.4);
+  border-radius:12px;color:var(--green);font-size:12px}
+footer .fine{color:#5b6779;font-size:12px;margin-top:10px}
+
+@media (max-width:480px){.hero{padding-top:34px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
-<p class="crumb">🏠 <a href="/">知行软件官网</a> / 郑州宝泽利余晓春</p>
-
-<h1>郑州宝泽利余晓春<br />收车卖车找我本人 · 电话微信同号</h1>
-
-<div class="tip">
-🔎 <b>你搜的应该是这八个字：郑州宝泽利余晓春</b><br />
-在手机或电脑浏览器里搜它，找到的就是我本人——<b>不经过任何总机、不转接任何其他人</b>。
-电话、微信都是同一个号：<b>15639928315</b>。
+<div class="topbar">
+  <div class="wrap">
+    <a class="crumb" href="/"><span class="dot"></span>知行软件官网 · 郑州宝泽利</a>
+    <span class="live"><i></i>本人在线 · 秒回</span>
+  </div>
 </div>
 
-<div class="contact">
-📱 收车 · 卖车 · 过户，直接找余晓春本人<br />
-<span class="num">15639928315</span>
-电话 = 微信 = 本人，加微信发车型照片，秒回报价<br/>
-<span style="display:inline-block;background:rgba(255,255,255,.16);border-radius:20px;padding:5px 14px;margin:10px 3px 0;font-size:14px">📱 12123使用培训</span>
-<span style="display:inline-block;background:rgba(255,255,255,.16);border-radius:20px;padding:5px 14px;margin:10px 3px 0;font-size:14px">🛡 车险选购培训</span>
-<span style="display:inline-block;background:rgba(255,255,255,.16);border-radius:20px;padding:5px 14px;margin:10px 3px 0;font-size:14px">🔄 过户流程培训</span>
-<span style="display:inline-block;background:rgba(255,255,255,.16);border-radius:20px;padding:5px 14px;margin:10px 3px 0;font-size:14px">✅ 年检验车培训</span>
-<span style="display:inline-block;background:rgba(255,255,255,.16);border-radius:20px;padding:5px 14px;margin:10px 3px 0;font-size:14px">🪪 驾驶证业务培训</span>
-<span style="display:inline-block;background:rgba(255,255,255,.16);border-radius:20px;padding:5px 14px;margin:10px 3px 0;font-size:14px">📖 驾考辅导</span>
-<span style="display:inline-block;background:rgba(255,255,255,.16);border-radius:20px;padding:5px 14px;margin:10px 3px 0;font-size:14px">⚡ 电工证培训</span>
-<span style="display:inline-block;background:rgba(255,255,255,.16);border-radius:20px;padding:5px 14px;margin:10px 3px 0;font-size:14px">🚜 叉车证培训</span>
-<span style="display:inline-block;background:rgba(255,255,255,.16);border-radius:20px;padding:5px 14px;margin:10px 3px 0;font-size:14px">⚠️ 押运员培训</span>
-<br/>
-<a class="btn" href="tel:15639928315">📞 一键拨号</a>
-<a class="btn" href="/usedcar.html?v=20261013">🚗 收车卖车 · 车务详情</a>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="pill">🚗 二手车 · 车务培训 · 考证辅导</span>
+    <h1><span class="g">收车卖车找我本人</span><span class="sub2">郑州宝泽利 · 余晓春 · 电话微信同号</span></h1>
+    <p class="lead">不经过任何总机、不转接任何其他人——电话、微信都是我本人，全程一对一。</p>
+
+    <div class="searchtip">🔎 <b>你搜的应该是这八个字：郑州宝泽利余晓春</b><br />在手机或电脑浏览器里搜它，找到的就是我本人。电话、微信都是同一个号：<b>15639928315</b>。</div>
+  </header>
+
+  <div class="contact">
+    <div class="in">
+      <div class="tag">CONTACT · 余晓春本人</div>
+      <span class="num">15639928315</span>
+      <div class="eq">收车 · 卖车 · 过户，直接找余晓春本人 · 加微信发车型照片秒回报价</div>
+      <div class="chips">
+        <span class="chip">📱 12123使用培训</span>
+        <span class="chip">🛡 车险选购培训</span>
+        <span class="chip">🔄 过户流程培训</span>
+        <span class="chip">✅ 年检验车培训</span>
+        <span class="chip">🪪 驾驶证业务培训</span>
+        <span class="chip">📖 驾考辅导</span>
+        <span class="chip">⚡ 电工证培训</span>
+        <span class="chip">🚜 叉车证培训</span>
+        <span class="chip">⚠️ 押运员培训</span>
+      </div>
+      <div class="btns">
+        <a class="btn btn-call" href="tel:15639928315">📞 一键拨号</a>
+        <a class="btn btn-ghost" href="/usedcar.html?v=20261028">🚗 收车卖车 · 车务详情</a>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="sec-head"><span class="no">🚨</span><h2 style="color:#ff9d90">紧急收车公告 · 高价收精品准新车</h2></div>
+    <div class="notice">
+      <div class="n-body">
+        <p><b style="color:var(--txt)">收车标准：</b>2023 年以后 · 5 万公里内 · 展厅级车况，价格给到最高！</p>
+        <p style="margin-top:8px"><b style="color:var(--txt)">重点收购车型：</b></p>
+        <div class="chips">
+          <span class="chip">24-26 年奔驰立标 E300</span>
+          <span class="chip">23-26 年宝马 530</span>
+          <span class="chip">23-26 年新款奥迪 A6</span>
+          <span class="chip">23 年后 S400 / 7系 / A8 全系</span>
+          <span class="chip">新能源 / 燃油 BBA（车况好、里程低）</span>
+          <span class="chip">奥迪</span>
+          <span class="chip">瑕疵理想</span>
+          <span class="chip">GL8</span>
+          <span class="chip">传祺商务</span>
+        </div>
+        <p style="margin-top:12px">📞 收车热线：<a class="hot" href="tel:15639928315">15639928315</a>（电话 = 微信），有车速报，机不可失！</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="ucx">
+      <div class="in">
+        <h3>🧰 二手车专家 · <span class="g">车商收车工具箱</span></h3>
+        <p>我平时收车、看车、谈价就在用的一套工具，现在免费开放给你：<br />智能估价、19 条砍价话术、OBD 只读诊断、车况速查报告——看车现场直接掏手机用。</p>
+        <div class="btns">
+          <a class="btn btn-call" href="/usedcar-expert.html">🚀 打开网页版（免安装）</a>
+          <a class="btn btn-ghost" href="/usedcar-expert.apk" download>📦 下载安卓 App（4.6MB）</a>
+        </div>
+        <div class="grid2">
+          <div class="g-card"><b>💰 智能估价</b><p>输入车龄里程自动算行情价，心里有底再开口，收车不被坑。</p></div>
+          <div class="g-card"><b>🗣 19 条砍价话术</b><p>现场看车怎么挑毛病、怎么压价，照着说就能用。</p></div>
+          <div class="g-card"><b>🔌 OBD 只读诊断</b><p>插上读故障码，只读不写，调表车、隐患车一眼看穿。</p></div>
+          <div class="g-card"><b>📋 车况速查报告</b><p>看车现场逐项过检，漆膜、事故、泡水快速出结论。</p></div>
+          <div class="g-card"><b>🧪 Arduino 实验室</b><p>自己动手做检测小工具，收车效率再上一层。</p></div>
+        </div>
+        <p class="ucx-note">工具估价仅供参考，成交价以现场看车为准 · <a href="/usedcar.html">收车卖车详情</a> ｜ <a href="/download.html">更多软件下载</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="no">1</span><h2>🛠 昊晟服务站 · 车务培训课堂</h2></div>
+    <div class="card">
+      <div class="row"><span class="ic">📱</span><div><b>交管12123使用课</b><p>自己查违章、自助缴罚款、绑定车辆驾驶证，手把手教到会</p></div></div>
+      <div class="row"><span class="ic">🛡</span><div><b>车险选购课</b><p>交强险、商业险怎么搭配，按车况算划算方案</p></div></div>
+      <div class="row"><span class="ic">🔄</span><div><b>过户流程课</b><p>过户、提档、转籍要什么材料、什么流程、有哪些坑</p></div></div>
+      <div class="row"><span class="ic">✅</span><div><b>年检验车课</b><p>审车流程、到期时间怎么查、怎样不脱审</p></div></div>
+      <div class="row"><span class="ic">🪪</span><div><b>驾驶证业务课</b><p>换证、补证要什么材料、去哪办、流程怎么走</p></div></div>
+      <div class="row"><span class="ic">📖</span><div><b>驾考辅导课</b><p>科一至科四理论辅导、流程讲解、经验分享</p></div></div>
+    </div>
+    <div class="tip">📍 服务站地址：<b>郑州市中原区西三环北三环交叉口（昊晟服务站）</b>。卖车流程、常见问题看 <a href="/usedcar.html?v=20261028"><b>二手车详情页</b></a>。</div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="no">2</span><h2>🏅 考证培训 · 电工证 / 叉车证 / 押运员</h2></div>
+    <div class="card">
+      <div class="row"><span class="ic">⚡</span><div><b>电工证培训</b><p>特种作业操作证（电工）理论考试范围、实操项目要点、报名条件与复审流程，零基础也能听懂</p></div></div>
+      <div class="row"><span class="ic">🚜</span><div><b>叉车证培训</b><p>特种设备作业人员证（叉车驾驶）理论题库精讲、实操驾驶要点、报名与复审全流程</p></div></div>
+      <div class="row"><span class="ic">⚠️</span><div><b>危险品押运员培训</b><p>道路危险货物运输从业人员从业资格考试范围、押运安全要点、常见危险品分类常识</p></div></div>
+    </div>
+    <div class="tip green">📢 郑重说明：以上均为<b>考试辅导培训</b>——教您考点、流程和规范，<b>不办证、不包过、不代考</b>，证书须本人参加正规考试取得。想了解的直接加微信 <b>15639928315</b>，先问清楚再决定。</div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="no">3</span><h2>我是谁 · 我怎么做生意</h2></div>
+    <div class="card">
+      <div style="padding:14px 0;font-size:14px;color:#c6cfdd">我叫余晓春，在郑州做二手车买卖，客户都叫我<b style="color:var(--amber)">「宝泽利的余晓春」</b>。在郑州买过车、卖过车的人，搜我的名字就能直接找到我，不用打公司总机转接，也不用加一堆业务员微信挑花眼。</div>
+      <div class="row"><span class="ic">💰</span><div><b>高价收车</b><p>看车定价，当场给价，不压价磨你</p></div></div>
+      <div class="row"><span class="ic">⚡</span><div><b>当天打款</b><p>手续齐全，当天结清，不拖</p></div></div>
+      <div class="row"><span class="ic">📄</span><div><b>过户</b><p>全程陪同协助，过户不用你来回跑</p></div></div>
+      <div class="row"><span class="ic">🔍</span><div><b>精品车源</b><p>车况实拍、检测透明，不藏毛病</p></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="no">4</span><h2>常问的几个问题</h2></div>
+    <div class="card faq">
+      <div class="q"><b>报价怎么来的？</b>——把车龄、里程、车况发我，我直接给一个能成交的价，不玩「先报高价再压低」。</div>
+      <div class="q"><b>卖车手续要准备什么？</b>——行驶证、身份证就行，其余我帮你走。</div>
+      <div class="q"><b>过不了户怎么办？</b>——抵押车、异地车都能处理，你把情况说清楚，我先判断能不能做。</div>
+      <div class="q"><b>人在外地怎么办？</b>——加微信把资料发来，视频看车、快递过户，全程不用你来回跑。</div>
+    </div>
+  </section>
+
+  <section class="soft">
+    <div class="s-head"><b>💻 另外我也做软件 —— 知行饭店 / 美业管理系统</b></div>
+    <div class="s-body">
+      给餐饮店、美业店用的收银管理后台：开单、收银、桌台、会员、打印、报表，<b style="color:var(--txt)">一次买断永久使用</b>，没有年费没有月费，断网也能开单。手机电脑同步。
+      <br />价格透明：饭店系统 <span class="price">20 / 40 / 60 元</span>三档，美业系统 <span class="price">50 元</span>，7 天全功能免费试用，微信 15639928315。
+      <br /><a class="btn btn-ghost" href="/">👉 去看知行软件官网</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="no">5</span><h2>怎么找到我</h2></div>
+    <div class="card">
+      <div class="row"><span class="ic">🔎</span><div><b>搜索引擎</b><p>搜 <b style="color:var(--amber)">「郑州宝泽利余晓春」</b>，第一条就是本页面</p></div></div>
+      <div class="row"><span class="ic">📞</span><div><b>电话</b><p><a href="tel:15639928315">15639928315</a>（本人接听）</p></div></div>
+      <div class="row"><span class="ic">💬</span><div><b>微信</b><p>15639928315（加我备注「收车」更快通过）</p></div></div>
+      <div class="row"><span class="ic">🎬</span><div><b>抖音</b><p>搜「郑州宝泽利余晓春」，看收车实拍视频</p></div></div>
+    </div>
+  </section>
+
 </div>
 
-<div class="notice">
-<span class="n-title">🚨 紧急收车公告 · 高价收精品准新车</span>
-<p style="margin:6px 0"><b>收车标准：</b>2023 年以后 · 5 万公里内 · 展厅级车况，价格给到最高！</p>
-<b>重点收购车型：</b><br/>
-<span class="chip">24-26 年奔驰立标 E300</span>
-<span class="chip">23-26 年宝马 530</span>
-<span class="chip">23-26 年新款奥迪 A6</span>
-<span class="chip">23 年后 S400 / 7系 / A8 全系</span>
-<span class="chip">新能源 / 燃油 BBA（车况好、里程低）</span>
-<span class="chip">奥迪</span>
-<span class="chip">瑕疵理想</span>
-<span class="chip">GL8</span>
-<span class="chip">传祺商务</span>
-<p style="margin:8px 0 0">📞 收车热线：<a href="tel:15639928315"><b>15639928315</b></a>（电话 = 微信），有车速报，机不可失！</p>
-</div>
-
-<div class="ucx-hero">
-<h3>🧰 二手车专家 · 车商收车工具箱</h3>
-<p>我平时收车、看车、谈价就在用的一套工具，现在免费开放给你：<br/>智能估价、19 条砍价话术、OBD 只读诊断、车况速查报告——看车现场直接掏手机用。</p>
-<div class="ucx-btns">
-<a class="ucx-btn primary" href="/usedcar-expert.html">🚀 打开网页版（免安装）</a>
-<a class="ucx-btn ghost" href="/usedcar-expert.apk" download>📦 下载安卓 App（4.6MB）</a>
-</div>
-</div>
-
-<div class="ucx-grid">
-<div class="ucx-card"><b>💰 智能估价</b><p>输入车龄里程自动算行情价，心里有底再开口，收车不被坑。</p></div>
-<div class="ucx-card"><b>🗣 19 条砍价话术</b><p>现场看车怎么挑毛病、怎么压价，照着说就能用。</p></div>
-<div class="ucx-card"><b>🔌 OBD 只读诊断</b><p>插上读故障码，只读不写，调表车、隐患车一眼看穿。</p></div>
-<div class="ucx-card"><b>📋 车况速查报告</b><p>看车现场逐项过检，漆膜、事故、泡水快速出结论。</p></div>
-<div class="ucx-card"><b>🧪 Arduino 实验室</b><p>自己动手做检测小工具，收车效率再上一层。</p></div>
-</div>
-<p class="ucx-note">工具估价仅供参考，成交价以现场看车为准 · <a href="/usedcar.html">收车卖车详情</a> ｜ <a href="/download.html">更多软件下载</a></p>
-
-<h2>🛠 昊晟服务站 · 车务培训课堂（电话:15639928315）</h2>
-<table>
-  <tr><th>培训课</th><th>讲什么</th></tr>
-  <tr><td>📱 交管12123使用课</td><td>自己查违章、自助缴罚款、绑定车辆驾驶证，手把手教到会</td></tr>
-  <tr><td>🛡 车险选购课</td><td>交强险、商业险怎么搭配，按车况算划算方案</td></tr>
-  <tr><td>🔄 过户流程课</td><td>过户、提档、转籍要什么材料、什么流程、有哪些坑</td></tr>
-  <tr><td>✅ 年检验车课</td><td>审车流程、到期时间怎么查、怎样不脱审</td></tr>
-  <tr><td>🪪 驾驶证业务课</td><td>换证、补证要什么材料、去哪办、流程怎么走</td></tr>
-  <tr><td>📖 驾考辅导课</td><td>科一至科四理论辅导、流程讲解、经验分享</td></tr>
-</table>
-<div class="tip">📍 服务站地址：<b>郑州市中原区西三环北三环交叉口（昊晟服务站）</b>。卖车流程、常见问题看 <a href="/usedcar.html?v=20261013"><b>二手车详情页</b></a>。</div>
-
-<h2>🏅 考证培训课堂 · 电工证 / 叉车证 / 危险品押运员</h2>
-<p>身边不少朋友要考上岗证件，我把这几门的<b>考试范围、报名流程、实操要点</b>讲明白，帮您少走弯路：</p>
-<table>
-  <tr><th>培训课</th><th>讲什么</th></tr>
-  <tr><td>⚡ 电工证培训</td><td>特种作业操作证（电工）理论考试范围、实操项目要点、报名条件与复审流程，零基础也能听懂</td></tr>
-  <tr><td>🚜 叉车证培训</td><td>特种设备作业人员证（叉车驾驶）理论题库精讲、实操驾驶要点、报名与复审全流程</td></tr>
-  <tr><td>⚠️ 危险品押运员培训</td><td>道路危险货物运输从业人员从业资格考试范围、押运安全要点、常见危险品分类常识</td></tr>
-</table>
-<div class="tip">📢 郑重说明：以上均为<b>考试辅导培训</b>——教您考点、流程和规范，<b>不办证、不包过、不代考</b>，证书须本人参加正规考试取得。想了解的直接加微信 <a href="tel:15639928315"><b>15639928315</b></a>，先问清楚再决定。</div>
-
-<h2>我是谁</h2>
-<p>我叫余晓春，在郑州做二手车买卖，客户都叫我<b>「宝泽利的余晓春」</b>。
-在郑州买过车、卖过车的人，搜我的名字就能直接找到我，
-不用打公司总机转接，也不用加一堆业务员微信挑花眼。</p>
-
-<h2>我怎么做生意</h2>
-<table>
-  <tr><th>环节</th><th>我的做法</th></tr>
-  <tr><td>高价收车</td><td>看车定价，当场给价，不压价磨你</td></tr>
-  <tr><td>当天打款</td><td>手续齐全，当天结清，不拖</td></tr>
-  <tr><td>过户</td><td>全程陪同协助，过户不用你来回跑</td></tr>
-  <tr><td>精品车源</td><td>车况实拍、检测透明，不藏毛病</td></tr>
-</table>
-
-<h2>常问的几个问题</h2>
-<ul>
-  <li><b>报价怎么来的？</b>——把车龄、里程、车况发我，我直接给一个能成交的价，不玩「先报高价再压低」。</li>
-  <li><b>卖车手续要准备什么？</b>——行驶证、身份证就行，其余我帮你走。</li>
-  <li><b>过不了户怎么办？</b>——抵押车、异地车都能处理，你把情况说清楚，我先判断能不能做。</li>
-  <li><b>人在外地怎么办？</b>——加微信把资料发来，视频看车、快递过户，全程不用你来回跑。</li>
-</ul>
-
-<div class="soft">
-<h2 style="margin-top:0">另外我也做软件——知行饭店 / 美业管理系统</h2>
-<p>给餐饮店、美业店用的收银管理后台：开单、收银、桌台、会员、打印、报表，一次买断永久使用，
-没有年费没有月费，断网也能开单。手机电脑同步。</p>
-<p>价格透明：饭店系统 20 / 40 / 60 元三档，美业系统 50 元，7 天全功能免费试用，微信 15639928315。</p>
-<a href="/">👉 去看知行软件官网</a>
-</div>
-
-<h2>怎么找到我</h2>
-<table>
-  <tr><th>渠道</th><th>怎么找</th></tr>
-  <tr><td>搜索引擎</td><td>搜 <b>「郑州宝泽利余晓春」</b>，第一条就是本页面</td></tr>
-  <tr><td>电话</td><td><a href="tel:15639928315">15639928315</a>（本人接听）</td></tr>
-  <tr><td>微信</td><td>15639928315（加我备注「收车」更快通过）</td></tr>
-  <tr><td>抖音</td><td>搜「郑州宝泽利余晓春」，看收车实拍视频</td></tr>
-</table>
-
-<p style="color:#888;font-size:13px;margin-top:34px;text-align:center">
-知行软件 · 郑州宝泽利余晓春 · 电话微信 15639928315<br/>
-<span style="display:inline-block;margin-top:6px;padding:2px 10px;border:1px solid #4caf50;border-radius:12px;color:#2e7d32;font-size:12px">✅ 本页版本 2026-10-17（含车务培训 + 考证培训课堂 + 二手车专家工具箱）</span>
-</p>
+<footer>
+  <div class="wrap">
+    <a class="crumb" href="/" style="justify-content:center">🏠 返回 知行软件官网</a>
+    <div class="fine">知行软件 · 郑州宝泽利余晓春 · 电话微信 15639928315</div>
+    <span class="ver">✅ 本页版本 2026-10-28 暗色科技版（车务培训 + 考证培训 + 二手车专家工具箱）</span>
+  </div>
+</footer>
 
 <script src="/assets/js/bot.js"></script>
 <script src="/assets/js/chat-widget.js"></script>
