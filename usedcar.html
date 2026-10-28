@@ -12,52 +12,241 @@
 {"@context":"https://schema.org","@type":"AutoDealer","name":"郑州宝泽利余晓春","founder":{"@type":"Person","name":"余晓春"},"telephone":"15639928315","areaServed":"郑州","description":"郑州二手车高价收车、放心卖车，电话微信 15639928315 即余晓春本人"}
 </script>
 <style>
-body{font-family:"Microsoft YaHei",sans-serif;max-width:800px;margin:0 auto;padding:20px;line-height:1.9;color:#2c3e50;background:#fffdf8}
-h1{font-size:26px;color:#c0392b;border-bottom:3px solid #ff7a3c;padding-bottom:10px}
-h2{font-size:20px;color:#d35400;margin-top:32px}
-.tip{background:#fff3e0;border-left:4px solid #ff7a3c;padding:12px 16px;border-radius:6px;margin:16px 0}
-.contact{background:#c0392b;color:#fff;text-align:center;padding:24px;border-radius:12px;margin:28px 0}
-.contact .num{font-size:34px;font-weight:bold;letter-spacing:2px;color:#ffe082;display:block;margin:8px 0}
-.contact a{color:#ffe082;font-weight:bold}
-.btn{display:inline-block;background:#ffe082;color:#c0392b;font-weight:bold;font-size:18px;padding:12px 34px;border-radius:30px;text-decoration:none;margin:10px 8px 0}
-table{border-collapse:collapse;width:100%;margin:16px 0}
-td,th{border:1px solid #e0c9a6;padding:10px;text-align:center}
-th{background:#ffedcc}
+:root{
+  --bg0:#0a0d14; --bg1:#11151f; --card:rgba(255,255,255,.045); --card2:rgba(255,255,255,.07);
+  --line:rgba(255,255,255,.09); --txt:#e8edf6; --sub:#9aa7bd;
+  --blue:#4da3ff; --cyan:#22d3ee; --amber:#ffb84d; --green:#34d399;
+  --grad:linear-gradient(135deg,#4da3ff 0%,#22d3ee 100%);
+  --grad-amber:linear-gradient(135deg,#ffb84d 0%,#ff8a3c 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",sans-serif;
+  background:var(--bg0);color:var(--txt);line-height:1.75;
+  min-height:100vh;position:relative;overflow-x:hidden;
+}
+/* 科技感背景：网格 + 双色辉光 */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(600px 400px at 85% -5%,rgba(77,163,255,.16),transparent 60%),
+    radial-gradient(700px 500px at -10% 30%,rgba(34,211,238,.10),transparent 60%),
+    radial-gradient(500px 400px at 90% 85%,rgba(255,184,77,.07),transparent 60%),
+    var(--bg0);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 75%);
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 18px}
+
+/* 顶栏 */
+.topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(10,13,20,.72);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:52px}
+.crumb{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--sub);text-decoration:none}
+.crumb:hover{color:var(--txt)}
+.crumb .dot{width:7px;height:7px;border-radius:50%;background:var(--grad);box-shadow:0 0 8px rgba(77,163,255,.9)}
+.live{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--green);
+  background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);padding:3px 10px;border-radius:20px}
+.live i{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(52,211,153,.5)}50%{opacity:.6;box-shadow:0 0 0 5px rgba(52,211,153,0)}}
+
+/* Hero */
+.hero{padding:46px 0 30px;text-align:center}
+.pill{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.06em;
+  color:var(--cyan);background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.3);
+  padding:5px 14px;border-radius:20px;margin-bottom:18px}
+h1{font-size:clamp(26px,6.4vw,40px);font-weight:800;line-height:1.28;letter-spacing:.01em}
+h1 .g{background:var(--grad-amber);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1 .name{display:block;font-size:.62em;font-weight:600;color:var(--sub);margin-top:8px;letter-spacing:.14em}
+.hero p.lead{color:var(--sub);font-size:15px;max-width:520px;margin:16px auto 0}
+
+/* 搜索词横幅 */
+.searchtip{margin:26px 0 0;border:1px solid rgba(255,184,77,.35);border-radius:14px;
+  background:linear-gradient(135deg,rgba(255,184,77,.10),rgba(255,138,60,.05));
+  padding:13px 16px;font-size:13.5px;color:#ffd9a0;display:flex;gap:10px;align-items:flex-start;text-align:left}
+.searchtip .ic{font-size:17px;line-height:1.5}
+.searchtip b{color:var(--amber)}
+
+/* 主 CTA */
+.cta-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0 6px}
+.btn{display:flex;align-items:center;justify-content:center;gap:9px;padding:15px 10px;
+  border-radius:14px;font-size:16.5px;font-weight:700;text-decoration:none;
+  transition:transform .15s ease,box-shadow .15s ease;letter-spacing:.02em}
+.btn:active{transform:scale(.97)}
+.btn-call{background:var(--grad-amber);color:#241300;box-shadow:0 8px 26px rgba(255,150,60,.32)}
+.btn-wechat{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
+.btn-wechat:hover{border-color:rgba(77,163,255,.5)}
+.btn small{display:block;font-size:11px;font-weight:400;opacity:.75;letter-spacing:0}
+.wechat-note{font-size:12px;color:var(--sub);text-align:center;margin-top:10px}
+.wechat-note code{color:var(--cyan);font-family:inherit;background:rgba(34,211,238,.08);padding:1px 7px;border-radius:6px}
+
+/* 数据条 */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:30px 0 8px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 6px;text-align:center}
+.stat b{display:block;font-size:19px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:11.5px;color:var(--sub)}
+
+/* 区块卡片 */
+section{margin:34px 0}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.sec-head .no{font-size:12px;font-weight:800;color:var(--bg0);background:var(--grad);
+  width:24px;height:24px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-head h2{font-size:19px;font-weight:750;letter-spacing:.02em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:6px 16px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.svc{display:flex;gap:13px;padding:15px 0;border-bottom:1px dashed var(--line)}
+.svc:last-child{border-bottom:none}
+.svc .ic{width:40px;height:40px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:19px;background:rgba(77,163,255,.10);border:1px solid rgba(77,163,255,.22)}
+.svc b{display:block;font-size:15px;margin-bottom:2px}
+.svc p{font-size:13px;color:var(--sub);line-height:1.65}
+
+.buy .card{padding:16px}
+.buy p{font-size:14px;color:var(--txt)}
+.buy .hl{color:var(--cyan);font-weight:600}
+.buy .tip{margin-top:13px;font-size:13px;color:#ffd9a0;background:rgba(255,184,77,.08);
+  border:1px solid rgba(255,184,77,.25);border-radius:12px;padding:11px 14px}
+
+.steps{counter-reset:st}
+.step{position:relative;padding:14px 0 14px 46px;border-bottom:1px dashed var(--line)}
+.step:last-child{border-bottom:none}
+.step::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:16px;
+  width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:800;color:var(--bg0);background:var(--grad);box-shadow:0 4px 14px rgba(77,163,255,.35)}
+.step b{font-size:14.5px}
+.step p{font-size:13px;color:var(--sub);margin-top:2px}
+
+/* 底部大联系卡 */
+.contact{position:relative;margin:40px 0 8px;border-radius:22px;padding:2px;
+  background:linear-gradient(135deg,rgba(255,184,77,.7),rgba(77,163,255,.5),rgba(34,211,238,.6))}
+.contact .in{border-radius:20px;background:linear-gradient(160deg,#141a26,#0d1119);
+  text-align:center;padding:30px 20px 26px}
+.contact .tag{font-size:12px;letter-spacing:.28em;color:var(--sub);text-transform:uppercase}
+.contact .num{display:block;font-size:clamp(30px,8.5vw,42px);font-weight:800;letter-spacing:.04em;
+  margin:10px 0 4px;background:var(--grad-amber);-webkit-background-clip:text;background-clip:text;color:transparent}
+.contact .eq{font-size:13px;color:var(--sub)}
+.contact .btns{display:flex;gap:10px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.contact .btn{padding:12px 22px}
+.copy-ok{font-size:12px;color:var(--green);height:18px;margin-top:10px}
+
+footer{padding:26px 0 42px;text-align:center}
+footer a{color:var(--blue);text-decoration:none;font-size:13.5px}
+footer a:hover{text-decoration:underline}
+footer .fine{color:#5b6779;font-size:12px;margin-top:8px}
+
+@media (max-width:480px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .cta-row{grid-template-columns:1fr}
+  .hero{padding-top:36px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<p>🏪 <a href="/">知行软件官网</a> / 郑州宝泽利余晓春</p>
-<h1>郑州宝泽利余晓春 · 高价收车 · 放心卖车</h1>
 
-<div class="tip">🔎 <b>认准搜索词：郑州宝泽利余晓春</b> —— 在浏览器里搜这八个字，找到的<b>只有我一个</b>。电话、微信都是我本人，收车卖车全程一对一，不经过任何总机、不转接任何别人。</div>
-
-<div class="contact">
-📱 收车卖车，直接找我本人<br/>
-<span class="num">15639928315</span>
-电话 = 微信 = 余晓春本人，加微信发车型照片，秒回报价<br/>
-<a class="btn" href="tel:15639928315">📞 一键拨号联系余晓春</a>
+<div class="topbar">
+  <div class="wrap">
+    <a class="crumb" href="/"><span class="dot"></span>知行软件官网 · 郑州宝泽利</a>
+    <span class="live"><i></i>本人在线 · 秒回</span>
+  </div>
 </div>
 
-<h2>一、为什么找我卖车最放心？</h2>
-<table>
-<tr><th>服务</th><th>说明</th></tr>
-<tr><td>本人对接</td><td>从报价到过户，全程我一个人负责，不换人、不转手</td></tr>
-<tr><td>高价收车</td><td>车况正常就给实在价，不玩压价套路</td></tr>
-<tr><td>上门评估</td><td>郑州全城免费上门看车，您不用跑一趟</td></tr>
-<tr><td>当天打款</td><td>价格谈拢当天过户打款，不等不拖</td></tr>
-<tr><td>手续包办</td><td>过户、提档全由我办，您签字就行</td></tr>
-</table>
+<div class="wrap">
 
-<h2>二、想买二手车的朋友看这里</h2>
-<p>车源都是<b>一手整备车</b>：收回来先做全车检测，该换的易损件全换新，再上架。支持第三方检测，重大事故车、泡水车、火烧车一律不碰。</p>
-<div class="tip">💡 加微信 <strong>15639928315</strong>，说出您的预算和车型，车源照片视频直接发您，先看车再约时间，不白跑。</div>
+  <header class="hero">
+    <span class="pill">🚗 郑州二手车 · 一对一服务</span>
+    <h1><span class="g">高价收车 · 放心卖车</span><span class="name">郑州宝泽利 · 余晓春</span></h1>
+    <p class="lead">车况正常就给实在价，价格谈拢当天过户打款。全程我一个人对接，不换人、不转手、不玩套路。</p>
 
-<h2>三、怎么找到我？</h2>
-<p>① 手机浏览器搜<b>「郑州宝泽利余晓春」</b>，进这个页面就是本人；<br/>
-② 直接拨打 <b>15639928315</b>；<br/>
-③ 电话号就是<b>微信号</b>，搜索添加，发车型照片秒回报价。</p>
-<div class="tip">📞 手机用户点这里直接拨打：<a href="tel:15639928315"><b>15639928315</b></a></div>
+    <div class="searchtip"><span class="ic">🔎</span><span>认准搜索词：<b>郑州宝泽利余晓春</b> —— 在浏览器里搜这八个字，找到的<b>只有我一个</b>。电话、微信都是我本人，不经过任何总机、不转接任何别人。</span></div>
 
-<p class="back">← 返回 <a href="/">知行软件官网</a>（饭店/美业管理系统）</p>
+    <div class="cta-row">
+      <a class="btn btn-call" href="tel:15639928315">📞 一键拨号<small>收车卖车直接聊</small></a>
+      <a class="btn btn-wechat" href="javascript:void(0)" onclick="copyWx(this)">💬 复制微信号<small>发车型照片秒回报价</small></a>
+    </div>
+    <p class="wechat-note">微信号就是手机号 <code>15639928315</code>，点右边按钮直接复制</p>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><b>0 中间商</b><span>本人全程对接</span></div>
+    <div class="stat"><b>当天</b><span>谈拢就打款</span></div>
+    <div class="stat"><b>免费</b><span>全城上门看车</span></div>
+    <div class="stat"><b>包办</b><span>过户提档手续</span></div>
+  </div>
+
+  <section>
+    <div class="sec-head"><span class="no">1</span><h2>为什么找我卖车最放心？</h2></div>
+    <div class="card">
+      <div class="svc"><span class="ic">🤝</span><div><b>本人对接</b><p>从报价到过户，全程我一个人负责，不换人、不转手。</p></div></div>
+      <div class="svc"><span class="ic">💰</span><div><b>高价收车</b><p>车况正常就给实在价，不玩压价套路。</p></div></div>
+      <div class="svc"><span class="ic">🚘</span><div><b>上门评估</b><p>郑州全城免费上门看车，您不用跑一趟。</p></div></div>
+      <div class="svc"><span class="ic">⚡</span><div><b>当天打款</b><p>价格谈拢当天过户打款，不等不拖。</p></div></div>
+      <div class="svc"><span class="ic">📄</span><div><b>手续包办</b><p>过户、提档全由我办，您签字就行。</p></div></div>
+    </div>
+  </section>
+
+  <section class="buy">
+    <div class="sec-head"><span class="no">2</span><h2>想买二手车的朋友看这里</h2></div>
+    <div class="card">
+      <p>车源都是<span class="hl">一手整备车</span>：收回来先做全车检测，该换的易损件全换新，再上架。支持第三方检测，<span class="hl">重大事故车、泡水车、火烧车一律不碰</span>。</p>
+      <div class="tip">💡 加微信 <strong>15639928315</strong>，说出您的预算和车型，车源照片视频直接发您，先看车再约时间，不白跑。</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="no">3</span><h2>怎么找到我？</h2></div>
+    <div class="card steps">
+      <div class="step"><b>浏览器搜「郑州宝泽利余晓春」</b><p>进这个页面就是我本人，假不了。</p></div>
+      <div class="step"><b>直接拨打 15639928315</b><p>收车卖车，电话里直接聊。</p></div>
+      <div class="step"><b>加微信：15639928315</b><p>电话号就是微信号，发车型照片，秒回报价。</p></div>
+    </div>
+  </section>
+
+  <div class="contact">
+    <div class="in">
+      <div class="tag">CONTACT · 余晓春本人</div>
+      <span class="num">15639928315</span>
+      <div class="eq">电话 = 微信 = 余晓春本人 · 加微信发车型照片秒回报价</div>
+      <div class="btns">
+        <a class="btn btn-call" href="tel:15639928315">📞 一键拨号</a>
+        <a class="btn btn-wechat" href="javascript:void(0)" onclick="copyWx(this)">💬 复制微信号</a>
+      </div>
+      <div class="copy-ok" id="copyOk"></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <a href="/">← 返回 知行软件官网（饭店/美业管理系统）</a>
+  <div class="fine">郑州宝泽利 · 余晓春 · 高价收车 · 放心卖车 · 电话微信 15639928315</div>
+</footer>
+
+<script>
+function copyWx(btn){
+  var wx="15639928315", ok=function(){
+    var el=document.getElementById("copyOk");
+    if(el){el.textContent="✓ 已复制，去微信粘贴搜索即可";}
+    if(btn && btn.lastElementChild){var s=btn.lastElementChild.textContent;btn.lastElementChild.textContent="已复制 ✓";
+      setTimeout(function(){btn.lastElementChild.textContent=s;},1800);}
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(wx).then(ok).catch(function(){fallback();});
+  }else{fallback();}
+  function fallback(){
+    var t=document.createElement("textarea");t.value=wx;t.style.position="fixed";t.style.opacity="0";
+    document.body.appendChild(t);t.select();
+    try{document.execCommand("copy");ok();}catch(e){}
+    document.body.removeChild(t);
+  }
+}
+</script>
 </body>
 </html>
